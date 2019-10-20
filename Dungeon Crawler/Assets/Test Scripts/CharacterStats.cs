@@ -22,4 +22,18 @@ public class CharacterStats : MonoBehaviour
             TakeDamage(10);
         }
     }
+
+    public void TakeDamage(int damage)
+    {
+        damage -= m_armour.GetValue();
+        damage = Mathf.Clamp(damage, 0, int.MaxValue);
+
+        m_currentHealth -= damage;
+        Debug.Log(transform.name + "takes " + damage + "damage.");
+
+        if (m_currentHealth <= 0)
+        {
+            Die();
+        }
+    }
 }
