@@ -36,4 +36,11 @@ public class CharacterStats : MonoBehaviour
             Die();
         }
     }
+
+    public virtual void Die()
+    {
+        //Die in some way
+        //Meant to be overriden
+        Debug.Log(transform.name + "died.");
+    }
 }
