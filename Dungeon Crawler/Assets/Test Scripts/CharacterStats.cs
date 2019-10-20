@@ -11,7 +11,7 @@ public class CharacterStats : MonoBehaviour
     public Stat m_armour;
 
     public Stat m_strength;
- 
+    public Stat m_vitality;
     private void Awake()
     {
         m_currentHealth = m_maxHealth;
