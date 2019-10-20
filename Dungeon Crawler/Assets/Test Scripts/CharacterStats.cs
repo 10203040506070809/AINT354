@@ -8,4 +8,5 @@ public class CharacterStats : MonoBehaviour
     public int m_currentHealth { get; private set; }
 
     public Stat m_damage;
+    public Stat m_armour;
 }
