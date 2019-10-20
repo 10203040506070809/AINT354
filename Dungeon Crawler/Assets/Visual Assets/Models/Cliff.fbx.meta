@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 5f9035085295f0a4292f68ad4c814eb5
+guid: 08b856d9c45b3464d81cd7bd80e5b816
 ModelImporter:
   serializedVersion: 26
   internalIDToNameTable: []
@@ -7,13 +7,23 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Tree_Leaf
-    second: {fileID: 2100000, guid: 26656ae0b55e77c4d910011b21a7cc8b, type: 2}
+      name: Cliff_Albedo
+    second: {fileID: 2100000, guid: 496cb8c1f638ad54695da08849e4882f, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Tree_Trunk
-    second: {fileID: 2100000, guid: cbb40f10e9abb114997bab3b910cdace, type: 2}
+      name: Material
+    second: {fileID: 2100000, guid: c8931f08ca6219742b0f3be9d72a9d31, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.001
+    second: {fileID: 2100000, guid: 1275e71482e3bea459d9f0feda46b9f0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.002
+    second: {fileID: 2100000, guid: a928cfbb078079e47b7d47cbd7dd11c2, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -53,10 +63,10 @@ ModelImporter:
     importBlendShapes: 1
     importCameras: 1
     importLights: 1
-    swapUVChannels: 0
+    swapUVChannels: 1
     generateSecondaryUV: 0
     useFileUnits: 1
-    keepQuads: 0
+    keepQuads: 1
     weldVertices: 1
     preserveHierarchy: 0
     skinWeightsMode: 0
