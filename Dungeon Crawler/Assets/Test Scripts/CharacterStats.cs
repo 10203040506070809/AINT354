@@ -4,15 +4,6 @@ using UnityEngine;
 
 public class CharacterStats : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public int m_maxHealth = 100;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
