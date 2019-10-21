@@ -24,22 +24,34 @@ public class PlayerStats : CharacterStats
             TakeDamage(10);
         }
     }
+
+
+    public override void TakeDamage(int damage)
+    {
+        base.TakeDamage(damage);
+
+        //Play audio clip
+        Debug.Log("OOF");
+    }
     /// <summary>
     /// A method which calculates stats according to a formula. This allows variation between players and specific enemies.
     /// </summary>
     public override void CalculateStats()
     {
-        //10 is the base value for these three variables. That is to say that at level 1, these are your levels.
-        m_movementSpeed.SetValue(10 + m_level);
-        m_vitality.SetValue(10 + m_level);
-        m_strength.SetValue(10 + m_level);
-        
+        //10 is the base value for these three variables. That is to say that at level 1, these are your levels. if m_isLinked is set to true, enemies will follow this pattern. Untick m_isLinked for unique, or to set up enemies manually.
+
+        if (m_isLinked)
+        {
+            m_movementSpeed.SetValue(10 + m_level);
+            m_vitality.SetValue(10 + m_level);
+            m_strength.SetValue(10 + m_level);
 
 
-        m_maxHealth = m_vitality.GetValue() * 10;
 
-        m_damage.SetValue(m_strength.GetValue() * 5);
+            m_maxHealth = m_vitality.GetValue() * 10;
 
+            m_damage.SetValue(m_strength.GetValue() * 5);
+        }
     }
 
     /// <summary>
@@ -48,7 +60,7 @@ public class PlayerStats : CharacterStats
     public override void Die()
     {
         base.Die();
-        Destroy(gameObject);
+        
         
         //TODO on death, give gold/experience to the thing that killed it.
     }

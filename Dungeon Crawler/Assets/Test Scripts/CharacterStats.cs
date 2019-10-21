@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CharacterStats : MonoBehaviour
 {
+    public bool m_isLinked;
     /// <summary>
     /// Variable to store the level of the entity.
     /// </summary>
@@ -15,7 +16,7 @@ public class CharacterStats : MonoBehaviour
     /// <summary>
     /// Variable to store the current health of an entity.
     /// </summary>
-    public int m_currentHealth { get; private set; }
+    public int m_currentHealth { get;  set; }
 
     /// <summary>
     /// A variable to store the damage an entity does.
@@ -74,7 +75,7 @@ public class CharacterStats : MonoBehaviour
     /// A method which is called when an entity takes damage. Removes health and calls the Die method when the entity dies.
     /// </summary>
     /// <param name="damage"></param>
-    public void TakeDamage(int damage)
+    public virtual void TakeDamage(int damage)
     {
         damage -= m_armour.GetValue();
         damage = Mathf.Clamp(damage, 0, int.MaxValue);
@@ -96,6 +97,8 @@ public class CharacterStats : MonoBehaviour
         //Die in some way
         //Meant to be overriden
         Debug.Log(transform.name + " died.");
+
+        Destroy(gameObject);
     }
 
     /// <summary>
