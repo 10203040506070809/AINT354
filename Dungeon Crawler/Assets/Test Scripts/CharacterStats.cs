@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CharacterStats : MonoBehaviour
 {
-    public bool m_isLinked;
+    public bool m_isLinked = true;
     /// <summary>
     /// Variable to store the level of the entity.
     /// </summary>
