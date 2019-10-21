@@ -7,8 +7,10 @@ public class EnemyStats : CharacterStats
 
     
     
-    // Start is called before the first frame update
-    private void Start()
+    /// <summary>
+    /// Awake is called when a script is  loaded for the first time.
+    /// </summary>
+    private void Awake()
     {
         CalculateStats();
     }

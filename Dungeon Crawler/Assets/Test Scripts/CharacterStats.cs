@@ -52,7 +52,7 @@ public class CharacterStats : MonoBehaviour
     /// </summary>
     private void Awake()
     {
-        m_currentHealth = m_maxHealth;
+        
     }
 
     /// <summary>
@@ -63,6 +63,13 @@ public class CharacterStats : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// A method that is called on the first frame.
+    /// </summary>
+    private void Start()
+    {
+        m_currentHealth = m_maxHealth;
+    }
     /// <summary>
     /// A method which is called when an entity takes damage. Removes health and calls the Die method when the entity dies.
     /// </summary>

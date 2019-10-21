@@ -4,20 +4,25 @@ using UnityEngine;
 public class PlayerStats : CharacterStats
 {
 
-    private void Start()
+    /// <summary>
+    /// A method that is called when the script is loaded.
+    /// </summary>
+    private void Awake()
     {
         CalculateStats();
     }
+
+
 
     /// <summary>
     /// An update which is called every frame.
     /// </summary>
     private void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.T))
-        //{
-        //    TakeDamage(10);
-        //}
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            TakeDamage(10);
+        }
     }
     /// <summary>
     /// A method which calculates stats according to a formula. This allows variation between players and specific enemies.

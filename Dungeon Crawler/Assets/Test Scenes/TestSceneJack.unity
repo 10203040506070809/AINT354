@@ -369,7 +369,7 @@ MonoBehaviour:
   m_armour:
     baseValue: 0
   m_strength:
-    baseValue: 4444
+    baseValue: 10
   m_vitality:
     baseValue: 10
   m_movementSpeed:
