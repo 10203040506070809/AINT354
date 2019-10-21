@@ -23,6 +23,12 @@ public class Stat
     {
         return baseValue;
     }
+
+    /// <summary>
+    /// Sets the value of  a stat.
+    /// </summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
    public int SetValue(int value)
     {
         baseValue = value;

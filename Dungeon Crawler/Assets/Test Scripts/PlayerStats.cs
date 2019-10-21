@@ -3,14 +3,10 @@ using UnityEngine;
 
 public class PlayerStats : CharacterStats
 {
-    private void Awake()
-    {
-                CalculateStats();
-    }
 
     private void Start()
     {
-        //CalculateStats();
+        CalculateStats();
     }
 
     /// <summary>
@@ -18,10 +14,10 @@ public class PlayerStats : CharacterStats
     /// </summary>
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            TakeDamage(10);
-        }
+        //if (Input.GetKeyDown(KeyCode.T))
+        //{
+        //    TakeDamage(10);
+        //}
     }
     /// <summary>
     /// A method which calculates stats according to a formula. This allows variation between players and specific enemies.
@@ -42,7 +38,7 @@ public class PlayerStats : CharacterStats
     }
 
     /// <summary>
-    /// The  enemy death event. //TODO Add an animation/shader to show death, instead of destroying the gameobject.
+    /// The  player death event. //TODO Add an animation/shader to show death, instead of destroying the gameobject.
     /// </summary>
     public override void Die()
     {
