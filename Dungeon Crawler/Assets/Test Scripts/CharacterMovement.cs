@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterStats))]
-public class Movement : MonoBehaviour
+public class CharacterMovement : MonoBehaviour
 {
     [SerializeField] private int m_movementSpeed;
     [SerializeField]
