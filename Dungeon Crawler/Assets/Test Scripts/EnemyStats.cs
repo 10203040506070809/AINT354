@@ -15,7 +15,9 @@ public class EnemyStats : CharacterStats
         CalculateStats();
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// Update is called every frame.
+    /// </summary>
     void Update()
     {
         //if (Input.GetKeyDown(KeyCode.T))
@@ -35,9 +37,6 @@ public class EnemyStats : CharacterStats
     /// <summary>
     /// Calculates the stats of the enemy. Can be ignored and set in the editor for special cases/mobs, otherwise standard formula will take precedence.
     /// </summary>
-    /// 
-
-
     public override void CalculateStats()
     {
         //10 is the base value for these three variables. That is to say that at level 1, these are your levels. If m_isLinked is set to true, enemies will follow this pattern. Untick m_isLinked for unique, or to set up enemies manually.
@@ -51,6 +50,8 @@ public class EnemyStats : CharacterStats
             m_maxHealth = m_vitality.GetValue() * (5);
 
             m_damage.SetValue(m_strength.GetValue() * (2));
+
+            m_currentInsanity = 10;
         }
     }
 

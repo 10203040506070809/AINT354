@@ -4,49 +4,55 @@ using UnityEngine;
 
 public class CharacterStats : MonoBehaviour
 {
-    public bool m_isLinked = true;
+    [SerializeField] protected bool m_isLinked = true;
     /// <summary>
     /// Variable to store the level of the entity.
     /// </summary>
-    public int m_level = 1;
+    [SerializeField] protected int m_level = 1;
     /// <summary>
     /// Variable to store the max health of an entity.
     /// </summary>
-    public int m_maxHealth = 100;
+    [SerializeField] protected int m_maxHealth = 100;
     /// <summary>
     /// Variable to store the current health of an entity.
     /// </summary>
-    public int m_currentHealth { get;  set; }
-
+    [SerializeField] protected int m_currentHealth { get;  set; }
+    /// <summary>
+    /// A variable to store the maximum insanity level.
+    /// </summary>
+    [SerializeField] protected Stat m_maxInsanity;
+    /// <summary>
+    /// A variable to store the current insanity level.
+    /// </summary>
+    [SerializeField] protected float m_currentInsanity = 0;
     /// <summary>
     /// A variable to store the damage an entity does.
     /// </summary>
-    public Stat m_damage;
+    [SerializeField] protected Stat m_damage;
     /// <summary>
     /// A variable to store the armour an entity has.
     /// </summary>
-    public Stat m_armour;
+    [SerializeField] protected Stat m_armour;
     /// <summary>
     /// A variable to store the strength an entity has.
     /// </summary>
-    public Stat m_strength;
+    [SerializeField] protected Stat m_strength;
     /// <summary>
     /// A variable to store the vitality an entity has.
     /// </summary>
-    public Stat m_vitality;
+    [SerializeField] protected Stat m_vitality;
     /// <summary>
     /// A variable to store the movement speed an entity has.
     /// </summary>
-    public Stat m_movementSpeed;
-
+    [SerializeField] protected Stat m_movementSpeed;
     /// <summary>
     /// A variable to store the gold a player has; or the gold an enemy gives on death.
     /// </summary>
-    public Stat m_gold;
+    [SerializeField] protected Stat m_gold;
     /// <summary>
     /// A variable to store the experience a player has; or the experience an enemy gives on death.
     /// </summary>
-    public Stat m_experience;
+    [SerializeField] protected Stat m_experience;
 
     /// <summary>
     /// A method which is called when the script is loaded. It calculates the entities stats.
