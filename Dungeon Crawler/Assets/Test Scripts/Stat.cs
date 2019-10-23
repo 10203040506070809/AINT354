@@ -9,7 +9,7 @@ public class Stat
     /// Start value for a given stat.
     /// </summary>
         [SerializeField]
-    private int baseValue;
+    private int m_baseValue;
 
     /// <summary>
     /// Final value for a given stat.
@@ -21,7 +21,7 @@ public class Stat
     /// <returns></returns>
     public int GetValue()
     {
-        return baseValue;
+        return m_baseValue;
     }
 
     /// <summary>
@@ -31,7 +31,7 @@ public class Stat
     /// <returns></returns>
    public int SetValue(int value)
     {
-        baseValue = value;
-        return baseValue;
+        m_baseValue = value;
+        return m_baseValue;
     }
 }
