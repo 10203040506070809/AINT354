@@ -15,9 +15,14 @@ public class EnemyMovement : CharacterMovement
     /// <summary>
     /// 
     /// </summary>
-    void Update()
+    public void Update()
     {
-        
+        Move();
+    }
+
+    public override void Move()
+    {
+        base.Move();
     }
 
 

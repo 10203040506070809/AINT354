@@ -38,9 +38,9 @@ public class PlayerMovement : CharacterMovement
     /// <summary>
     /// Update is called once per frame
     /// </summary>
-    public override void Update()
+    public void Update()
     {
-        base.Update();
+        Move();
       
     }
     /// <summary>

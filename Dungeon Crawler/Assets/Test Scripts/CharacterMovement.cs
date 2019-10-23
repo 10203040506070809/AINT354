@@ -9,9 +9,9 @@ public class CharacterMovement : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    public virtual void Update()
+    private void Update()
     {
-        Move();
+       
     }
 
     /// <summary>
