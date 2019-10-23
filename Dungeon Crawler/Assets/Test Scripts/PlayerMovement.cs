@@ -3,48 +3,80 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[RequireComponent(typeof(CharacterStats))]
+[RequireComponent(typeof(CharacterStats), typeof(Rigidbody))]
 public class PlayerMovement : CharacterMovement
 {
-    private Rigidbody rb;
-    private CharacterStats myStats;
-    int x = 0; int y = 0; int z = 0;
-
-
-    // Start is called before the first frame update
+    /// <summary>
+    /// An audiosource for footsteps, called when the player moves.
+    /// </summary>
+    [SerializeField] private AudioSource m_footSteps;
+    /// <summary>
+    /// An integer denoting the force a player jumps at.
+    /// </summary>
+    [SerializeField] private int m_jumpForce;
+    /// <summary>
+    /// A rigidbody variable,responsible for physics.
+    /// </summary>
+    private Rigidbody m_rigidBody;
+    /// <summary>
+    /// A characterstats variable storing the player movement speed.
+    /// </summary>
+    private CharacterStats m_myStats;
+    /// <summary>
+    /// 
+    /// </summary>
+    private Vector3 m_MovementVector;
+    /// <summary>
+    /// Start is called before the first frame update
+    /// </summary>
     void Start()
     {
-        rb = this.GetComponent<Rigidbody>();
-
-        myStats = this.GetComponent<CharacterStats>();
+        m_rigidBody = this.GetComponent<Rigidbody>();
+       
+        m_myStats = this.GetComponent<CharacterStats>();
     }
-
-    // Update is called once per frame
+    /// <summary>
+    /// Update is called once per frame
+    /// </summary>
     public override void Update()
     {
         base.Update();
-       
+      
     }
-
+    /// <summary>
+    /// 
+    /// </summary>
     public override void Move()
-    { 
-        base.Move();
+    {
+    /// <summary>
+    /// A variable to hold the player movement along the x axis.
+    /// </summary>
+    int m_x = 0;
 
-        Vector3 test = new Vector3(x, y, z);
+    /// <summary>
+    /// A variable to hold the player movement along the y axis.
+    /// </summary>
+    int m_y = 0;
+    /// <summary>
+    /// A variable to hold the player movement along the z axis.
+    /// </summary>
+    int m_z = 0;
+
+    m_MovementVector = new Vector3(m_x, m_y, m_z);
         //TODO Footstep sound
 
-        rb.velocity = test;
+        m_rigidBody.velocity = m_MovementVector;
         if (Input.GetAxis("Horizontal") != 0)
         {
-            test.x = Input.GetAxis("Horizontal") * myStats.GetMovementSpeed();
-            Debug.Log("Done a thing x");
+            m_MovementVector.x = Input.GetAxis("Horizontal") * m_myStats.GetMovementSpeed();
+      
         }
         if (Input.GetAxis("Vertical") != 0)
         {
-            test.z = Input.GetAxis("Vertical") * myStats.GetMovementSpeed();
-            Debug.Log("Done a thing z");
+            m_MovementVector.z = Input.GetAxis("Vertical") * m_myStats.GetMovementSpeed();
+            
         }
 
-        rb.velocity = test;
+        m_rigidBody.velocity = m_MovementVector;
     }
 }

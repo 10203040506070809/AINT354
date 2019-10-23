@@ -6,7 +6,9 @@ using UnityEngine;
 public class CharacterMovement : MonoBehaviour
 {
   
-    // Update is called once per frame
+    /// <summary>
+    /// 
+    /// </summary>
     public virtual void Update()
     {
         Move();
@@ -16,7 +18,6 @@ public class CharacterMovement : MonoBehaviour
     /// Method for movement. Meant to be overriden.
     /// </summary>
     /// 
-
     public virtual void Move()
     {
        

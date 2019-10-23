@@ -4,13 +4,17 @@ using UnityEngine;
 
 public class EnemyMovement : CharacterMovement
 {
-    // Start is called before the first frame update
+    /// <summary>
+    /// 
+    /// </summary>
     void Start()
     {
         
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// 
+    /// </summary>
     void Update()
     {
         
