@@ -114,4 +114,9 @@ public class CharacterStats : MonoBehaviour
     {
        
     }
+
+    public float GetMovementSpeed()
+    {
+        return m_movementSpeed.GetValue();
+    }
 }
