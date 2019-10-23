@@ -5,12 +5,20 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterStats))]
 public class CharacterMovement : MonoBehaviour
 {
-    [SerializeField] private int m_movementSpeed;
-    [SerializeField]
-
+  
     // Update is called once per frame
     void Update()
     {
-        
+        Move();
+    }
+
+    /// <summary>
+    /// Method for movement. Meant to be overriden.
+    /// </summary>
+    /// 
+
+    public virtual void Move()
+    {
+       
     }
 }

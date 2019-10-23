@@ -15,4 +15,13 @@ public class PlayerMovement : CharacterMovement
     {
         
     }
+
+    public override void Move()
+    {
+        base.Move();
+
+        //TODO Footstep sound
+
+        
+    }
 }
