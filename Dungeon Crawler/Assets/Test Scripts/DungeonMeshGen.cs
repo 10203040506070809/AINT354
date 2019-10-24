@@ -14,6 +14,80 @@ public class DungeonMeshGen : MonoBehaviour
     public void GenerateMesh(int[,] map, float squareSize)
     {
         squareGrid = new SquareGrid(map, squareSize);
+
+        for (int x = 0; x < squareGrid.squares.GetLength(0); x++)
+        {
+            for (int y = 0; y < squareGrid.squares.GetLength(1); y++)
+            {
+                TriangulateSquare(squareGrid.squares[x, y]);
+            }
+        }
+    }
+
+    void TriangulateSquare(Square square)
+    {
+        switch (square.configuration)
+        {
+            case 0:
+                break;
+
+            case 1:
+                MeshFromPoints(square.centreBottom, square.bottomLeft, square.centreLeft);
+                break;
+            case 2:
+                MeshFromPoints(square.centreRight, square.bottomRight, square.centreBottom);
+                break;
+            case 4:
+                MeshFromPoints(square.centreTop, square.topRight, square.centreRight);
+                break;
+            case 8:
+                MeshFromPoints(square.topLeft, square.centreTop, square.centreLeft);
+                break;
+
+            // 2 points:
+            case 3:
+                MeshFromPoints(square.centreRight, square.bottomRight, square.bottomLeft, square.centreLeft);
+                break;
+            case 6:
+                MeshFromPoints(square.centreTop, square.topRight, square.bottomRight, square.centreBottom);
+                break;
+            case 9:
+                MeshFromPoints(square.topLeft, square.centreTop, square.centreBottom, square.bottomLeft);
+                break;
+            case 12:
+                MeshFromPoints(square.topLeft, square.topRight, square.centreRight, square.centreLeft);
+                break;
+            case 5:
+                MeshFromPoints(square.centreTop, square.topRight, square.centreRight, square.centreBottom, square.bottomLeft, square.centreLeft);
+                break;
+            case 10:
+                MeshFromPoints(square.topLeft, square.centreTop, square.centreRight, square.bottomRight, square.centreBottom, square.centreLeft);
+                break;
+
+            // 3 point:
+            case 7:
+                MeshFromPoints(square.centreTop, square.topRight, square.bottomRight, square.bottomLeft, square.centreLeft);
+                break;
+            case 11:
+                MeshFromPoints(square.topLeft, square.centreTop, square.centreRight, square.bottomRight, square.bottomLeft);
+                break;
+            case 13:
+                MeshFromPoints(square.topLeft, square.topRight, square.centreRight, square.centreBottom, square.bottomLeft);
+                break;
+            case 14:
+                MeshFromPoints(square.topLeft, square.topRight, square.bottomRight, square.centreBottom, square.centreLeft);
+                break;
+
+            // 4 point:
+            case 15:
+                MeshFromPoints(square.topLeft, square.topRight, square.bottomRight, square.bottomLeft);
+                break;
+        }
+    }
+
+    void MeshFromPoints(params Node[] points)
+    {
+
     }
     /// <summary>
     /// Class and constructor for an array of Squares.
