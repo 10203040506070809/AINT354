@@ -25,7 +25,7 @@ public class DungeonMapGen : MonoBehaviour
     /// Percentage of wall tiles generated in the map.
     /// </summary>
     [Range(0, 100)]
-    public int m_randomFillPercent;
+    public int m_fillPercent;
     /// <summary>
     /// Matrix holding the map data consisting of 1s and 0s. 1 means there is a wall, 0 means there is air.
     /// </summary>
@@ -48,6 +48,23 @@ public class DungeonMapGen : MonoBehaviour
         {
             m_seed = Time.time.ToString();
         }
-        System.Random psuedoRandom = new System.Random(m_seed.GetHashCode());
+        System.Random pseudoRandom = new System.Random(m_seed.GetHashCode());
+
+        for (int i = 0; i < m_width; i++)
+        {
+            for (int j = 0; j < m_height; j++)
+            {
+                if (pseudoRandom.Next(0,100) < m_fillPercent)
+                {
+                    m_map[i, j] = 1;
+                }
+                else
+                {
+                    m_map[i, j] = 0;
+                }
+            }
+        }
     }
+
+
 }
