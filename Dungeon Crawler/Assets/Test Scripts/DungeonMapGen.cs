@@ -141,6 +141,7 @@ public class DungeonMapGen : MonoBehaviour
                 }
             }
         }
+        ///How many walls are surrounding the point (param1, param2)
         return wallCount;
     }
 

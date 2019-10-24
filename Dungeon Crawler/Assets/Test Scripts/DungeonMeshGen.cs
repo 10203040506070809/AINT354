@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class DungeonMeshGen : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public class Node
     {
-        
-    }
+        public Vector3 position;
+        public int vertexIndex = -1;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public Node(Vector3 _pos)
+        {
+            position = _pos;
+        }
     }
 }
