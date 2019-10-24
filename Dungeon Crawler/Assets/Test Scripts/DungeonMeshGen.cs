@@ -6,8 +6,10 @@ using UnityEngine;
 public class DungeonMeshGen : MonoBehaviour
 {
     public SquareGrid squareGrid;
-
-
+    public void GenerateMesh(int[,] map, float squareSize)
+    {
+        squareGrid = new SquareGrid(map, squareSize);
+    }
     public class SquareGrid
     {
         public Square[,] squares;

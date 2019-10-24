@@ -48,6 +48,8 @@ public class DungeonMapGen : MonoBehaviour
         {
             SmoothMap();
         }
+        DungeonMeshGen meshGen = GetComponent<DungeonMeshGen>();
+        meshGen.GenerateMesh(m_map, 1);
     }
     
     /// <summary>
