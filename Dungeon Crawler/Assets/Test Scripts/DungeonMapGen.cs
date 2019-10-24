@@ -151,7 +151,7 @@ public class DungeonMapGen : MonoBehaviour
     /// <summary>
     /// Draws the matrix m_map in unity using black and white squares. Black squares are walls, white squares are air.
     /// </summary>
-    void OnDrawGizmos()
+    /*void OnDrawGizmos()
     {
         ///Checks if the map is initialised.
         if (m_map != null)
@@ -177,5 +177,5 @@ public class DungeonMapGen : MonoBehaviour
                 }
             }
         }
-    }
+    }*/
 }

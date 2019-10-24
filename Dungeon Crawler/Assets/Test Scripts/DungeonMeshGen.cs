@@ -18,6 +18,7 @@ public class DungeonMeshGen : MonoBehaviour
     /// <summary>
     /// Class and constructor for an array of Squares.
     /// </summary>
+    /// 
     public class SquareGrid
     {
         public Square[,] squares;
@@ -74,6 +75,10 @@ public class DungeonMeshGen : MonoBehaviour
         /// The nodes of each orthogonal direction from the centre of the square.
         /// </summary>
         public Node centreTop, centreRight, centreBottom, centreLeft;
+        /// <summary>
+        /// Configuration of mesh around each point.
+        /// </summary>
+        public int configuration;
 
         public Square(ControlNode _topLeft, ControlNode _topRight, ControlNode _bottomRight, ControlNode _bottomLeft)
         {
@@ -86,6 +91,16 @@ public class DungeonMeshGen : MonoBehaviour
             centreRight = bottomRight.above;
             centreBottom = bottomLeft.right;
             centreLeft = bottomLeft.above;
+
+            /// Configuration is set dependent on which surrounding nodes are active.
+            if (topLeft.active)
+                configuration += 8;
+            if (topRight.active)
+                configuration += 4;
+            if (bottomRight.active)
+                configuration += 2;
+            if (bottomLeft.active)
+                configuration += 1;
         }
     }
     /// <summary>
