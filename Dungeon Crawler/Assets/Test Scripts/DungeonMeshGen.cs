@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System.Collections.Generic;
 
 public class DungeonMeshGen : MonoBehaviour
 {
     public SquareGrid squareGrid;
+    List<Vector3> vertices;
+    List<int> triangles;
     /// <summary>
     /// Takes in the values from DungeonMapGen and passes them into the SquareGrid constructor.
     /// </summary>
@@ -14,7 +16,7 @@ public class DungeonMeshGen : MonoBehaviour
     public void GenerateMesh(int[,] map, float squareSize)
     {
         squareGrid = new SquareGrid(map, squareSize);
-
+        /// Loops through every square in squareGrid.
         for (int x = 0; x < squareGrid.squares.GetLength(0); x++)
         {
             for (int y = 0; y < squareGrid.squares.GetLength(1); y++)
@@ -26,8 +28,10 @@ public class DungeonMeshGen : MonoBehaviour
 
     void TriangulateSquare(Square square)
     {
+        /// Switch statement based on square configuration (which control nodes are active).
         switch (square.configuration)
         {
+            /// cases if 1 control point is active.
             case 0:
                 break;
 
@@ -44,7 +48,7 @@ public class DungeonMeshGen : MonoBehaviour
                 MeshFromPoints(square.topLeft, square.centreTop, square.centreLeft);
                 break;
 
-            // 2 points:
+            /// cases if 2 control points are active.
             case 3:
                 MeshFromPoints(square.centreRight, square.bottomRight, square.bottomLeft, square.centreLeft);
                 break;
@@ -64,7 +68,7 @@ public class DungeonMeshGen : MonoBehaviour
                 MeshFromPoints(square.topLeft, square.centreTop, square.centreRight, square.bottomRight, square.centreBottom, square.centreLeft);
                 break;
 
-            // 3 point:
+            /// cases if 3 control points are active.
             case 7:
                 MeshFromPoints(square.centreTop, square.topRight, square.bottomRight, square.bottomLeft, square.centreLeft);
                 break;
@@ -78,7 +82,7 @@ public class DungeonMeshGen : MonoBehaviour
                 MeshFromPoints(square.topLeft, square.topRight, square.bottomRight, square.centreBottom, square.centreLeft);
                 break;
 
-            // 4 point:
+            /// case if 4 control points are active.
             case 15:
                 MeshFromPoints(square.topLeft, square.topRight, square.bottomRight, square.bottomLeft);
                 break;
@@ -87,7 +91,33 @@ public class DungeonMeshGen : MonoBehaviour
 
     void MeshFromPoints(params Node[] points)
     {
+        AssignVertices(points);
 
+        if (points.Length >= 3)
+            CreateTriangle(points[0], points[1], points[2]);
+        if (points.Length >= 4)
+            CreateTriangle(points[0], points[2], points[3]);
+        if (points.Length >= 5)
+            CreateTriangle(points[0], points[3], points[4]);
+        if (points.Length >= 6)
+            CreateTriangle(points[0], points[4], points[5]);
+    }
+    void AssignVertices(Node[] points)
+    {
+        for (int i = 0; i < points.Length; i++)
+        {
+            if (points[i].vertexIndex == -1)
+            {
+                points[i].vertexIndex = vertices.Count;
+                vertices.Add(points[i].position);
+            }
+        }
+    }
+    void CreateTriangle(Node a, Node b, Node c)
+    {
+        triangles.Add(a.vertexIndex);
+        triangles.Add(b.vertexIndex);
+        triangles.Add(c.vertexIndex);
     }
     /// <summary>
     /// Class and constructor for an array of Squares.
