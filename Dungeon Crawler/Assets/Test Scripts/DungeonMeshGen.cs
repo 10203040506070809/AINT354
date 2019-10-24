@@ -1,12 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Collections.Generic;
 
 public class DungeonMeshGen : MonoBehaviour
 {
     public SquareGrid squareGrid;
+    /// <summary>
+    /// List of vertices for mesh rendering.
+    /// </summary>
     List<Vector3> vertices;
+    /// <summary>
+    /// List of triangles for mesh rendering.
+    /// </summary>
     List<int> triangles;
     /// <summary>
     /// Takes in the values from DungeonMapGen and passes them into the SquareGrid constructor.
@@ -16,6 +21,10 @@ public class DungeonMeshGen : MonoBehaviour
     public void GenerateMesh(int[,] map, float squareSize)
     {
         squareGrid = new SquareGrid(map, squareSize);
+        /// Initialises vertices list.
+        vertices = new List<Vector3>();
+        /// Initialises triangles list.
+        triangles = new List<int>();
         /// Loops through every square in squareGrid.
         for (int x = 0; x < squareGrid.squares.GetLength(0); x++)
         {
@@ -24,6 +33,15 @@ public class DungeonMeshGen : MonoBehaviour
                 TriangulateSquare(squareGrid.squares[x, y]);
             }
         }
+        ///Creates a new mesh for the map
+        Mesh mesh = new Mesh();
+        ///Assigns the newly created mesh to the mesh component of MeshFilter.
+        GetComponent<MeshFilter>().mesh = mesh;
+        ///Converts the list of vertices to an array and assigns it to the mesh.
+        mesh.vertices = vertices.ToArray();
+        ///Converts the list of triangles to an array and assigns it to the mesh.
+        mesh.triangles = triangles.ToArray();
+        mesh.RecalculateNormals();
     }
 
     void TriangulateSquare(Square square)
@@ -88,11 +106,14 @@ public class DungeonMeshGen : MonoBehaviour
                 break;
         }
     }
-
+    /// <summary>
+    /// Creates the correct number of triangles based on how many nodes are active in the square.
+    /// </summary>
+    /// <param name="points">The array of points passed in based on the configuration of the square.</param>
     void MeshFromPoints(params Node[] points)
     {
         AssignVertices(points);
-
+        ///Checks how many points are needed for each possible configuration. 3 points need 1 trianlge, 4 points need 2 triangles, 5 points need 3 triangles and so on.
         if (points.Length >= 3)
             CreateTriangle(points[0], points[1], points[2]);
         if (points.Length >= 4)
@@ -102,17 +123,31 @@ public class DungeonMeshGen : MonoBehaviour
         if (points.Length >= 6)
             CreateTriangle(points[0], points[4], points[5]);
     }
+    /// <summary>
+    /// Assigns the vertex index of the node based on how many vertices have already been assigned. Also adds the position variable of the node to the vertices list.
+    /// </summary>
+    /// <param name="points">The array of points passed in based on the configuration of the square.</param>
     void AssignVertices(Node[] points)
     {
+        ///loops through the points of the configuration for the square and assigns each vertex to a list.
         for (int i = 0; i < points.Length; i++)
         {
+            /// Checks for points not yet initialised.
             if (points[i].vertexIndex == -1)
             {
+                /// Assigns the vertex index to the size of the vertices list. For example, the list will be initialised with 0 values so the first vertexIndex will also be 0.
                 points[i].vertexIndex = vertices.Count;
+                /// Adds the Vector3 component of the node to the vertices list.
                 vertices.Add(points[i].position);
             }
         }
     }
+    /// <summary>
+    /// Creates a triangle based on the nodes passed through
+    /// </summary>
+    /// <param name="a">First vertex of the triangle</param>
+    /// <param name="b">Second vertex of the triangle</param>
+    /// <param name="c">Third vertex of the triangle</param>
     void CreateTriangle(Node a, Node b, Node c)
     {
         triangles.Add(a.vertexIndex);
