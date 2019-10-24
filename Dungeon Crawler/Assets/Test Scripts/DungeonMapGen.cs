@@ -167,7 +167,7 @@ public class DungeonMapGen : MonoBehaviour
                     {
                         Gizmos.color = Color.white;
                     }
-                    ///Defines the coordinates at which the m_map matrix value will be drawn
+                    ///Defines the coordinates at which the m_map matrix value will be drawn.
                     Vector3 pos = new Vector3(-m_width / 2 + i + .5f, 0, -m_height / 2 + j + .5f);
                     Gizmos.DrawCube(pos, Vector3.one);
                 }
