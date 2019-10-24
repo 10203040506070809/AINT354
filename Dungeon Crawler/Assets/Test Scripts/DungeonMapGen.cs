@@ -48,6 +48,7 @@ public class DungeonMapGen : MonoBehaviour
         {
             SmoothMap();
         }
+        /// Passes the m_map array and the specified square size into the GenerateMesh method.
         DungeonMeshGen meshGen = GetComponent<DungeonMeshGen>();
         meshGen.GenerateMesh(m_map, 1);
     }

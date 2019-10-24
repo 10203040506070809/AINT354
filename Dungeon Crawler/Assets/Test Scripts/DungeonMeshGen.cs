@@ -6,6 +6,11 @@ using UnityEngine;
 public class DungeonMeshGen : MonoBehaviour
 {
     public SquareGrid squareGrid;
+    /// <summary>
+    /// Takes in the values from DungeonMapGen and passes them into the SquareGrid constructor.
+    /// </summary>
+    /// <param name="map">The int array m_map which holds the data of whether coordinates are air or walls.</param>
+    /// <param name="squareSize">The size of the squares.</param>
     public void GenerateMesh(int[,] map, float squareSize)
     {
         squareGrid = new SquareGrid(map, squareSize);
