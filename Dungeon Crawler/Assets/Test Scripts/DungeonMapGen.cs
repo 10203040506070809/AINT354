@@ -34,11 +34,15 @@ public class DungeonMapGen : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        GenerateMap();
     }
 
-    // Update is called once per frame
-
+    void GenerateMap()
+    {
+        m_map = new int[m_width, m_height];
+        RandomlyFillMap();
+    }
+    
     /// <summary>
     /// Generates a random seed if set by user then populates m_map with 1s and 0s.
     /// </summary>
@@ -66,5 +70,26 @@ public class DungeonMapGen : MonoBehaviour
         }
     }
 
-
+    void OnDrawGizmos()
+    {
+        if (m_map != null)
+        {
+            for (int i = 0; i < m_width; i++)
+            {
+                for (int j = 0; j < m_height; j++)
+                {
+                    if (m_map[i, j] == 1)
+                    {
+                        Gizmos.color = Color.black;
+                    }
+                    else
+                    {
+                        Gizmos.color = Color.white;
+                    }
+                    Vector3 pos = new Vector3(-m_width / 2 + i + .5f, 0, -m_height / 2 + j + .5f);
+                    Gizmos.DrawCube(pos, Vector3.one);
+                }
+            }
+        }
+    }
 }
