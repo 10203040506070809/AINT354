@@ -44,7 +44,7 @@ public class DungeonMapGen : MonoBehaviour
     }
     
     /// <summary>
-    /// Generates a random seed if set by user then populates m_map with 1s and 0s.
+    /// Generates a random seed if set by user then populates m_map with 1s and 0s. Edges of the map are set to walls.
     /// </summary>
     void RandomlyFillMap()
     {
@@ -58,18 +58,53 @@ public class DungeonMapGen : MonoBehaviour
         {
             for (int j = 0; j < m_height; j++)
             {
-                if (pseudoRandom.Next(0,100) < m_fillPercent)
+                if (i == 0 || i == m_width - 1 || j == 0 || j == m_height - 1)
                 {
                     m_map[i, j] = 1;
                 }
                 else
                 {
-                    m_map[i, j] = 0;
+                    if (pseudoRandom.Next(0, 100) < m_fillPercent)
+                    {
+                        m_map[i, j] = 1;
+                    }
+                    else
+                    {
+                        m_map[i, j] = 0;
+                    }
                 }
             }
         }
     }
 
+
+
+    int GetSurroundingWallCount(int gridX, int gridY)
+    {
+        int wallCount = 0;
+        for (int neighbourX = gridX - 1; neighbourX <= gridX + 1; neighbourX++)
+        {
+            for (int neighbourY = gridY - 1; neighbourY <= gridY + 1; neighbourY++)
+            {
+                if (neighbourX >= 0 && neighbourX < m_width && neighbourY >= 0 && neighbourY < m_height)
+                {
+                    if (neighbourX != gridX || neighbourY != gridY)
+                    {
+                        wallCount += m_map[neighbourX, neighbourY];
+                    }
+                }
+                else
+                {
+                    wallCount++;
+                }
+            }
+        }
+        return wallCount;
+    }
+
+    /// <summary>
+    /// Draws the matrix m_map in unity using black and white squares. Black squares are walls, white squares are air.
+    /// </summary>
     void OnDrawGizmos()
     {
         if (m_map != null)
