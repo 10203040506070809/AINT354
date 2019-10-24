@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class DungeonMapGen : MonoBehaviour
 {
@@ -29,6 +30,7 @@ public class DungeonMapGen : MonoBehaviour
     /// Matrix holding the map data consisting of 1s and 0s. 1 means there is a wall, 0 means there is air.
     /// </summary>
     int[,] m_map;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -37,4 +39,15 @@ public class DungeonMapGen : MonoBehaviour
 
     // Update is called once per frame
 
+    /// <summary>
+    /// Generates a random seed if set by user then populates m_map with 1s and 0s.
+    /// </summary>
+    void RandomlyFillMap()
+    {
+        if (m_useRandomSeed)
+        {
+            m_seed = Time.time.ToString();
+        }
+        System.Random psuedoRandom = new System.Random(m_seed.GetHashCode());
+    }
 }
