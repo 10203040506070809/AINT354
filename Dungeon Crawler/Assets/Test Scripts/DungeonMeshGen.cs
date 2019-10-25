@@ -160,12 +160,19 @@ public class DungeonMeshGen : MonoBehaviour
         AddTriangleToDictionary(triangle.vertexIndexB, triangle);
         AddTriangleToDictionary(triangle.vertexIndexC, triangle);
     }
+    /// <summary>
+    /// Creates lists of triangles which contain a given vertex.
+    /// </summary>
+    /// <param name="vertexIndexKey"></param>
+    /// <param name="triangle"></param>
     void AddTriangleToDictionary(int vertexIndexKey, Triangle triangle)
     {
+        /// If the vertex has already been identified, it adds the new triangle to list which contains the given vertex.
         if (triangleDictionary.ContainsKey(vertexIndexKey))
         {
             triangleDictionary[vertexIndexKey].Add(triangle);
         }
+        /// If the vertex has not already been identified, it adds the new triangle to a new list which contains the given vertex.
         else
         {
             List<Triangle> triangleList = new List<Triangle>();
