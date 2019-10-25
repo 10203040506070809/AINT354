@@ -74,30 +74,47 @@ public class DungeonMapGen : MonoBehaviour
         DungeonMeshGen meshGen = GetComponent<DungeonMeshGen>();
         meshGen.GenerateMesh(borderedMap, 1);
     }
+    /// <summary>
+    /// Given a starting tile finds all other bordering tiles which share the same type (air/wall)
+    /// </summary>
+    /// <param name="startX">The X coordinate of the tile being checked.</param>
+    /// <param name="startY">The Y coordinate of the tile being checked.</param>
+    /// <returns>A list of tile coordinates which define a region of tiles which are the same type.</returns>
     List<Coord> GetRegionTiles(int startX, int startY)
     {
+        /// List of coordinates which will define a region.
         List<Coord> tiles = new List<Coord>();
+        /// 2D array the same size as the map which will store information on whether a tile has been checked.
         int[,] mapFlags = new int[m_width, m_height];
+        /// Determines whether the starting coordinate is a wall or air tile.
         int tileType = m_map[startX, startY];
-
+        /// Creates a queue of coordinates which will be checked to see if they border any other tiles of the same type.
         Queue<Coord> queue = new Queue<Coord>();
+        /// Starting coordinate is added to the queue for testing. 
         queue.Enqueue(new Coord(startX, startY));
+        /// Coordinate is marked as being checked for belonging to a region.
         mapFlags[startX, startY] = 1;
-
+        /// Loops until no more tiles of the same type are located within a region.
         while (queue.Count > 0)
         {
+            /// Removes the current tile from the queue.
             Coord tile = queue.Dequeue();
+            /// Adds the tile to the list of tiles in the region
             tiles.Add(tile);
-
+            /// Loop through the surrounding tiles in a 3x3 area.
             for (int x = tile.tileX - 1; x <= tile.tileX + 1; x++)
             {
                 for (int y = tile.tileY - 1; y <= tile.tileY + 1; y++)
                 {
+                    /// Checks that the tile is within the map and excludes checks on diagonal tiles.
                     if (IsInMapRange(x, y) && (y == tile.tileY || x == tile.tileX))
                     {
+                        /// Checks whether the tile has already been checked and whether it is the same tile type as the starting tile.
                         if (mapFlags[x, y] == 0 && m_map[x, y] == tileType)
                         {
+                            /// Updates mapFlags to know that the tile has been checked.
                             mapFlags[x, y] = 1;
+                            /// Adds all tiles which border the current tile and share the the same type (air/wall) as the starting tile to be checked.
                             queue.Enqueue(new Coord(x, y));
                         }
                     }
