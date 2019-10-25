@@ -173,35 +173,44 @@ public class DungeonMeshGen : MonoBehaviour
             triangleDictionary.Add(vertexIndexKey, triangleList);
         }
     }
+    /// <summary>
+    /// Finds all triangles containing a given vertex then loops through these to see if any of the connected vertices form an edge to the map.
+    /// </summary>
+    /// <param name="vertexIndex">The triangle vertex being tested.</param>
+    /// <returns>Returns the corresponding vertex if it forms an edge or returns -1 if it doesn't.</returns>
     int GetConnectedOutlineVertex(int vertexIndex)
     {
+        /// Creates a list of triangle which contain the passed in vertex.
         List<Triangle> trianglesContainingVertex = triangleDictionary[vertexIndex];
-
+        /// Loops through every triangle which contains the passed in vertex.
         for (int i = 0; i < trianglesContainingVertex.Count; i++)
         {
+            /// A triangle in the list above.
             Triangle triangle = trianglesContainingVertex[i];
-
+            /// Loops through each vertex in the triangle to see if they are shared by any other triangles and, in turn, whether they form an edge.
             for (int j = 0; j < 3; j++)
             {
                 int vertexB = triangle[j];
+                /// Check to avoid comparing the vertex against itself.
                 if (vertexB != vertexIndex)
                 {
                     if (IsOutlineEdge(vertexIndex, vertexB))
                     {
+                        /// Returns the vertex which forms an outline edge with the passed in vertex.
                         return vertexB;
                     }
                 }
             }
         }
-
+        /// Returns -1 if no outline edge is found.
         return -1;
     }
     /// <summary>
     /// Finds every triangle which shares a vertex with vertexA then checks whether any of these triangles also contain vertexB.
     /// </summary>
-    /// <param name="vertexA">One vertex of the line being checked</param>
-    /// <param name="vertexB">The second vertex of the line being checked</param>
-    /// <returns></returns>
+    /// <param name="vertexA">One vertex of the line being checked.</param>
+    /// <param name="vertexB">The second vertex of the line being checked.</param>
+    /// <returns>Returns a bool stating whether or not the two parameters form an outline edge.</returns>
     bool IsOutlineEdge(int vertexA, int vertexB)
     {
         /// List of triangles containing vertexA;
