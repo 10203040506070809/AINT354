@@ -117,6 +117,9 @@ public class DungeonMapGen : MonoBehaviour
             {
                 survivingRooms.Add(new Room(roomRegion, m_map));
             }
+            survivingRooms.Sort();
+            survivingRooms[0].isMainRoom = true;
+            survivingRooms[0].isAccessibleFromMainRoom = true;
         }
     }
     /// <summary>
@@ -409,12 +412,14 @@ public class DungeonMapGen : MonoBehaviour
             tileY = y;
         }
     }
-    class Room
+    class Room : IComparable<Room>
     {
         public List<Coord> tiles;
         public List<Coord> edgeTiles;
         public List<Room> connectedRooms;
         public int roomSize;
+        public bool isAccessibleFromMainRoom;
+        public bool isMainRoom;
 
         public Room()
         {
@@ -453,6 +458,10 @@ public class DungeonMapGen : MonoBehaviour
         public bool IsConnected(Room otherRoom)
         {
             return connectedRooms.Contains(otherRoom);
+        }
+        public int CompareTo(Room otherRoom)
+        {
+            return otherRoom.roomSize.CompareTo(roomSize);
         }
     }
         /// <summary>
