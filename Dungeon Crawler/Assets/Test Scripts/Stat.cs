@@ -15,6 +15,7 @@ public class Stat
     /// <returns></returns>
     public int GetValue()
     {
+        ///Returns the value of a stat.
         return m_baseValue;
     }
 
@@ -26,6 +27,8 @@ public class Stat
    public int SetValue(int value)
     {
         m_baseValue = value;
+
+        ///Returns the  value of a stat.
         return m_baseValue;
     }
 }

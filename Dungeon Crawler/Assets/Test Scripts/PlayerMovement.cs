@@ -6,6 +6,11 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterStats), typeof(Rigidbody))]
 public class PlayerMovement : CharacterMovement
 {
+
+    /// <summary>
+    /// How frequently a step sound needs to be called.
+    /// </summary>
+    [SerializeField] private float m_stepLength;
     /// <summary>
     /// An audiosource for footsteps, called when the player moves.
     /// </summary>
@@ -36,9 +41,11 @@ public class PlayerMovement : CharacterMovement
         m_myStats = this.GetComponent<CharacterStats>();
     }
     /// <summary>
-    /// Update is called once per frame
+    /// FixedUpdate is called once per frame. Because we're dealing with Rigidbody physics,
+    /// it's better to use FixedUpdate
+    /// as it occurs at the same time every frame.
     /// </summary>
-    public void Update()
+    public void FixedUpdate()
     {
         Move();
       
