@@ -74,7 +74,7 @@ public class DungeonMapGen : MonoBehaviour
         DungeonMeshGen meshGen = GetComponent<DungeonMeshGen>();
         meshGen.GenerateMesh(borderedMap, 1);
     }
-    
+
     /// <summary>
     /// Generates a random seed if set by user then populates m_map with 1s and 0s. Edges of the map are set to walls.
     /// </summary>
@@ -169,7 +169,17 @@ public class DungeonMapGen : MonoBehaviour
         ///How many walls are surrounding the point (param1, param2)
         return wallCount;
     }
+    struct Coord
+    {
+        public int tileX;
+        public int tileY;
 
+        public Coord(int x, int y)
+        {
+            tileX = x;
+            tileY = y;
+        }
+    }
     /// <summary>
     /// Draws the matrix m_map in unity using black and white squares. Black squares are walls, white squares are air.
     /// </summary>
