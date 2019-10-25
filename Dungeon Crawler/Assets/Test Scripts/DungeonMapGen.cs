@@ -48,6 +48,7 @@ public class DungeonMapGen : MonoBehaviour
         {
             SmoothMap();
         }
+        ProcessMap();
         /// Specifies how wide/long the border will be.
         int borderSize = 5;
         /// Creates a new 2D int array with the first dimension being the map width plus the border size multiplied by 2. This is because the border needs to extend over both the left and right side of the map.
@@ -130,8 +131,11 @@ public class DungeonMapGen : MonoBehaviour
     /// Finds the closest seperate rooms and calls a method which connects them via the shortest route.
     /// </summary>
     /// <param name="allRooms">A list of all air regions(rooms).</param>
-    void ConnectClosestRooms(List<Room> allRooms)
+    /// <param name="forceAccessibilityFromMainRoom">A bool stating whether a room needs to be forced to connect to the main room.</param>
+    void ConnectClosestRooms(List<Room> allRooms, bool forceAccessibilityFromMainRoom = false)
     {
+        List<Room> roomListA = new List<Room>();
+        List<Room> roomListB = new List<Room>();
         /// Shortest distance between two rooms.
         int bestDistance = 0;
         /// Coordinate for the tile in room A which results in the shortest connection.
@@ -144,24 +148,47 @@ public class DungeonMapGen : MonoBehaviour
         Room bestRoomB = new Room();
         /// Whether a possible connection between two rooms has been found.
         bool possibleConnectionFound = false;
-        /// Loops through every room.
-        foreach (Room roomA in allRooms)
+        /// Checks if the room needs to be forced to connect to the main room
+        if (forceAccessibilityFromMainRoom)
         {
-            /// Resets whether a connection is found for each new room being checked.
-            possibleConnectionFound = false;
-            /// Loops through every room.
-            foreach (Room roomB in allRooms)
+            /// Sorts rooms into two lists (those which are accessible from the main room and those which aren't).
+            foreach (Room room in allRooms)
             {
-                /// Makes sure roomA doesn't try to connect with itself.
-                if (roomA == roomB)
+                if (room.isAccessibleFromMainRoom)
+                {
+                    roomListB.Add(room);
+                }
+                else
+                {
+                    roomListA.Add(room);
+                }
+            }
+        }
+        /// Carries on as normal
+        else
+        {
+            roomListA = allRooms;
+            roomListB = allRooms;
+        }
+        /// Loops through every room.
+        foreach (Room roomA in roomListA)
+        {
+            if (!forceAccessibilityFromMainRoom)
+            {
+                /// Resets whether a connection is found for each new room being checked.
+                possibleConnectionFound = false;
+                if (roomA.connectedRooms.Count > 0)
                 {
                     continue;
                 }
-                /// Makes sure roomA isn't already connected to roomB.
-                if (roomA.IsConnected(roomB))
+            }
+            /// Loops through every room.
+            foreach (Room roomB in roomListB)
+            {
+                /// Makes sure roomA doesn't try to connect with itself and roomA isnt already connected to roomB.
+                if (roomA == roomB || roomA.IsConnected(roomB))
                 {
-                    possibleConnectionFound = false;
-                    break;
+                    continue;
                 }
                 /// Loops through each edge tile of roomA. 
                 for (int tileIndexA = 0; tileIndexA < roomA.edgeTiles.Count; tileIndexA++)
@@ -190,11 +217,22 @@ public class DungeonMapGen : MonoBehaviour
                     }
                 }
             }
-            /// Checks if a connection between rooms has been found.
-            if (possibleConnectionFound)
+            /// Checks if a connection between rooms has been found and doesnt need to be forced to connect to main room.
+            if (possibleConnectionFound && !forceAccessibilityFromMainRoom)
             {
                 /// Calls the function to connect the rooms.
                 CreatePassage(bestRoomA, bestRoomB, bestTileA, bestTileB);
+            }
+            /// Checks if a connection between rooms has been found and does need to be forced to connect to main room.
+            if (possibleConnectionFound && forceAccessibilityFromMainRoom)
+            {
+                /// Calls the function to connect the rooms.
+                CreatePassage(bestRoomA, bestRoomB, bestTileA, bestTileB);
+                ConnectClosestRooms(allRooms, true);
+            }
+            if (!forceAccessibilityFromMainRoom)
+            {
+                ConnectClosestRooms(allRooms, true);
             }
         }
     }
@@ -210,6 +248,7 @@ public class DungeonMapGen : MonoBehaviour
         /// Updates the rooms to say they're connected to eachother.
         Room.ConnectRooms(roomA, roomB);
         Debug.DrawLine(CoordToWorldPoint(tileA), CoordToWorldPoint(tileB), Color.green, 100);
+        Debug.Log("here");
     }
     Vector3 CoordToWorldPoint(Coord tile)
     {
