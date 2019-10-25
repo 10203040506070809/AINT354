@@ -19,6 +19,7 @@ public class DungeonMeshGen : MonoBehaviour
     Dictionary<int, List<Triangle>> triangleDictionary = new Dictionary<int, List<Triangle>>();
     List<List<int>> outlines = new List<List<int>>();
     HashSet<int> checkedVertices = new HashSet<int>();
+    public MeshFilter walls;
     /// <summary>
     /// Takes in the values from DungeonMapGen and passes them into the SquareGrid constructor.
     /// </summary>
@@ -26,6 +27,9 @@ public class DungeonMeshGen : MonoBehaviour
     /// <param name="squareSize">The size of the squares.</param>
     public void GenerateMesh(int[,] map, float squareSize)
     {
+        triangleDictionary.Clear();
+        outlines.Clear();
+        checkedVertices.Clear();
         squareGrid = new SquareGrid(map, squareSize);
         /// Initialises vertices list.
         vertices = new List<Vector3>();
@@ -48,6 +52,41 @@ public class DungeonMeshGen : MonoBehaviour
         ///Converts the list of triangles to an array and assigns it to the mesh.
         mesh.triangles = triangles.ToArray();
         mesh.RecalculateNormals();
+
+        CreateWallMesh();
+    }
+    void CreateWallMesh()
+    {
+
+        CalculateMeshOutlines();
+
+        List<Vector3> wallVertices = new List<Vector3>();
+        List<int> wallTriangles = new List<int>();
+        Mesh wallMesh = new Mesh();
+        float wallHeight = 5;
+
+        foreach (List<int> outline in outlines)
+        {
+            for (int i = 0; i < outline.Count - 1; i++)
+            {
+                int startIndex = wallVertices.Count;
+                wallVertices.Add(vertices[outline[i]]); // left
+                wallVertices.Add(vertices[outline[i + 1]]); // right
+                wallVertices.Add(vertices[outline[i]] - Vector3.up * wallHeight); // bottom left
+                wallVertices.Add(vertices[outline[i + 1]] - Vector3.up * wallHeight); // bottom right
+
+                wallTriangles.Add(startIndex + 0);
+                wallTriangles.Add(startIndex + 2);
+                wallTriangles.Add(startIndex + 3);
+
+                wallTriangles.Add(startIndex + 3);
+                wallTriangles.Add(startIndex + 1);
+                wallTriangles.Add(startIndex + 0);
+            }
+        }
+        wallMesh.vertices = wallVertices.ToArray();
+        wallMesh.triangles = wallTriangles.ToArray();
+        walls.mesh = wallMesh;
     }
 
     void TriangulateSquare(Square square)
@@ -190,6 +229,9 @@ public class DungeonMeshGen : MonoBehaviour
             triangleDictionary.Add(vertexIndexKey, triangleList);
         }
     }
+    /// <summary>
+    /// 
+    /// </summary>
     void CalculateMeshOutlines()
     {
 
