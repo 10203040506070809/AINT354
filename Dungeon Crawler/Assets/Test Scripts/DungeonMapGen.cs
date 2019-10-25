@@ -314,34 +314,70 @@ public class DungeonMapGen : MonoBehaviour
             tileY = y;
         }
     }
-    /// <summary>
-    /// Draws the matrix m_map in unity using black and white squares. Black squares are walls, white squares are air.
-    /// </summary>
-    /*void OnDrawGizmos()
+    class Room
     {
-        ///Checks if the map is initialised.
-        if (m_map != null)
+        public List<Coord> tiles;
+        public List<Coord> edgeTiles;
+        public List<Room> connectedRooms;
+        public int roomSize;
+
+        public Room()
         {
-            ///Loop through every point in m_map.
-            for (int i = 0; i < m_width; i++)
+        }
+
+        public Room(List<Coord> roomTiles, int[,] map)
+        {
+            tiles = roomTiles;
+            roomSize = tiles.Count;
+            connectedRooms = new List<Room>();
+
+            edgeTiles = new List<Coord>();
+            foreach (Coord tile in tiles)
             {
-                for (int j = 0; j < m_height; j++)
+                for (int x = tile.tileX - 1; x <= tile.tileX + 1; x++)
                 {
-                    ///Sets wall values to black.
-                    if (m_map[i, j] == 1)
+                    for (int y = tile.tileY - 1; y <= tile.tileY + 1; y++)
                     {
-                        Gizmos.color = Color.black;
+                        if (x == tile.tileX || y == tile.tileY)
+                        {
+                            if (map[x, y] == 1)
+                            {
+                                edgeTiles.Add(tile);
+                            }
+                        }
                     }
-                    ///sets air values to white.
-                    else
-                    {
-                        Gizmos.color = Color.white;
-                    }
-                    ///Defines the coordinates at which the m_map matrix value will be drawn.
-                    Vector3 pos = new Vector3(-m_width / 2 + i + .5f, 0, -m_height / 2 + j + .5f);
-                    Gizmos.DrawCube(pos, Vector3.one);
                 }
             }
         }
-    }*/
-}
+    }
+        /// <summary>
+        /// Draws the matrix m_map in unity using black and white squares. Black squares are walls, white squares are air.
+        /// </summary>
+        /*void OnDrawGizmos()
+        {
+            ///Checks if the map is initialised.
+            if (m_map != null)
+            {
+                ///Loop through every point in m_map.
+                for (int i = 0; i < m_width; i++)
+                {
+                    for (int j = 0; j < m_height; j++)
+                    {
+                        ///Sets wall values to black.
+                        if (m_map[i, j] == 1)
+                        {
+                            Gizmos.color = Color.black;
+                        }
+                        ///sets air values to white.
+                        else
+                        {
+                            Gizmos.color = Color.white;
+                        }
+                        ///Defines the coordinates at which the m_map matrix value will be drawn.
+                        Vector3 pos = new Vector3(-m_width / 2 + i + .5f, 0, -m_height / 2 + j + .5f);
+                        Gizmos.DrawCube(pos, Vector3.one);
+                    }
+                }
+            }
+        }*/
+    }
