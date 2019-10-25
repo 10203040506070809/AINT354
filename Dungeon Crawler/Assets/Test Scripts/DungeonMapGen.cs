@@ -349,6 +349,16 @@ public class DungeonMapGen : MonoBehaviour
                 }
             }
         }
+        public static void ConnectRooms(Room roomA, Room roomB)
+        {
+            roomA.connectedRooms.Add(roomB);
+            roomB.connectedRooms.Add(roomA);
+        }
+
+        public bool IsConnected(Room otherRoom)
+        {
+            return connectedRooms.Contains(otherRoom);
+        }
     }
         /// <summary>
         /// Draws the matrix m_map in unity using black and white squares. Black squares are walls, white squares are air.
