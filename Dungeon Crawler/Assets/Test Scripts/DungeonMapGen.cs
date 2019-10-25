@@ -101,6 +101,7 @@ public class DungeonMapGen : MonoBehaviour
         /// The threshold size which determines whether the region gets removed.
         int roomThresholdSize = 50;
         /// Loops through every region of air.
+        List<Room> survivingRooms = new List<Room>();
         foreach (List<Coord> roomRegion in roomRegions)
         {
             /// checks uf the size of the air region is smaller than the threshold.
@@ -111,6 +112,10 @@ public class DungeonMapGen : MonoBehaviour
                 {
                     m_map[tile.tileX, tile.tileY] = 1;
                 }
+            }
+            else
+            {
+                survivingRooms.Add(new Room(roomRegion, m_map));
             }
         }
     }
