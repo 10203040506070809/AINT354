@@ -476,21 +476,27 @@ public class DungeonMapGen : MonoBehaviour
             }
         }
         /// <summary>
-        /// Adds the rooms to rooms which are connected
+        /// Adds the rooms passed in to rooms which are connected. If either room is accessible from the main room it updates the other room to being accessible from the main room as well.
         /// </summary>
         /// <param name="roomA">Room to be connected to roomB</param>
         /// <param name="roomB">Room to be connected to roomA</param>
 		public static void ConnectRooms(Room roomA, Room roomB)
         {
+            /// Checks if roomA is accessible from the main room.
             if (roomA.isAccessibleFromMainRoom)
             {
+                /// Adds roomB as accessible from main room.
                 roomB.SetAccessibleFromMainRoom();
             }
+            /// Checks if roomB is accessible from the main room.
             else if (roomB.isAccessibleFromMainRoom)
             {
+                /// Adds roomA as accessible from main room.
                 roomA.SetAccessibleFromMainRoom();
             }
+            /// Adds roomB as a connected room for roomA.
             roomA.connectedRooms.Add(roomB);
+            /// Adds roomA as a connected room for roomB.
             roomB.connectedRooms.Add(roomA);
         }
         /// <summary>
@@ -511,11 +517,17 @@ public class DungeonMapGen : MonoBehaviour
         {
             return otherRoom.roomSize.CompareTo(roomSize);
         }
+        /// <summary>
+        /// Sets a room to be accessible from main room. Also sets every connected room to the room in question to acessible from main room too.
+        /// </summary>
         public void SetAccessibleFromMainRoom()
         {
+            /// Check to see if it isnt already connected to main room.
             if (!isAccessibleFromMainRoom)
             {
+                /// Sets the room as accessible from main room.
                 isAccessibleFromMainRoom = true;
+                /// Sets every connected room as accessible from main room as well.
                 foreach (Room connectedRoom in connectedRooms)
                 {
                     connectedRoom.SetAccessibleFromMainRoom();
