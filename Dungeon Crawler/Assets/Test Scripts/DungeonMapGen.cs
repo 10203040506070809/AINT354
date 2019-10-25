@@ -191,8 +191,16 @@ public class DungeonMapGen : MonoBehaviour
             }
         }
     }
+    /// <summary>
+    /// Updates the rooms passed in to say that they're now connected.
+    /// </summary>
+    /// <param name="roomA">First room to be connected.</param>
+    /// <param name="roomB">Second room to be connected.</param>
+    /// <param name="tileA">The tile from roomA to be connected to the tile in roomB.</param>
+    /// <param name="tileB">The tile from roomB to be connected to the tile in roomA.</param>
     void CreatePassage(Room roomA, Room roomB, Coord tileA, Coord tileB)
     {
+        /// Updates the rooms to say they're connected to eachother.
         Room.ConnectRooms(roomA, roomB);
         Debug.DrawLine(CoordToWorldPoint(tileA), CoordToWorldPoint(tileB), Color.green, 100);
     }
