@@ -480,8 +480,16 @@ public class DungeonMapGen : MonoBehaviour
         /// </summary>
         /// <param name="roomA">Room to be connected to roomB</param>
         /// <param name="roomB">Room to be connected to roomA</param>
-        public static void ConnectRooms(Room roomA, Room roomB)
+		public static void ConnectRooms(Room roomA, Room roomB)
         {
+            if (roomA.isAccessibleFromMainRoom)
+            {
+                roomB.SetAccessibleFromMainRoom();
+            }
+            else if (roomB.isAccessibleFromMainRoom)
+            {
+                roomA.SetAccessibleFromMainRoom();
+            }
             roomA.connectedRooms.Add(roomB);
             roomB.connectedRooms.Add(roomA);
         }
@@ -502,6 +510,17 @@ public class DungeonMapGen : MonoBehaviour
         public int CompareTo(Room otherRoom)
         {
             return otherRoom.roomSize.CompareTo(roomSize);
+        }
+        public void SetAccessibleFromMainRoom()
+        {
+            if (!isAccessibleFromMainRoom)
+            {
+                isAccessibleFromMainRoom = true;
+                foreach (Room connectedRoom in connectedRooms)
+                {
+                    connectedRoom.SetAccessibleFromMainRoom();
+                }
+            }
         }
     }
         /// <summary>
