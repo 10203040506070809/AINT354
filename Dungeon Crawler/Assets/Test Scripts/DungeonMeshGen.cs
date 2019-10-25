@@ -109,6 +109,11 @@ public class DungeonMeshGen : MonoBehaviour
             /// case if 4 control points are active.
             case 15:
                 MeshFromPoints(square.topLeft, square.topRight, square.bottomRight, square.bottomLeft);
+                /// Forms a solid wall so will not be outline vertices.
+                checkedVertices.Add(square.topLeft.vertexIndex);
+                checkedVertices.Add(square.topRight.vertexIndex);
+                checkedVertices.Add(square.bottomRight.vertexIndex);
+                checkedVertices.Add(square.bottomLeft.vertexIndex);
                 break;
         }
     }
@@ -236,7 +241,7 @@ public class DungeonMeshGen : MonoBehaviour
             {
                 int vertexB = triangle[j];
                 /// Check to avoid comparing the vertex against itself.
-                if (vertexB != vertexIndex)
+                if (vertexB != vertexIndex && !checkedVertices.Contains(vertexB))
                 {
                     if (IsOutlineEdge(vertexIndex, vertexB))
                     {
