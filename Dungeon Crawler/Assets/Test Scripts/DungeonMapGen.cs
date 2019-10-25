@@ -48,9 +48,31 @@ public class DungeonMapGen : MonoBehaviour
         {
             SmoothMap();
         }
+        /// Specifies how wide/long the border will be.
+        int borderSize = 5;
+        /// Creates a new 2D int array with the first dimension being the map width plus the border size multiplied by 2. This is because the border needs to extend over both the left and right side of the map.
+        int[,] borderedMap = new int[m_width + borderSize * 2, m_height + borderSize * 2];
+        /// Loops through the borderedMap array
+        for (int x = 0; x < borderedMap.GetLength(0); x++)
+        {
+            for (int y = 0; y < borderedMap.GetLength(1); y++)
+            {
+                /// Checks whether the values are inside the map.
+                if (x >= borderSize && x < m_width + borderSize && y >= borderSize && y < m_height + borderSize)
+                {
+                    /// Sets the value in borderedMap to whatever value is insidem_map.
+                    borderedMap[x, y] = m_map[x - borderSize, y - borderSize];
+                }
+                else
+                {
+                    /// If the value is outside the map, borderedMap array is filled with a wall value.
+                    borderedMap[x, y] = 1;
+                }
+            }
+        }
         /// Passes the m_map array and the specified square size into the GenerateMesh method.
         DungeonMeshGen meshGen = GetComponent<DungeonMeshGen>();
-        meshGen.GenerateMesh(m_map, 1);
+        meshGen.GenerateMesh(borderedMap, 1);
     }
     
     /// <summary>
