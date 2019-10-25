@@ -17,7 +17,13 @@ public class DungeonMeshGen : MonoBehaviour
     /// A dictionary which contains lists of triangle which share a common vertex.
     /// </summary>
     Dictionary<int, List<Triangle>> triangleDictionary = new Dictionary<int, List<Triangle>>();
+    /// <summary>
+    /// A list of outlines. Each inner list contains the indeces of the vertices which make up the outline.
+    /// </summary>
     List<List<int>> outlines = new List<List<int>>();
+    /// <summary>
+    /// A list of vertices which have been checked whether they are part of an outline or not.
+    /// </summary>
     HashSet<int> checkedVertices = new HashSet<int>();
     public MeshFilter walls;
     /// <summary>
@@ -27,6 +33,7 @@ public class DungeonMeshGen : MonoBehaviour
     /// <param name="squareSize">The size of the squares.</param>
     public void GenerateMesh(int[,] map, float squareSize)
     {
+        /// Clears these variables upon each new map generation.
         triangleDictionary.Clear();
         outlines.Clear();
         checkedVertices.Clear();
@@ -55,21 +62,28 @@ public class DungeonMeshGen : MonoBehaviour
 
         CreateWallMesh();
     }
+    /// <summary>
+    /// Calls the necessary function to generate wall outlines then adds the vertices which make up the outlines to lists which will be fed into the mesh renderer.
+    /// </summary>
     void CreateWallMesh()
     {
-
         CalculateMeshOutlines();
-
+        /// List of vertices which will make up the wall mesh.
         List<Vector3> wallVertices = new List<Vector3>();
+        /// List of triangles which will make up the wall mesh.
         List<int> wallTriangles = new List<int>();
+        /// Creates new mesh for the wall.
         Mesh wallMesh = new Mesh();
+        /// Set wall height.
         float wallHeight = 5;
-
+        /// Loops through each list of vertices in outlines.
         foreach (List<int> outline in outlines)
         {
+            /// Loops through each vertex in the list.
             for (int i = 0; i < outline.Count - 1; i++)
             {
                 int startIndex = wallVertices.Count;
+                /// Adds the vertices to the lists which will make up the wall mesh.
                 wallVertices.Add(vertices[outline[i]]); // left
                 wallVertices.Add(vertices[outline[i + 1]]); // right
                 wallVertices.Add(vertices[outline[i]] - Vector3.up * wallHeight); // bottom left
@@ -230,35 +244,49 @@ public class DungeonMeshGen : MonoBehaviour
         }
     }
     /// <summary>
-    /// 
+    /// Checks every vertex to see if it is part of an outline. If it is, it then traces the outline and populates the outlines list with the vertices which make up the outline.
     /// </summary>
     void CalculateMeshOutlines()
     {
-
+        /// Loops through every vertex in the vertices list.
         for (int vertexIndex = 0; vertexIndex < vertices.Count; vertexIndex++)
         {
+            /// Checks whether the vertex has been verified to be part of an outline.
             if (!checkedVertices.Contains(vertexIndex))
             {
+                /// Passes in the vertex to see if it's part of an outline.
                 int newOutlineVertex = GetConnectedOutlineVertex(vertexIndex);
+                /// Checks whether the vertex is part of an outline.
                 if (newOutlineVertex != -1)
                 {
+                    /// The vertex has no been checked so is added to the list of checked vertices.
                     checkedVertices.Add(vertexIndex);
-
+                    /// The vertex will be part of an outline consisting of multiple other vertices so a list containing these vertices is created.
                     List<int> newOutline = new List<int>();
                     newOutline.Add(vertexIndex);
+                    /// Adds the list to outlines
                     outlines.Add(newOutline);
+                    /// Recursive function to list each vertex in an outline.
                     FollowOutline(newOutlineVertex, outlines.Count - 1);
                     outlines[outlines.Count - 1].Add(vertexIndex);
                 }
             }
         }
     }
+    /// <summary>
+    /// Recursive function to list each vertex in an outline.
+    /// </summary>
+    /// <param name="vertexIndex">The vertex to be checked and possibly added to the list of outline vertices.</param>
+    /// <param name="outlineIndex">Which outline in 'outlines' is being traced by the function.</param>
     void FollowOutline(int vertexIndex, int outlineIndex)
     {
+        /// Adds the vertex to its corresponding outline.
         outlines[outlineIndex].Add(vertexIndex);
+        /// Adds the vertex to the hashset of checked vertices.
         checkedVertices.Add(vertexIndex);
+        /// Checks if the next connected vertex is part of the outline.
         int nextVertexIndex = GetConnectedOutlineVertex(vertexIndex);
-
+        /// Function calls itself until the outline is complete.
         if (nextVertexIndex != -1)
         {
             FollowOutline(nextVertexIndex, outlineIndex);
