@@ -74,6 +74,32 @@ public class DungeonMapGen : MonoBehaviour
         DungeonMeshGen meshGen = GetComponent<DungeonMeshGen>();
         meshGen.GenerateMesh(borderedMap, 1);
     }
+
+    List<List<Coord>> GetRegions(int tileType)
+    {
+        List<List<Coord>> regions = new List<List<Coord>>();
+        int[,] mapFlags = new int[m_width, m_height];
+
+        for (int x = 0; x < m_width; x++)
+        {
+            for (int y = 0; y < m_height; y++)
+            {
+                if (mapFlags[x, y] == 0 && m_map[x, y] == tileType)
+                {
+                    List<Coord> newRegion = GetRegionTiles(x, y);
+                    regions.Add(newRegion);
+
+                    foreach (Coord tile in newRegion)
+                    {
+                        mapFlags[tile.tileX, tile.tileY] = 1;
+                    }
+                }
+            }
+        }
+
+        return regions;
+    }
+
     /// <summary>
     /// Given a starting tile finds all other bordering tiles which share the same type (air/wall)
     /// </summary>
