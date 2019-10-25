@@ -17,6 +17,8 @@ public class DungeonMeshGen : MonoBehaviour
     /// A dictionary which contains lists of triangle which share a common vertex.
     /// </summary>
     Dictionary<int, List<Triangle>> triangleDictionary = new Dictionary<int, List<Triangle>>();
+    List<List<int>> outlines = new List<List<int>>();
+    HashSet<int> checkedVertices = new HashSet<int>();
     /// <summary>
     /// Takes in the values from DungeonMapGen and passes them into the SquareGrid constructor.
     /// </summary>
@@ -181,6 +183,38 @@ public class DungeonMeshGen : MonoBehaviour
             List<Triangle> triangleList = new List<Triangle>();
             triangleList.Add(triangle);
             triangleDictionary.Add(vertexIndexKey, triangleList);
+        }
+    }
+    void CalculateMeshOutlines()
+    {
+
+        for (int vertexIndex = 0; vertexIndex < vertices.Count; vertexIndex++)
+        {
+            if (!checkedVertices.Contains(vertexIndex))
+            {
+                int newOutlineVertex = GetConnectedOutlineVertex(vertexIndex);
+                if (newOutlineVertex != -1)
+                {
+                    checkedVertices.Add(vertexIndex);
+
+                    List<int> newOutline = new List<int>();
+                    newOutline.Add(vertexIndex);
+                    outlines.Add(newOutline);
+                    FollowOutline(newOutlineVertex, outlines.Count - 1);
+                    outlines[outlines.Count - 1].Add(vertexIndex);
+                }
+            }
+        }
+    }
+    void FollowOutline(int vertexIndex, int outlineIndex)
+    {
+        outlines[outlineIndex].Add(vertexIndex);
+        checkedVertices.Add(vertexIndex);
+        int nextVertexIndex = GetConnectedOutlineVertex(vertexIndex);
+
+        if (nextVertexIndex != -1)
+        {
+            FollowOutline(nextVertexIndex, outlineIndex);
         }
     }
     /// <summary>
