@@ -74,21 +74,70 @@ public class DungeonMapGen : MonoBehaviour
         DungeonMeshGen meshGen = GetComponent<DungeonMeshGen>();
         meshGen.GenerateMesh(borderedMap, 1);
     }
-
+    /// <summary>
+    /// Removes map regions if their size is below a threshold.
+    /// </summary>
+    void ProcessMap()
+    {
+        /// Gets a list of regions which are wall types.
+        List<List<Coord>> wallRegions = GetRegions(1);
+        /// The threshold size which determines whether the region gets removed.
+        int wallThresholdSize = 50;
+        /// Loops through every region of walls.
+        foreach (List<Coord> wallRegion in wallRegions)
+        {
+            /// checks uf the size of the wall region is smaller than the threshold.
+            if (wallRegion.Count < wallThresholdSize)
+            {
+                /// Changes each tile in the region to air
+                foreach (Coord tile in wallRegion)
+                {
+                    m_map[tile.tileX, tile.tileY] = 0;
+                }
+            }
+        }
+        /// Gets a list of regions which are air types.
+        List<List<Coord>> roomRegions = GetRegions(0);
+        /// The threshold size which determines whether the region gets removed.
+        int roomThresholdSize = 50;
+        /// Loops through every region of air.
+        foreach (List<Coord> roomRegion in roomRegions)
+        {
+            /// checks uf the size of the air region is smaller than the threshold.
+            if (roomRegion.Count < roomThresholdSize)
+            {
+                /// Changes each tile in the region to air
+                foreach (Coord tile in roomRegion)
+                {
+                    m_map[tile.tileX, tile.tileY] = 1;
+                }
+            }
+        }
+    }
+    /// <summary>
+    /// Returns a list of regions of the specified tile type (air/wall).
+    /// </summary>
+    /// <param name="tileType">1 or 0 depending on whether the tile is a wall or air.</param>
+    /// <returns>A list of regions containing a list of tiles.</returns>
     List<List<Coord>> GetRegions(int tileType)
     {
+        /// Initiates the list of regions.
         List<List<Coord>> regions = new List<List<Coord>>();
+        /// 2D array the same size as the map which will store information on whether a tile has been checked.
         int[,] mapFlags = new int[m_width, m_height];
-
+        /// Loops through every tile in the map
         for (int x = 0; x < m_width; x++)
         {
             for (int y = 0; y < m_height; y++)
             {
+                /// Checks if the tile has been previously checked and if the tile type matches the passed in parameter.
                 if (mapFlags[x, y] == 0 && m_map[x, y] == tileType)
                 {
+                    /// Generates a list of coordinates which make up a region.
                     List<Coord> newRegion = GetRegionTiles(x, y);
+                    /// Adds the list of coordinates to the list of regions.
                     regions.Add(newRegion);
-
+                    /// Marks each tile in the region previously discovered as checked.
                     foreach (Coord tile in newRegion)
                     {
                         mapFlags[tile.tileX, tile.tileY] = 1;
@@ -150,6 +199,12 @@ public class DungeonMapGen : MonoBehaviour
 
         return tiles;
     }
+    /// <summary>
+    /// Checks whether the passed in coordinates are within the map space.
+    /// </summary>
+    /// <param name="x">The value of the x coordinate being checked.</param>
+    /// <param name="y">The value of the y coordinate being checked.</param>
+    /// <returns>Bool showing whether the passed in coordinates are within the map space.</returns>
     bool IsInMapRange(int x, int y)
     {
         return x >= 0 && x < m_width && y >= 0 && y < m_height;
