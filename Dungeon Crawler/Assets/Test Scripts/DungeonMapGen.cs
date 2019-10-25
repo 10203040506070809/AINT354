@@ -119,6 +119,59 @@ public class DungeonMapGen : MonoBehaviour
             }
         }
     }
+    void ConnectClosestRooms(List<Room> allRooms)
+    {
+
+        int bestDistance = 0;
+        Coord bestTileA = new Coord();
+        Coord bestTileB = new Coord();
+        Room bestRoomA = new Room();
+        Room bestRoomB = new Room();
+        bool possibleConnectionFound = false;
+
+        foreach (Room roomA in allRooms)
+        {
+            possibleConnectionFound = false;
+
+            foreach (Room roomB in allRooms)
+            {
+                if (roomA == roomB)
+                {
+                    continue;
+                }
+                if (roomA.IsConnected(roomB))
+                {
+                    possibleConnectionFound = false;
+                    break;
+                }
+
+                for (int tileIndexA = 0; tileIndexA < roomA.edgeTiles.Count; tileIndexA++)
+                {
+                    for (int tileIndexB = 0; tileIndexB < roomB.edgeTiles.Count; tileIndexB++)
+                    {
+                        Coord tileA = roomA.edgeTiles[tileIndexA];
+                        Coord tileB = roomB.edgeTiles[tileIndexB];
+                        int distanceBetweenRooms = (int)(Mathf.Pow(tileA.tileX - tileB.tileX, 2) + Mathf.Pow(tileA.tileY - tileB.tileY, 2));
+
+                        if (distanceBetweenRooms < bestDistance || !possibleConnectionFound)
+                        {
+                            bestDistance = distanceBetweenRooms;
+                            possibleConnectionFound = true;
+                            bestTileA = tileA;
+                            bestTileB = tileB;
+                            bestRoomA = roomA;
+                            bestRoomB = roomB;
+                        }
+                    }
+                }
+            }
+
+            if (possibleConnectionFound)
+            {
+                CreatePassage(bestRoomA, bestRoomB, bestTileA, bestTileB);
+            }
+        }
+    }
     /// <summary>
     /// Returns a list of regions of the specified tile type (air/wall).
     /// </summary>
