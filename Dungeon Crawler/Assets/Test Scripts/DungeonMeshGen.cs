@@ -196,16 +196,27 @@ public class DungeonMeshGen : MonoBehaviour
 
         return -1;
     }
+    /// <summary>
+    /// Finds every triangle which shares a vertex with vertexA then checks whether any of these triangles also contain vertexB.
+    /// </summary>
+    /// <param name="vertexA">One vertex of the line being checked</param>
+    /// <param name="vertexB">The second vertex of the line being checked</param>
+    /// <returns></returns>
     bool IsOutlineEdge(int vertexA, int vertexB)
     {
+        /// List of triangles containing vertexA;
         List<Triangle> trianglesContainingVertexA = triangleDictionary[vertexA];
+        /// How many triangles share the given vertices.
         int sharedTriangleCount = 0;
-
+        /// Loops through every triangle which contains vertexA.
         for (int i = 0; i < trianglesContainingVertexA.Count; i++)
         {
+            /// checks whether the triangles which contain vertexA also contains vertexB.
             if (trianglesContainingVertexA[i].Contains(vertexB))
             {
+                /// Adds 1 to the count if a triangle shares both vertices.
                 sharedTriangleCount++;
+                /// If the vertices are shared by more than one triangle, the line they form is not an edge.
                 if (sharedTriangleCount > 1)
                 {
                     break;
