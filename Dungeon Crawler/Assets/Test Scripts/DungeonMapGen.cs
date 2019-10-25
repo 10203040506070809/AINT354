@@ -416,13 +416,34 @@ public class DungeonMapGen : MonoBehaviour
             tileY = y;
         }
     }
+    /// <summary>
+    /// Rooms are defined by any number of connected tiles which share the same tile type (wall/air).
+    /// </summary>
     class Room : IComparable<Room>
     {
+        /// <summary>
+        /// The tiles which make up the room.
+        /// </summary>
         public List<Coord> tiles;
+        /// <summary>
+        /// The tiles which border the room.
+        /// </summary>
         public List<Coord> edgeTiles;
+        /// <summary>
+        /// The rooms connected to the room in question.
+        /// </summary>
         public List<Room> connectedRooms;
+        /// <summary>
+        /// How many tiles make up the room.
+        /// </summary>
         public int roomSize;
+        /// <summary>
+        /// Whether the room is accessible from the main room (largest room).
+        /// </summary>
         public bool isAccessibleFromMainRoom;
+        /// <summary>
+        /// Whether the room is the main room (largest room).
+        /// </summary>
         public bool isMainRoom;
 
         public Room()
@@ -436,6 +457,7 @@ public class DungeonMapGen : MonoBehaviour
             connectedRooms = new List<Room>();
 
             edgeTiles = new List<Coord>();
+            /// Checks every tile in the room to see if it borders a wall. If it does then it is added to the edge tiles.
             foreach (Coord tile in tiles)
             {
                 for (int x = tile.tileX - 1; x <= tile.tileX + 1; x++)
@@ -453,16 +475,30 @@ public class DungeonMapGen : MonoBehaviour
                 }
             }
         }
+        /// <summary>
+        /// Adds the rooms to rooms which are connected
+        /// </summary>
+        /// <param name="roomA">Room to be connected to roomB</param>
+        /// <param name="roomB">Room to be connected to roomA</param>
         public static void ConnectRooms(Room roomA, Room roomB)
         {
             roomA.connectedRooms.Add(roomB);
             roomB.connectedRooms.Add(roomA);
         }
-
+        /// <summary>
+        /// Checks whether the room is connected to another room.
+        /// </summary>
+        /// <param name="otherRoom">The room to be checked</param>
+        /// <returns>Returns true if the room is connected to another room and false if it isn't.</returns>
         public bool IsConnected(Room otherRoom)
         {
             return connectedRooms.Contains(otherRoom);
         }
+        /// <summary>
+        /// Compares the sizes of rooms.
+        /// </summary>
+        /// <param name="otherRoom">The room to be compared.</param>
+        /// <returns>Returns an int describing whether the room is larger, smaller or equal to another room.</returns>
         public int CompareTo(Room otherRoom)
         {
             return otherRoom.roomSize.CompareTo(roomSize);
