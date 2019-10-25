@@ -119,44 +119,62 @@ public class DungeonMapGen : MonoBehaviour
             }
         }
     }
+    /// <summary>
+    /// Finds the closest seperate rooms and calls a method which connects them via the shortest route.
+    /// </summary>
+    /// <param name="allRooms">A list of all air regions(rooms).</param>
     void ConnectClosestRooms(List<Room> allRooms)
     {
-
+        /// Shortest distance between two rooms.
         int bestDistance = 0;
+        /// Coordinate for the tile in room A which results in the shortest connection.
         Coord bestTileA = new Coord();
+        /// Coordinate for the tile in room B which results in the shortest connection.
         Coord bestTileB = new Coord();
+        /// Room which results in the shortest connection to room B.
         Room bestRoomA = new Room();
+        /// Room which results in the shortest connection to room A.
         Room bestRoomB = new Room();
+        /// Whether a possible connection between two rooms has been found.
         bool possibleConnectionFound = false;
-
+        /// Loops through every room.
         foreach (Room roomA in allRooms)
         {
+            /// Resets whether a connection is found for each new room being checked.
             possibleConnectionFound = false;
-
+            /// Loops through every room.
             foreach (Room roomB in allRooms)
             {
+                /// Makes sure roomA doesn't try to connect with itself.
                 if (roomA == roomB)
                 {
                     continue;
                 }
+                /// Makes sure roomA isn't already connected to roomB.
                 if (roomA.IsConnected(roomB))
                 {
                     possibleConnectionFound = false;
                     break;
                 }
-
+                /// Loops through each edge tile of roomA. 
                 for (int tileIndexA = 0; tileIndexA < roomA.edgeTiles.Count; tileIndexA++)
                 {
+                    ///Loops through each edge tile of roomB.
                     for (int tileIndexB = 0; tileIndexB < roomB.edgeTiles.Count; tileIndexB++)
                     {
+                        /// Sets the current coordinates of the tiles being checked
                         Coord tileA = roomA.edgeTiles[tileIndexA];
                         Coord tileB = roomB.edgeTiles[tileIndexB];
+                        /// Calculates the distance between the two tiles.
                         int distanceBetweenRooms = (int)(Mathf.Pow(tileA.tileX - tileB.tileX, 2) + Mathf.Pow(tileA.tileY - tileB.tileY, 2));
-
+                        /// Checks if the new distance found is better than the current best distance.
                         if (distanceBetweenRooms < bestDistance || !possibleConnectionFound)
                         {
+                            /// Sets the new found distance to be the best distance.
                             bestDistance = distanceBetweenRooms;
+                            /// Updates connection found to true.
                             possibleConnectionFound = true;
+                            /// Sets the values needed to identify the connection between the rooms.
                             bestTileA = tileA;
                             bestTileB = tileB;
                             bestRoomA = roomA;
@@ -165,9 +183,10 @@ public class DungeonMapGen : MonoBehaviour
                     }
                 }
             }
-
+            /// Checks if a connection between rooms has been found.
             if (possibleConnectionFound)
             {
+                /// Calls the function to connect the rooms.
                 CreatePassage(bestRoomA, bestRoomB, bestTileA, bestTileB);
             }
         }
