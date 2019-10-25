@@ -13,6 +13,9 @@ public class DungeonMeshGen : MonoBehaviour
     /// List of triangles for mesh rendering.
     /// </summary>
     List<int> triangles;
+    /// <summary>
+    /// A dictionary which contains lists of triangle which share a common vertex.
+    /// </summary>
     Dictionary<int, List<Triangle>> triangleDictionary = new Dictionary<int, List<Triangle>>();
     /// <summary>
     /// Takes in the values from DungeonMapGen and passes them into the SquareGrid constructor.
@@ -163,8 +166,8 @@ public class DungeonMeshGen : MonoBehaviour
     /// <summary>
     /// Creates lists of triangles which contain a given vertex.
     /// </summary>
-    /// <param name="vertexIndexKey"></param>
-    /// <param name="triangle"></param>
+    /// <param name="vertexIndexKey">One vertex of the triangle.</param>
+    /// <param name="triangle">The triangle the vertex belongs to.</param>
     void AddTriangleToDictionary(int vertexIndexKey, Triangle triangle)
     {
         /// If the vertex has already been identified, it adds the new triangle to list which contains the given vertex.
