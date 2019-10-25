@@ -191,6 +191,16 @@ public class DungeonMapGen : MonoBehaviour
             }
         }
     }
+    void CreatePassage(Room roomA, Room roomB, Coord tileA, Coord tileB)
+    {
+        Room.ConnectRooms(roomA, roomB);
+        Debug.DrawLine(CoordToWorldPoint(tileA), CoordToWorldPoint(tileB), Color.green, 100);
+    }
+    Vector3 CoordToWorldPoint(Coord tile)
+    {
+        return new Vector3(-m_width / 2 + .5f + tile.tileX, 2, -m_height / 2 + .5f + tile.tileY);
+    }
+
     /// <summary>
     /// Returns a list of regions of the specified tile type (air/wall).
     /// </summary>
