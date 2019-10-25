@@ -74,7 +74,43 @@ public class DungeonMapGen : MonoBehaviour
         DungeonMeshGen meshGen = GetComponent<DungeonMeshGen>();
         meshGen.GenerateMesh(borderedMap, 1);
     }
+    List<Coord> GetRegionTiles(int startX, int startY)
+    {
+        List<Coord> tiles = new List<Coord>();
+        int[,] mapFlags = new int[m_width, m_height];
+        int tileType = m_map[startX, startY];
 
+        Queue<Coord> queue = new Queue<Coord>();
+        queue.Enqueue(new Coord(startX, startY));
+        mapFlags[startX, startY] = 1;
+
+        while (queue.Count > 0)
+        {
+            Coord tile = queue.Dequeue();
+            tiles.Add(tile);
+
+            for (int x = tile.tileX - 1; x <= tile.tileX + 1; x++)
+            {
+                for (int y = tile.tileY - 1; y <= tile.tileY + 1; y++)
+                {
+                    if (IsInMapRange(x, y) && (y == tile.tileY || x == tile.tileX))
+                    {
+                        if (mapFlags[x, y] == 0 && m_map[x, y] == tileType)
+                        {
+                            mapFlags[x, y] = 1;
+                            queue.Enqueue(new Coord(x, y));
+                        }
+                    }
+                }
+            }
+        }
+
+        return tiles;
+    }
+    bool IsInMapRange(int x, int y)
+    {
+        return x >= 0 && x < m_width && y >= 0 && y < m_height;
+    }
     /// <summary>
     /// Generates a random seed if set by user then populates m_map with 1s and 0s. Edges of the map are set to walls.
     /// </summary>
@@ -151,7 +187,7 @@ public class DungeonMapGen : MonoBehaviour
             for (int neighbourY = gridY - 1; neighbourY <= gridY + 1; neighbourY++)
             {
                 ///Check to avoid edge points of the map.
-                if (neighbourX >= 0 && neighbourX < m_width && neighbourY >= 0 && neighbourY < m_height)
+                if (IsInMapRange(neighbourX,neighbourY))
                 {
                     ///Check to avoid the center point of the 3x3 grid being checked.
                     if (neighbourX != gridX || neighbourY != gridY)
