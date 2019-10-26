@@ -119,13 +119,16 @@ public class DungeonMapGen : MonoBehaviour
                 survivingRooms.Add(new Room(roomRegion, m_map));
             }
         }
-        /// Sorts rooms by size.
-        survivingRooms.Sort();
-        /// Largest room is set to main room.
-        survivingRooms[0].isMainRoom = true;
-        /// Sets the main room as accessible via itself.
-        survivingRooms[0].isAccessibleFromMainRoom = true;
-        ConnectClosestRooms(survivingRooms);
+        if (survivingRooms.Count != 0)
+        {
+            /// Sorts rooms by size.
+            survivingRooms.Sort();
+            /// Largest room is set to main room.
+            survivingRooms[0].isMainRoom = true;
+            /// Sets the main room as accessible via itself.
+            survivingRooms[0].isAccessibleFromMainRoom = true;
+            ConnectClosestRooms(survivingRooms);
+        }
     }
     /// <summary>
     /// Finds the closest seperate rooms and calls a method which connects them via the shortest route.
