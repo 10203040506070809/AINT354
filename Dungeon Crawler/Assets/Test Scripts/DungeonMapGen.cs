@@ -118,14 +118,14 @@ public class DungeonMapGen : MonoBehaviour
             {
                 survivingRooms.Add(new Room(roomRegion, m_map));
             }
-            /// Sorts rooms by size.
-            survivingRooms.Sort();
-            /// Largest room is set to main room.
-            survivingRooms[0].isMainRoom = true;
-            /// Sets the main room as accessible via itself.
-            survivingRooms[0].isAccessibleFromMainRoom = true;
-            ConnectClosestRooms(survivingRooms);
         }
+        /// Sorts rooms by size.
+        survivingRooms.Sort();
+        /// Largest room is set to main room.
+        survivingRooms[0].isMainRoom = true;
+        /// Sets the main room as accessible via itself.
+        survivingRooms[0].isAccessibleFromMainRoom = true;
+        ConnectClosestRooms(survivingRooms);
     }
     /// <summary>
     /// Finds the closest seperate rooms and calls a method which connects them via the shortest route.
@@ -223,17 +223,17 @@ public class DungeonMapGen : MonoBehaviour
                 /// Calls the function to connect the rooms.
                 CreatePassage(bestRoomA, bestRoomB, bestTileA, bestTileB);
             }
-            /// Checks if a connection between rooms has been found and does need to be forced to connect to main room.
-            if (possibleConnectionFound && forceAccessibilityFromMainRoom)
-            {
-                /// Calls the function to connect the rooms.
-                CreatePassage(bestRoomA, bestRoomB, bestTileA, bestTileB);
-                ConnectClosestRooms(allRooms, true);
-            }
-            if (!forceAccessibilityFromMainRoom)
-            {
-                ConnectClosestRooms(allRooms, true);
-            }
+        }
+        /// Checks if a connection between rooms has been found and does need to be forced to connect to main room.
+        if (possibleConnectionFound && forceAccessibilityFromMainRoom)
+        {
+            /// Calls the function to connect the rooms.
+            CreatePassage(bestRoomA, bestRoomB, bestTileA, bestTileB);
+            ConnectClosestRooms(allRooms, true);
+        }
+        if (!forceAccessibilityFromMainRoom)
+        {
+            ConnectClosestRooms(allRooms, true);
         }
     }
     /// <summary>
