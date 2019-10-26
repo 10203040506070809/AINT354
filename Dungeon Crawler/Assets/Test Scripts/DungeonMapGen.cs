@@ -29,15 +29,15 @@ public class DungeonMapGen : MonoBehaviour
     /// <summary>
     /// Matrix holding the map data consisting of 1s and 0s. 1 means there is a wall, 0 means there is air.
     /// </summary>
-    int[,] m_map;
+    private int[,] m_map;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         GenerateMap();
     }
 
-    void GenerateMap()
+    private void GenerateMap()
     {
         /// Initialises m_map with chosen parameters.
         m_map = new int[m_width, m_height];
@@ -78,7 +78,7 @@ public class DungeonMapGen : MonoBehaviour
     /// <summary>
     /// Removes map regions if their size is below a threshold.
     /// </summary>
-    void ProcessMap()
+    private void ProcessMap()
     {
         /// Gets a list of regions which are wall types.
         List<List<Coord>> wallRegions = GetRegions(1);
@@ -132,7 +132,7 @@ public class DungeonMapGen : MonoBehaviour
     /// </summary>
     /// <param name="allRooms">A list of all air regions(rooms).</param>
     /// <param name="forceAccessibilityFromMainRoom">A bool stating whether a room needs to be forced to connect to the main room.</param>
-    void ConnectClosestRooms(List<Room> allRooms, bool forceAccessibilityFromMainRoom = false)
+    private void ConnectClosestRooms(List<Room> allRooms, bool forceAccessibilityFromMainRoom = false)
     {
         List<Room> roomListA = new List<Room>();
         List<Room> roomListB = new List<Room>();
@@ -231,6 +231,7 @@ public class DungeonMapGen : MonoBehaviour
             CreatePassage(bestRoomA, bestRoomB, bestTileA, bestTileB);
             ConnectClosestRooms(allRooms, true);
         }
+        /// Loops through all rooms again and forces any room which is not yet connected to the main room to connect to a room which is.
         if (!forceAccessibilityFromMainRoom)
         {
             ConnectClosestRooms(allRooms, true);
@@ -243,7 +244,7 @@ public class DungeonMapGen : MonoBehaviour
     /// <param name="roomB">Second room to be connected.</param>
     /// <param name="tileA">The tile from roomA to be connected to the tile in roomB.</param>
     /// <param name="tileB">The tile from roomB to be connected to the tile in roomA.</param>
-    void CreatePassage(Room roomA, Room roomB, Coord tileA, Coord tileB)
+    private void CreatePassage(Room roomA, Room roomB, Coord tileA, Coord tileB)
     {
         /// Updates the rooms to say they're connected to eachother.
         Room.ConnectRooms(roomA, roomB);
@@ -260,7 +261,7 @@ public class DungeonMapGen : MonoBehaviour
     /// </summary>
     /// <param name="c">The centre of the circle.</param>
     /// <param name="r">The radius of the circle.</param>
-    void DrawCircle(Coord c, int r)
+    private void DrawCircle(Coord c, int r)
     {
         /// Loops through x values within the radius.
         for (int x = -r; x <= r; x++)
@@ -290,7 +291,7 @@ public class DungeonMapGen : MonoBehaviour
     /// <param name="from">The starting coordinate of the line.</param>
     /// <param name="to">The ending coordinate of the line.</param>
     /// <returns>A list of coordinates which fall on the line between the passed in parameters.</returns>
-    List<Coord> GetLine(Coord from, Coord to)
+    private List<Coord> GetLine(Coord from, Coord to)
     {
         /// The list of coordinates which lie on the line.
         List<Coord> line = new List<Coord>();
@@ -366,7 +367,7 @@ public class DungeonMapGen : MonoBehaviour
     /// </summary>
     /// <param name="tileType">1 or 0 depending on whether the tile is a wall or air.</param>
     /// <returns>A list of regions containing a list of tiles.</returns>
-    List<List<Coord>> GetRegions(int tileType)
+    private List<List<Coord>> GetRegions(int tileType)
     {
         /// Initiates the list of regions.
         List<List<Coord>> regions = new List<List<Coord>>();
@@ -402,7 +403,7 @@ public class DungeonMapGen : MonoBehaviour
     /// <param name="startX">The X coordinate of the tile being checked.</param>
     /// <param name="startY">The Y coordinate of the tile being checked.</param>
     /// <returns>A list of tile coordinates which define a region of tiles which are the same type.</returns>
-    List<Coord> GetRegionTiles(int startX, int startY)
+    private List<Coord> GetRegionTiles(int startX, int startY)
     {
         /// List of coordinates which will define a region.
         List<Coord> tiles = new List<Coord>();
@@ -452,14 +453,14 @@ public class DungeonMapGen : MonoBehaviour
     /// <param name="x">The value of the x coordinate being checked.</param>
     /// <param name="y">The value of the y coordinate being checked.</param>
     /// <returns>Bool showing whether the passed in coordinates are within the map space.</returns>
-    bool IsInMapRange(int x, int y)
+    private bool IsInMapRange(int x, int y)
     {
         return x >= 0 && x < m_width && y >= 0 && y < m_height;
     }
     /// <summary>
     /// Generates a random seed if set by user then populates m_map with 1s and 0s. Edges of the map are set to walls.
     /// </summary>
-    void RandomlyFillMap()
+    private void RandomlyFillMap()
     {
         /// Checks if a random seed needs to be created. If it does then it creates on based on current time.
         if (m_useRandomSeed)
@@ -495,7 +496,7 @@ public class DungeonMapGen : MonoBehaviour
     /// <summary>
     /// Checks the surrounding values of every point in the m_map matrix. If the point is surrounded by more than x number of walls, the point is set to a wall. If the point is surrounded by less than x number of walls, the point is set to air.
     /// </summary>
-    void SmoothMap()
+    private void SmoothMap()
     {
         /// Loops through m_map matrix.
         for (int i = 0; i < m_width; i++)
@@ -522,7 +523,7 @@ public class DungeonMapGen : MonoBehaviour
     /// <param name="gridY">The value of the y coordinate being checked.</param>
     /// <returns>How many walls are surrounding the point (param1, param2).</returns>
 
-    int GetSurroundingWallCount(int gridX, int gridY)
+    private int GetSurroundingWallCount(int gridX, int gridY)
     {
         /// Initialises wallCount which tracks how many walls are surrounding a given point.
         int wallCount = 0;
@@ -553,7 +554,7 @@ public class DungeonMapGen : MonoBehaviour
     /// <summary>
     /// A coordinate representing a tile on the map.
     /// </summary>
-    struct Coord
+    private struct Coord
     {
         /// <summary>
         /// The x value of the coordinate.
@@ -573,7 +574,7 @@ public class DungeonMapGen : MonoBehaviour
     /// <summary>
     /// Rooms are defined by any number of connected tiles which share the same tile type (wall/air).
     /// </summary>
-    class Room : IComparable<Room>
+    private class Room : IComparable<Room>
     {
         /// <summary>
         /// The tiles which make up the room.
