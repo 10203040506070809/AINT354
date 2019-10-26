@@ -250,6 +250,83 @@ public class DungeonMapGen : MonoBehaviour
         Debug.DrawLine(CoordToWorldPoint(tileA), CoordToWorldPoint(tileB), Color.green, 100);
         Debug.Log("here");
     }
+    /// <summary>
+    /// Gets a list of points relating to map tiles which fall on a line between the passed in parameters.
+    /// </summary>
+    /// <param name="from">The starting coordinate of the line.</param>
+    /// <param name="to">The ending coordinate of the line.</param>
+    /// <returns>A list of coordinates which fall on the line between the passed in parameters.</returns>
+    List<Coord> GetLine(Coord from, Coord to)
+    {
+        /// The list of coordinates which lie on the line
+        List<Coord> line = new List<Coord>();
+        /// The x coordinate of the starting point.
+        int x = from.tileX;
+        /// The y coordinate of the starting point.
+        int y = from.tileY;
+        /// The change in the x coordinates of the start and end of the line.
+        int dx = to.tileX - from.tileX;
+        /// The change in the y coordinates of the start and end of the line.
+        int dy = to.tileY - from.tileY;
+        /// Whether the change in x is greater than the change in y.
+        bool inverted = false;
+        /// Whether the line moves left or right.
+        int step = Math.Sign(dx);
+        /// Whether the line moves up or down.
+        int gradientStep = Math.Sign(dy);
+        /// Used to determine whether the change in x is greater than the change in y.
+        int longest = Mathf.Abs(dx);
+        /// Used to determine whether the change in x is greater than the change in y.
+        int shortest = Mathf.Abs(dy);
+        /// Check to see if the change in x is greater than the change in y.
+        if (longest < shortest)
+        {
+            /// Update to say that the change in y is greater than the change in x.
+            inverted = true;
+            /// Switches the variables below around.
+            longest = Mathf.Abs(dy);
+            shortest = Mathf.Abs(dx);
+
+            step = Math.Sign(dy);
+            gradientStep = Math.Sign(dx);
+        }
+        /// Based on the threshold between map tiles.
+        int gradientAccumulation = longest / 2;
+        /// Loops through the x or y coordinates depending on which is greater.
+        for (int i = 0; i < longest; i++)
+        {
+            /// Adds a coordinate which falls on the line to the list
+            line.Add(new Coord(x, y));
+            /// Move along y axis if change in y is greater than change in x.
+            if (inverted)
+            {
+                y += step;
+            }
+            /// Move along x axis if change in x is greater than change in y.
+            else
+            {
+                x += step;
+            }
+            /// Adds the change in x or y to the threshold
+            gradientAccumulation += shortest;
+            /// If the threshold has been passed, add to the corresponding x or y value.
+            if (gradientAccumulation >= longest)
+            {
+                if (inverted)
+                {
+                    x += gradientStep;
+                }
+                else
+                {
+                    y += gradientStep;
+                }
+                /// Resets threshold.
+                gradientAccumulation -= longest;
+            }
+        }
+
+        return line;
+    }
     Vector3 CoordToWorldPoint(Coord tile)
     {
         return new Vector3(-m_width / 2 + .5f + tile.tileX, 2, -m_height / 2 + .5f + tile.tileY);
