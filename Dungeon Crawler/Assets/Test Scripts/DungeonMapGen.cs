@@ -247,8 +247,6 @@ public class DungeonMapGen : MonoBehaviour
     {
         /// Updates the rooms to say they're connected to eachother.
         Room.ConnectRooms(roomA, roomB);
-        Debug.DrawLine(CoordToWorldPoint(tileA), CoordToWorldPoint(tileB), Color.green, 100);
-        Debug.Log("here");
         /// Gets the set of coordinates which fall on the line between two rooms.
         List<Coord> line = GetLine(tileA, tileB);
         /// Loops through each coordinate in a line and sets tiles within a radius of each coordinate to air.
@@ -363,11 +361,6 @@ public class DungeonMapGen : MonoBehaviour
 
         return line;
     }
-    Vector3 CoordToWorldPoint(Coord tile)
-    {
-        return new Vector3(-m_width / 2 + .5f + tile.tileX, 2, -m_height / 2 + .5f + tile.tileY);
-    }
-
     /// <summary>
     /// Returns a list of regions of the specified tile type (air/wall).
     /// </summary>
@@ -696,34 +689,4 @@ public class DungeonMapGen : MonoBehaviour
             }
         }
     }
-        /// <summary>
-        /// Draws the matrix m_map in unity using black and white squares. Black squares are walls, white squares are air.
-        /// </summary>
-        /*void OnDrawGizmos()
-        {
-            ///Checks if the map is initialised.
-            if (m_map != null)
-            {
-                ///Loop through every point in m_map.
-                for (int i = 0; i < m_width; i++)
-                {
-                    for (int j = 0; j < m_height; j++)
-                    {
-                        ///Sets wall values to black.
-                        if (m_map[i, j] == 1)
-                        {
-                            Gizmos.color = Color.black;
-                        }
-                        ///sets air values to white.
-                        else
-                        {
-                            Gizmos.color = Color.white;
-                        }
-                        ///Defines the coordinates at which the m_map matrix value will be drawn.
-                        Vector3 pos = new Vector3(-m_width / 2 + i + .5f, 0, -m_height / 2 + j + .5f);
-                        Gizmos.DrawCube(pos, Vector3.one);
-                    }
-                }
-            }
-        }*/
-    }
+}
