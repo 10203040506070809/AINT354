@@ -2,27 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
-[RequireComponent(typeof(CharacterStats), typeof(Rigidbody))]
+/// <summary>
+/// Made using Filmstorms tutorial, 'Create an Open World Movement System in Unity C#'
+/// </summary>
+[RequireComponent(typeof(CharacterStats), typeof(CharacterController))]
 public class PlayerMovement : CharacterMovement
 {
-
-    /// <summary>
-    /// How frequently a step sound needs to be called.
-    /// </summary>
-    [SerializeField] private float m_stepLength;
-    /// <summary>
-    /// An audiosource for footsteps, called when the player moves.
-    /// </summary>
-    [SerializeField] private AudioSource m_footSteps;
-    /// <summary>
-    /// An integer denoting the force a player jumps at.
-    /// </summary>
-    [SerializeField] private int m_jumpForce;
-    /// <summary>
-    /// A rigidbody variable,responsible for physics.
-    /// </summary>
-    private Rigidbody m_rigidBody;
     /// <summary>
     /// A characterstats variable storing the player movement speed.
     /// </summary>
@@ -30,15 +15,45 @@ public class PlayerMovement : CharacterMovement
     /// <summary>
     /// 
     /// </summary>
-    private Vector3 m_MovementVector;
+    private CharacterController m_characterController;
+    /// <summary>
+    /// 
+    /// </summary>
+    private Animator m_animator;
+    /// <summary>
+    /// 
+    /// </summary>
+    [SerializeField] private float m_speed;
+    /// <summary>
+    /// 
+    /// </summary>
+    [SerializeField] private float m_inputX;
+    /// <summary>
+    /// 
+    /// </summary>
+    [SerializeField] private float m_inputZ;
+    /// <summary>
+    /// 
+    /// </summary>
+    private float m_verticalVelocity;
+    /// <summary>
+    /// 
+    /// </summary>
+    private Vector3 m_moveVector;
+    
     /// <summary>
     /// Start is called before the first frame update
     /// </summary>
-    void Start()
-    {
-        m_rigidBody = this.GetComponent<Rigidbody>();
-       
+    public void Start()
+    {      
         m_myStats = this.GetComponent<CharacterStats>();
+
+        m_characterController = this.GetComponent<CharacterController>();
+
+        m_animator = this.GetComponent<Animator>();
+
+        m_speed = m_myStats.GetMovementSpeed();
+
     }
     /// <summary>
     /// FixedUpdate is called once per frame. Because we're dealing with Rigidbody physics,
@@ -47,43 +62,38 @@ public class PlayerMovement : CharacterMovement
     /// </summary>
     public void FixedUpdate()
     {
+       
+
+        if (m_characterController.isGrounded)
+        {
+            m_verticalVelocity -= 0;
+            //Debug.Log("Grounded.");
+        }
+        if (!m_characterController.isGrounded)
+        {
+
+            m_verticalVelocity -= 2;
+            //Debug.Log("Not Grounded.");
+            m_moveVector = new Vector3(0, m_verticalVelocity, 0);
+            m_characterController.Move(m_moveVector);
+        }
         Move();
-      
     }
     /// <summary>
     /// 
     /// </summary>
     public override void Move()
     {
-    /// <summary>
-    /// A variable to hold the player movement along the x axis.
-    /// </summary>
-    int m_x = 0;
-
-    /// <summary>
-    /// A variable to hold the player movement along the y axis.
-    /// </summary>
-    int m_y = 0;
-    /// <summary>
-    /// A variable to hold the player movement along the z axis.
-    /// </summary>
-    int m_z = 0;
-
-    m_MovementVector = new Vector3(m_x, m_y, m_z);
-        //TODO Footstep sound
-
-        m_rigidBody.velocity = m_MovementVector;
-        if (Input.GetAxis("Horizontal") != 0)
+        if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
         {
-            m_MovementVector.x = Input.GetAxis("Horizontal") * m_myStats.GetMovementSpeed();
-      
-        }
-        if (Input.GetAxis("Vertical") != 0)
-        {
-            m_MovementVector.z = Input.GetAxis("Vertical") * m_myStats.GetMovementSpeed();
-            
-        }
+            m_moveVector = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+            m_moveVector *= m_myStats.GetMovementSpeed() / 5;
+          
 
-        m_rigidBody.velocity = m_MovementVector;
+            m_characterController.Move(m_moveVector * Time.deltaTime);
+            transform.rotation = Quaternion.LookRotation(m_moveVector);
+        }
     }
+   
+
 }
