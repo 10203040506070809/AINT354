@@ -50,13 +50,13 @@ public class DungeonMeshGen : MonoBehaviour
                 TriangulateSquare(squareGrid.squares[x, y]);
             }
         }
-        ///Creates a new mesh for the map
+        /// Creates a new mesh for the map.
         Mesh mesh = new Mesh();
-        ///Assigns the newly created mesh to the mesh component of MeshFilter.
+        /// Assigns the newly created mesh to the mesh component of MeshFilter.
         GetComponent<MeshFilter>().mesh = mesh;
-        ///Converts the list of vertices to an array and assigns it to the mesh.
+        /// Converts the list of vertices to an array and assigns it to the mesh.
         mesh.vertices = vertices.ToArray();
-        ///Converts the list of triangles to an array and assigns it to the mesh.
+        /// Converts the list of triangles to an array and assigns it to the mesh.
         mesh.triangles = triangles.ToArray();
         mesh.RecalculateNormals();
 
@@ -108,10 +108,10 @@ public class DungeonMeshGen : MonoBehaviour
         /// Switch statement based on square configuration (which control nodes are active).
         switch (square.configuration)
         {
-            /// cases if 1 control point is active.
+            /// Case if 0 control points are active.
             case 0:
                 break;
-
+            /// Cases if 1 control point is active.
             case 1:
                 MeshFromPoints(square.centreLeft, square.centreBottom, square.bottomLeft);
                 break;
@@ -125,7 +125,7 @@ public class DungeonMeshGen : MonoBehaviour
                 MeshFromPoints(square.topLeft, square.centreTop, square.centreLeft);
                 break;
 
-            /// cases if 2 control points are active.
+            /// Cases if 2 control points are active.
             case 3:
                 MeshFromPoints(square.centreRight, square.bottomRight, square.bottomLeft, square.centreLeft);
                 break;
@@ -145,7 +145,7 @@ public class DungeonMeshGen : MonoBehaviour
                 MeshFromPoints(square.topLeft, square.centreTop, square.centreRight, square.bottomRight, square.centreBottom, square.centreLeft);
                 break;
 
-            /// cases if 3 control points are active.
+            /// Cases if 3 control points are active.
             case 7:
                 MeshFromPoints(square.centreTop, square.topRight, square.bottomRight, square.bottomLeft, square.centreLeft);
                 break;
@@ -159,7 +159,7 @@ public class DungeonMeshGen : MonoBehaviour
                 MeshFromPoints(square.topLeft, square.topRight, square.bottomRight, square.centreBottom, square.centreLeft);
                 break;
 
-            /// case if 4 control points are active.
+            /// Case if 4 control points are active.
             case 15:
                 MeshFromPoints(square.topLeft, square.topRight, square.bottomRight, square.bottomLeft);
                 /// Forms a solid wall so will not be outline vertices.
@@ -177,7 +177,7 @@ public class DungeonMeshGen : MonoBehaviour
     void MeshFromPoints(params Node[] points)
     {
         AssignVertices(points);
-        ///Checks how many points are needed for each possible configuration. 3 points need 1 trianlge, 4 points need 2 triangles, 5 points need 3 triangles and so on.
+        /// Checks how many points are needed for each possible configuration. 3 points need 1 trianlge, 4 points need 2 triangles, 5 points need 3 triangles and so on.
         if (points.Length >= 3)
             CreateTriangle(points[0], points[1], points[2]);
         if (points.Length >= 4)
@@ -193,7 +193,7 @@ public class DungeonMeshGen : MonoBehaviour
     /// <param name="points">The array of points passed in based on the configuration of the square.</param>
     void AssignVertices(Node[] points)
     {
-        ///loops through the points of the configuration for the square and assigns each vertex to a list.
+        /// Loops through the points of the configuration for the square and assigns each vertex to a list.
         for (int i = 0; i < points.Length; i++)
         {
             /// Checks for points not yet initialised.
@@ -207,11 +207,11 @@ public class DungeonMeshGen : MonoBehaviour
         }
     }
     /// <summary>
-    /// Creates a triangle based on the nodes passed through
+    /// Creates a triangle based on the nodes passed through.
     /// </summary>
-    /// <param name="a">First vertex of the triangle</param>
-    /// <param name="b">Second vertex of the triangle</param>
-    /// <param name="c">Third vertex of the triangle</param>
+    /// <param name="a">First vertex of the triangle.</param>
+    /// <param name="b">Second vertex of the triangle.</param>
+    /// <param name="c">Third vertex of the triangle.</param>
     void CreateTriangle(Node a, Node b, Node c)
     {
         triangles.Add(a.vertexIndex);
@@ -264,7 +264,7 @@ public class DungeonMeshGen : MonoBehaviour
                     /// The vertex will be part of an outline consisting of multiple other vertices so a list containing these vertices is created.
                     List<int> newOutline = new List<int>();
                     newOutline.Add(vertexIndex);
-                    /// Adds the list to outlines
+                    /// Adds the list to outlines.
                     outlines.Add(newOutline);
                     /// Recursive function to list each vertex in an outline.
                     FollowOutline(newOutlineVertex, outlines.Count - 1);
@@ -339,7 +339,7 @@ public class DungeonMeshGen : MonoBehaviour
         /// Loops through every triangle which contains vertexA.
         for (int i = 0; i < trianglesContainingVertexA.Count; i++)
         {
-            /// checks whether the triangles which contain vertexA also contains vertexB.
+            /// Checks whether the triangles which contain vertexA also contains vertexB.
             if (trianglesContainingVertexA[i].Contains(vertexB))
             {
                 /// Adds 1 to the count if a triangle shares both vertices.
@@ -404,7 +404,7 @@ public class DungeonMeshGen : MonoBehaviour
             float mapHeight = nodeCountY * squareSize;
             /// 2D array of controlNodes declared based on the width and height of m_map. 
             ControlNode[,] controlNodes = new ControlNode[nodeCountX, nodeCountY];
-            /// Loops through every node
+            /// Loops through every node.
             for (int x = 0; x < nodeCountX; x++)
             {
                 for (int y = 0; y < nodeCountY; y++)
