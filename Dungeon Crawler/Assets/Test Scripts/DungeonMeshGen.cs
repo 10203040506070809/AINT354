@@ -98,6 +98,7 @@ public class DungeonMeshGen : MonoBehaviour
                 wallTriangles.Add(startIndex + 0);
             }
         }
+        /// Adds the necessary arrays to the mesh.
         wallMesh.vertices = wallVertices.ToArray();
         wallMesh.triangles = wallTriangles.ToArray();
         walls.mesh = wallMesh;
@@ -353,11 +354,26 @@ public class DungeonMeshGen : MonoBehaviour
         }
         return sharedTriangleCount == 1;
     }
+    /// <summary>
+    /// Constructs triangles by storing three vertices which make up the triangle.
+    /// </summary>
     private struct Triangle
     {
+        /// <summary>
+        /// Index of first vertex of the triangle.
+        /// </summary>
         public int vertexIndexA;
+        /// <summary>
+        /// Index of second vertex of the triangle.
+        /// </summary>
         public int vertexIndexB;
+        /// <summary>
+        /// Index of third vertex of the triangle.
+        /// </summary>
         public int vertexIndexC;
+        /// <summary>
+        /// Int array storing the vertices of the triangle.
+        /// </summary>
         int[] vertices;
 
         public Triangle(int a, int b, int c)
@@ -370,6 +386,11 @@ public class DungeonMeshGen : MonoBehaviour
             vertices[1] = b;
             vertices[2] = c;
         }
+        /// <summary>
+        /// Returns the vertex in the position of the array of the parameter passed in.
+        /// </summary>
+        /// <param name="i">The location in the array where the desired vertex of the triangle is stored.</param>
+        /// <returns>A vertex of the triangle.</returns>
         public int this[int i]
         {
             get
@@ -377,6 +398,11 @@ public class DungeonMeshGen : MonoBehaviour
                 return vertices[i];
             }
         }
+        /// <summary>
+        /// Checks if a triangle contains a certain vertex.
+        /// </summary>
+        /// <param name="vertexIndex">The index of the vertex in the list of all vertices to be compared with the index of each vertice of the triangle.</param>
+        /// <returns>Whether or not the triangle contains the vertex.</returns>
         public bool Contains(int vertexIndex)
         {
             return vertexIndex == vertexIndexA || vertexIndex == vertexIndexB || vertexIndex == vertexIndexC;
