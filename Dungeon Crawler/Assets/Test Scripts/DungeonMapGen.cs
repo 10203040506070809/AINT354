@@ -249,6 +249,29 @@ public class DungeonMapGen : MonoBehaviour
         Room.ConnectRooms(roomA, roomB);
         Debug.DrawLine(CoordToWorldPoint(tileA), CoordToWorldPoint(tileB), Color.green, 100);
         Debug.Log("here");
+        List<Coord> line = GetLine(tileA, tileB);
+        foreach (Coord c in line)
+        {
+            DrawCircle(c, 5);
+        }
+    }
+    void DrawCircle(Coord c, int r)
+    {
+        for (int x = -r; x <= r; x++)
+        {
+            for (int y = -r; y <= r; y++)
+            {
+                if (x * x + y * y <= r * r)
+                {
+                    int drawX = c.tileX + x;
+                    int drawY = c.tileY + y;
+                    if (IsInMapRange(drawX, drawY))
+                    {
+                        m_map[drawX, drawY] = 0;
+                    }
+                }
+            }
+        }
     }
     /// <summary>
     /// Gets a list of points relating to map tiles which fall on a line between the passed in parameters.
