@@ -249,24 +249,37 @@ public class DungeonMapGen : MonoBehaviour
         Room.ConnectRooms(roomA, roomB);
         Debug.DrawLine(CoordToWorldPoint(tileA), CoordToWorldPoint(tileB), Color.green, 100);
         Debug.Log("here");
+        /// Gets the set of coordinates which fall on the line between two rooms.
         List<Coord> line = GetLine(tileA, tileB);
+        /// Loops through each coordinate in a line and sets tiles within a radius of each coordinate to air.
         foreach (Coord c in line)
         {
             DrawCircle(c, 5);
         }
     }
+    /// <summary>
+    /// Checks a radius around a point and sets every tile within the radius to be air.
+    /// </summary>
+    /// <param name="c">The centre of the circle.</param>
+    /// <param name="r">The radius of the circle.</param>
     void DrawCircle(Coord c, int r)
     {
+        /// Loops through x values within the radius.
         for (int x = -r; x <= r; x++)
         {
+            /// Loops through y values within the radius.
             for (int y = -r; y <= r; y++)
             {
+                /// Checks if the coordinate is within the radius.
                 if (x * x + y * y <= r * r)
                 {
+                    /// Generates the new coordinate within the radius.
                     int drawX = c.tileX + x;
                     int drawY = c.tileY + y;
+                    /// Checks if the coordinate is within the map.
                     if (IsInMapRange(drawX, drawY))
                     {
+                        /// Sets the tile to be air.
                         m_map[drawX, drawY] = 0;
                     }
                 }
