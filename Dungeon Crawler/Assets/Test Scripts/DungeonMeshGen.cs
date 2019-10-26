@@ -8,23 +8,23 @@ public class DungeonMeshGen : MonoBehaviour
     /// <summary>
     /// List of vertices for mesh rendering.
     /// </summary>
-    List<Vector3> vertices;
+    private List<Vector3> vertices;
     /// <summary>
     /// List of triangles for mesh rendering.
     /// </summary>
-    List<int> triangles;
+    private List<int> triangles;
     /// <summary>
     /// A dictionary which contains lists of triangle which share a common vertex.
     /// </summary>
-    Dictionary<int, List<Triangle>> triangleDictionary = new Dictionary<int, List<Triangle>>();
+    private Dictionary<int, List<Triangle>> triangleDictionary = new Dictionary<int, List<Triangle>>();
     /// <summary>
     /// A list of outlines. Each inner list contains the indeces of the vertices which make up the outline.
     /// </summary>
-    List<List<int>> outlines = new List<List<int>>();
+    private List<List<int>> outlines = new List<List<int>>();
     /// <summary>
     /// A list of vertices which have been checked whether they are part of an outline or not.
     /// </summary>
-    HashSet<int> checkedVertices = new HashSet<int>();
+    private HashSet<int> checkedVertices = new HashSet<int>();
     public MeshFilter walls;
     /// <summary>
     /// Takes in the values from DungeonMapGen and passes them into the SquareGrid constructor.
@@ -65,7 +65,7 @@ public class DungeonMeshGen : MonoBehaviour
     /// <summary>
     /// Calls the necessary function to generate wall outlines then adds the vertices which make up the outlines to lists which will be fed into the mesh renderer.
     /// </summary>
-    void CreateWallMesh()
+    private void CreateWallMesh()
     {
         CalculateMeshOutlines();
         /// List of vertices which will make up the wall mesh.
@@ -103,7 +103,7 @@ public class DungeonMeshGen : MonoBehaviour
         walls.mesh = wallMesh;
     }
 
-    void TriangulateSquare(Square square)
+    private void TriangulateSquare(Square square)
     {
         /// Switch statement based on square configuration (which control nodes are active).
         switch (square.configuration)
@@ -174,7 +174,7 @@ public class DungeonMeshGen : MonoBehaviour
     /// Creates the correct number of triangles based on how many nodes are active in the square.
     /// </summary>
     /// <param name="points">The array of points passed in based on the configuration of the square.</param>
-    void MeshFromPoints(params Node[] points)
+    private void MeshFromPoints(params Node[] points)
     {
         AssignVertices(points);
         /// Checks how many points are needed for each possible configuration. 3 points need 1 trianlge, 4 points need 2 triangles, 5 points need 3 triangles and so on.
@@ -191,7 +191,7 @@ public class DungeonMeshGen : MonoBehaviour
     /// Assigns the vertex index of the node based on how many vertices have already been assigned. Also adds the position variable of the node to the vertices list.
     /// </summary>
     /// <param name="points">The array of points passed in based on the configuration of the square.</param>
-    void AssignVertices(Node[] points)
+    private void AssignVertices(Node[] points)
     {
         /// Loops through the points of the configuration for the square and assigns each vertex to a list.
         for (int i = 0; i < points.Length; i++)
@@ -212,7 +212,7 @@ public class DungeonMeshGen : MonoBehaviour
     /// <param name="a">First vertex of the triangle.</param>
     /// <param name="b">Second vertex of the triangle.</param>
     /// <param name="c">Third vertex of the triangle.</param>
-    void CreateTriangle(Node a, Node b, Node c)
+    private void CreateTriangle(Node a, Node b, Node c)
     {
         triangles.Add(a.vertexIndex);
         triangles.Add(b.vertexIndex);
@@ -228,7 +228,7 @@ public class DungeonMeshGen : MonoBehaviour
     /// </summary>
     /// <param name="vertexIndexKey">One vertex of the triangle.</param>
     /// <param name="triangle">The triangle the vertex belongs to.</param>
-    void AddTriangleToDictionary(int vertexIndexKey, Triangle triangle)
+    private void AddTriangleToDictionary(int vertexIndexKey, Triangle triangle)
     {
         /// If the vertex has already been identified, it adds the new triangle to list which contains the given vertex.
         if (triangleDictionary.ContainsKey(vertexIndexKey))
@@ -246,7 +246,7 @@ public class DungeonMeshGen : MonoBehaviour
     /// <summary>
     /// Checks every vertex to see if it is part of an outline. If it is, it then traces the outline and populates the outlines list with the vertices which make up the outline.
     /// </summary>
-    void CalculateMeshOutlines()
+    private void CalculateMeshOutlines()
     {
         /// Loops through every vertex in the vertices list.
         for (int vertexIndex = 0; vertexIndex < vertices.Count; vertexIndex++)
@@ -278,7 +278,7 @@ public class DungeonMeshGen : MonoBehaviour
     /// </summary>
     /// <param name="vertexIndex">The vertex to be checked and possibly added to the list of outline vertices.</param>
     /// <param name="outlineIndex">Which outline in 'outlines' is being traced by the function.</param>
-    void FollowOutline(int vertexIndex, int outlineIndex)
+    private void FollowOutline(int vertexIndex, int outlineIndex)
     {
         /// Adds the vertex to its corresponding outline.
         outlines[outlineIndex].Add(vertexIndex);
@@ -297,7 +297,7 @@ public class DungeonMeshGen : MonoBehaviour
     /// </summary>
     /// <param name="vertexIndex">The triangle vertex being tested.</param>
     /// <returns>Returns the corresponding vertex if it forms an edge or returns -1 if it doesn't.</returns>
-    int GetConnectedOutlineVertex(int vertexIndex)
+    private int GetConnectedOutlineVertex(int vertexIndex)
     {
         /// Creates a list of triangle which contain the passed in vertex.
         List<Triangle> trianglesContainingVertex = triangleDictionary[vertexIndex];
@@ -330,7 +330,7 @@ public class DungeonMeshGen : MonoBehaviour
     /// <param name="vertexA">One vertex of the line being checked.</param>
     /// <param name="vertexB">The second vertex of the line being checked.</param>
     /// <returns>Returns a bool stating whether or not the two parameters form an outline edge.</returns>
-    bool IsOutlineEdge(int vertexA, int vertexB)
+    private bool IsOutlineEdge(int vertexA, int vertexB)
     {
         /// List of triangles containing vertexA;
         List<Triangle> trianglesContainingVertexA = triangleDictionary[vertexA];
@@ -353,7 +353,7 @@ public class DungeonMeshGen : MonoBehaviour
         }
         return sharedTriangleCount == 1;
     }
-    struct Triangle
+    private struct Triangle
     {
         public int vertexIndexA;
         public int vertexIndexB;
