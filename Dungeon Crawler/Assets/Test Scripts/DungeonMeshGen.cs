@@ -4,28 +4,28 @@ using UnityEngine;
 
 public class DungeonMeshGen : MonoBehaviour
 {
-    public SquareGrid squareGrid;
+    public SquareGrid m_squareGrid;
     /// <summary>
     /// List of vertices for mesh rendering.
     /// </summary>
-    private List<Vector3> vertices;
+    private List<Vector3> m_vertices;
     /// <summary>
     /// List of triangles for mesh rendering.
     /// </summary>
-    private List<int> triangles;
+    private List<int> m_triangles;
     /// <summary>
     /// A dictionary which contains lists of triangle which share a common vertex.
     /// </summary>
-    private Dictionary<int, List<Triangle>> triangleDictionary = new Dictionary<int, List<Triangle>>();
+    private Dictionary<int, List<Triangle>> m_triangleDictionary = new Dictionary<int, List<Triangle>>();
     /// <summary>
     /// A list of outlines. Each inner list contains the indeces of the vertices which make up the outline.
     /// </summary>
-    private List<List<int>> outlines = new List<List<int>>();
+    private List<List<int>> m_outlines = new List<List<int>>();
     /// <summary>
     /// A list of vertices which have been checked whether they are part of an outline or not.
     /// </summary>
-    private HashSet<int> checkedVertices = new HashSet<int>();
-    public MeshFilter walls;
+    private HashSet<int> m_checkedVertices = new HashSet<int>();
+    public MeshFilter m_walls;
     /// <summary>
     /// Takes in the values from DungeonMapGen and passes them into the SquareGrid constructor.
     /// </summary>
@@ -34,20 +34,20 @@ public class DungeonMeshGen : MonoBehaviour
     public void GenerateMesh(int[,] map, float squareSize)
     {
         /// Clears these variables upon each new map generation.
-        triangleDictionary.Clear();
-        outlines.Clear();
-        checkedVertices.Clear();
-        squareGrid = new SquareGrid(map, squareSize);
+        m_triangleDictionary.Clear();
+        m_outlines.Clear();
+        m_checkedVertices.Clear();
+        m_squareGrid = new SquareGrid(map, squareSize);
         /// Initialises vertices list.
-        vertices = new List<Vector3>();
+        m_vertices = new List<Vector3>();
         /// Initialises triangles list.
-        triangles = new List<int>();
+        m_triangles = new List<int>();
         /// Loops through every square in squareGrid.
-        for (int x = 0; x < squareGrid.squares.GetLength(0); x++)
+        for (int x = 0; x < m_squareGrid.squares.GetLength(0); x++)
         {
-            for (int y = 0; y < squareGrid.squares.GetLength(1); y++)
+            for (int y = 0; y < m_squareGrid.squares.GetLength(1); y++)
             {
-                TriangulateSquare(squareGrid.squares[x, y]);
+                TriangulateSquare(m_squareGrid.squares[x, y]);
             }
         }
         /// Creates a new mesh for the map.
@@ -55,9 +55,9 @@ public class DungeonMeshGen : MonoBehaviour
         /// Assigns the newly created mesh to the mesh component of MeshFilter.
         GetComponent<MeshFilter>().mesh = mesh;
         /// Converts the list of vertices to an array and assigns it to the mesh.
-        mesh.vertices = vertices.ToArray();
+        mesh.vertices = m_vertices.ToArray();
         /// Converts the list of triangles to an array and assigns it to the mesh.
-        mesh.triangles = triangles.ToArray();
+        mesh.triangles = m_triangles.ToArray();
         mesh.RecalculateNormals();
 
         CreateWallMesh();
@@ -77,17 +77,17 @@ public class DungeonMeshGen : MonoBehaviour
         /// Set wall height.
         float wallHeight = 5;
         /// Loops through each list of vertices in outlines.
-        foreach (List<int> outline in outlines)
+        foreach (List<int> outline in m_outlines)
         {
             /// Loops through each vertex in the list.
             for (int i = 0; i < outline.Count - 1; i++)
             {
                 int startIndex = wallVertices.Count;
                 /// Adds the vertices to the lists which will make up the wall mesh.
-                wallVertices.Add(vertices[outline[i]]); // left
-                wallVertices.Add(vertices[outline[i + 1]]); // right
-                wallVertices.Add(vertices[outline[i]] - Vector3.up * wallHeight); // bottom left
-                wallVertices.Add(vertices[outline[i + 1]] - Vector3.up * wallHeight); // bottom right
+                wallVertices.Add(m_vertices[outline[i]]); // left
+                wallVertices.Add(m_vertices[outline[i + 1]]); // right
+                wallVertices.Add(m_vertices[outline[i]] - Vector3.up * wallHeight); // bottom left
+                wallVertices.Add(m_vertices[outline[i + 1]] - Vector3.up * wallHeight); // bottom right
 
                 wallTriangles.Add(startIndex + 0);
                 wallTriangles.Add(startIndex + 2);
@@ -101,9 +101,12 @@ public class DungeonMeshGen : MonoBehaviour
         /// Adds the necessary arrays to the mesh.
         wallMesh.vertices = wallVertices.ToArray();
         wallMesh.triangles = wallTriangles.ToArray();
-        walls.mesh = wallMesh;
+        m_walls.mesh = wallMesh;
     }
-
+    /// <summary>
+    /// Takes in the configuration of the square and defines triangles which will make up the mesh for the square.
+    /// </summary>
+    /// <param name="square">The square's configuration to be represented as triangles.</param>
     private void TriangulateSquare(Square square)
     {
         /// Switch statement based on square configuration (which control nodes are active).
@@ -164,10 +167,10 @@ public class DungeonMeshGen : MonoBehaviour
             case 15:
                 MeshFromPoints(square.topLeft, square.topRight, square.bottomRight, square.bottomLeft);
                 /// Forms a solid wall so will not be outline vertices.
-                checkedVertices.Add(square.topLeft.vertexIndex);
-                checkedVertices.Add(square.topRight.vertexIndex);
-                checkedVertices.Add(square.bottomRight.vertexIndex);
-                checkedVertices.Add(square.bottomLeft.vertexIndex);
+                m_checkedVertices.Add(square.topLeft.vertexIndex);
+                m_checkedVertices.Add(square.topRight.vertexIndex);
+                m_checkedVertices.Add(square.bottomRight.vertexIndex);
+                m_checkedVertices.Add(square.bottomLeft.vertexIndex);
                 break;
         }
     }
@@ -201,9 +204,9 @@ public class DungeonMeshGen : MonoBehaviour
             if (points[i].vertexIndex == -1)
             {
                 /// Assigns the vertex index to the size of the vertices list. For example, the list will be initialised with 0 values so the first vertexIndex will also be 0.
-                points[i].vertexIndex = vertices.Count;
+                points[i].vertexIndex = m_vertices.Count;
                 /// Adds the Vector3 component of the node to the vertices list.
-                vertices.Add(points[i].position);
+                m_vertices.Add(points[i].position);
             }
         }
     }
@@ -215,9 +218,9 @@ public class DungeonMeshGen : MonoBehaviour
     /// <param name="c">Third vertex of the triangle.</param>
     private void CreateTriangle(Node a, Node b, Node c)
     {
-        triangles.Add(a.vertexIndex);
-        triangles.Add(b.vertexIndex);
-        triangles.Add(c.vertexIndex);
+        m_triangles.Add(a.vertexIndex);
+        m_triangles.Add(b.vertexIndex);
+        m_triangles.Add(c.vertexIndex);
 
         Triangle triangle = new Triangle(a.vertexIndex, b.vertexIndex, c.vertexIndex);
         AddTriangleToDictionary(triangle.vertexIndexA, triangle);
@@ -232,16 +235,16 @@ public class DungeonMeshGen : MonoBehaviour
     private void AddTriangleToDictionary(int vertexIndexKey, Triangle triangle)
     {
         /// If the vertex has already been identified, it adds the new triangle to list which contains the given vertex.
-        if (triangleDictionary.ContainsKey(vertexIndexKey))
+        if (m_triangleDictionary.ContainsKey(vertexIndexKey))
         {
-            triangleDictionary[vertexIndexKey].Add(triangle);
+            m_triangleDictionary[vertexIndexKey].Add(triangle);
         }
         /// If the vertex has not already been identified, it adds the new triangle to a new list which contains the given vertex.
         else
         {
             List<Triangle> triangleList = new List<Triangle>();
             triangleList.Add(triangle);
-            triangleDictionary.Add(vertexIndexKey, triangleList);
+            m_triangleDictionary.Add(vertexIndexKey, triangleList);
         }
     }
     /// <summary>
@@ -250,10 +253,10 @@ public class DungeonMeshGen : MonoBehaviour
     private void CalculateMeshOutlines()
     {
         /// Loops through every vertex in the vertices list.
-        for (int vertexIndex = 0; vertexIndex < vertices.Count; vertexIndex++)
+        for (int vertexIndex = 0; vertexIndex < m_vertices.Count; vertexIndex++)
         {
             /// Checks whether the vertex has been verified to be part of an outline.
-            if (!checkedVertices.Contains(vertexIndex))
+            if (!m_checkedVertices.Contains(vertexIndex))
             {
                 /// Passes in the vertex to see if it's part of an outline.
                 int newOutlineVertex = GetConnectedOutlineVertex(vertexIndex);
@@ -261,15 +264,15 @@ public class DungeonMeshGen : MonoBehaviour
                 if (newOutlineVertex != -1)
                 {
                     /// The vertex has no been checked so is added to the list of checked vertices.
-                    checkedVertices.Add(vertexIndex);
+                    m_checkedVertices.Add(vertexIndex);
                     /// The vertex will be part of an outline consisting of multiple other vertices so a list containing these vertices is created.
                     List<int> newOutline = new List<int>();
                     newOutline.Add(vertexIndex);
                     /// Adds the list to outlines.
-                    outlines.Add(newOutline);
+                    m_outlines.Add(newOutline);
                     /// Recursive function to list each vertex in an outline.
-                    FollowOutline(newOutlineVertex, outlines.Count - 1);
-                    outlines[outlines.Count - 1].Add(vertexIndex);
+                    FollowOutline(newOutlineVertex, m_outlines.Count - 1);
+                    m_outlines[m_outlines.Count - 1].Add(vertexIndex);
                 }
             }
         }
@@ -282,9 +285,9 @@ public class DungeonMeshGen : MonoBehaviour
     private void FollowOutline(int vertexIndex, int outlineIndex)
     {
         /// Adds the vertex to its corresponding outline.
-        outlines[outlineIndex].Add(vertexIndex);
+        m_outlines[outlineIndex].Add(vertexIndex);
         /// Adds the vertex to the hashset of checked vertices.
-        checkedVertices.Add(vertexIndex);
+        m_checkedVertices.Add(vertexIndex);
         /// Checks if the next connected vertex is part of the outline.
         int nextVertexIndex = GetConnectedOutlineVertex(vertexIndex);
         /// Function calls itself until the outline is complete.
@@ -301,7 +304,7 @@ public class DungeonMeshGen : MonoBehaviour
     private int GetConnectedOutlineVertex(int vertexIndex)
     {
         /// Creates a list of triangle which contain the passed in vertex.
-        List<Triangle> trianglesContainingVertex = triangleDictionary[vertexIndex];
+        List<Triangle> trianglesContainingVertex = m_triangleDictionary[vertexIndex];
         /// Loops through every triangle which contains the passed in vertex.
         for (int i = 0; i < trianglesContainingVertex.Count; i++)
         {
@@ -312,7 +315,7 @@ public class DungeonMeshGen : MonoBehaviour
             {
                 int vertexB = triangle[j];
                 /// Check to avoid comparing the vertex against itself.
-                if (vertexB != vertexIndex && !checkedVertices.Contains(vertexB))
+                if (vertexB != vertexIndex && !m_checkedVertices.Contains(vertexB))
                 {
                     if (IsOutlineEdge(vertexIndex, vertexB))
                     {
@@ -334,7 +337,7 @@ public class DungeonMeshGen : MonoBehaviour
     private bool IsOutlineEdge(int vertexA, int vertexB)
     {
         /// List of triangles containing vertexA;
-        List<Triangle> trianglesContainingVertexA = triangleDictionary[vertexA];
+        List<Triangle> trianglesContainingVertexA = m_triangleDictionary[vertexA];
         /// How many triangles share the given vertices.
         int sharedTriangleCount = 0;
         /// Loops through every triangle which contains vertexA.
