@@ -92,11 +92,6 @@ public class PlayerMovement : CharacterMovement
             transform.rotation = Quaternion.LookRotation(m_moveVector);
         }
     }
-
-    private void CreateDust()
-    {
-        dust.Play();
-    }
    
 
 }
