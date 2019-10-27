@@ -24,4 +24,10 @@ public class TitleScreenManager : MonoBehaviour
         Debug.Log("Application closed.");
 #endif
     }
+
+    public void OnNewGamePress()
+    {
+
+    }
+
 }
