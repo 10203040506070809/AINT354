@@ -4,19 +4,36 @@ using UnityEngine;
 
 public class Obstructable : MonoBehaviour
 {
-    private Color m_transparantColour;
+    /// <summary>
+    /// A variable denoting the transparant colour of an obstruction.
+    /// </summary>
+    private Color m_transparentColour;
+    /// <summary>
+    /// A variable denoting the original colour of an obstruction.
+    /// </summary>
     private Color m_originalColour;
+    /// <summary>
+    /// A variable to hold the renderer of an obstruction.
+    /// </summary>
     private Renderer renderer;
+    /// <summary>
+    /// A method which occurs when the application begins.
+    /// </summary>
     private void Start()
     {
         renderer = GetComponent<Renderer>();
         m_originalColour = renderer.material.color;
     }
-
-    public void SetTransparant()
+    /// <summary>
+    /// Sets the obstructions colour to transparent.
+    /// </summary>
+    public void SetTransparent()
     {
-        renderer.material.color = m_transparantColour;
+        renderer.material.color = m_transparentColour;
     }
+    /// <summary>
+    /// Sets the obstructions colour to transparent.
+    /// </summary>
     public void SetNormal()
     {
         renderer.material.color = m_originalColour;

@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// Made using Filmstorms tutorial, 'Create an Open World Movement System in Unity C#'
-/// </summary>
+
 [RequireComponent(typeof(CharacterStats), typeof(CharacterController))]
 public class PlayerMovement : CharacterMovement
 {
@@ -13,34 +11,33 @@ public class PlayerMovement : CharacterMovement
     /// </summary>
     private CharacterStats m_myStats;
     /// <summary>
-    /// 
+    /// A reference to the character controller attached to the player.
     /// </summary>
     private CharacterController m_characterController;
     /// <summary>
-    /// 
+    /// A reference to the animator attached to the player.
     /// </summary>
     private Animator m_animator;
     /// <summary>
-    /// 
+    /// A reference to a float used to denote speed. Should be overriden by the players' movement stat.
     /// </summary>
     [SerializeField] private float m_speed;
     /// <summary>
-    /// 
+    /// An input for an x value that is used for players' horizontal movement.
     /// </summary>
     [SerializeField] private float m_inputX;
     /// <summary>
-    /// 
+    /// An input for a z value that is used for players' vertical movement.
     /// </summary>
     [SerializeField] private float m_inputZ;
     /// <summary>
-    /// 
+    /// A variable that's used to ground the player.
     /// </summary>
     private float m_verticalVelocity;
     /// <summary>
-    /// 
+    /// A movement vector for the players' movement.
     /// </summary>
-    private Vector3 m_moveVector;
-    
+    private Vector3 m_moveVector; 
     /// <summary>
     /// Start is called before the first frame update
     /// </summary>
@@ -63,12 +60,13 @@ public class PlayerMovement : CharacterMovement
     public void FixedUpdate()
     {
        
-
+        ///If the player is grounded, do this.
         if (m_characterController.isGrounded)
         {
             m_verticalVelocity -= 0;
             //Debug.Log("Grounded.");
         }
+        ///Otherwise, do this. Note, this is not an else statement in case of edge cases.
         if (!m_characterController.isGrounded)
         {
 
@@ -80,7 +78,7 @@ public class PlayerMovement : CharacterMovement
         Move();
     }
     /// <summary>
-    /// 
+    /// Moves the player based on input.
     /// </summary>
     public override void Move()
     {
