@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TitleScreenManager : MonoBehaviour
 {
@@ -14,5 +15,13 @@ public class TitleScreenManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void OnQuitPress()
+    {
+        Application.Quit();
+#if UNITY_EDITOR
+        Debug.Log("Application closed.");
+#endif
     }
 }
