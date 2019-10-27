@@ -212,6 +212,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &79389745 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 5f9035085295f0a4292f68ad4c814eb5,
+    type: 3}
+  m_PrefabInstance: {fileID: 1251680510}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &79389750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 79389745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92586574039db4e4a824d284257abd3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &668182982
 GameObject:
   m_ObjectHideFlags: 0
@@ -224,6 +242,7 @@ GameObject:
   - component: {fileID: 668182985}
   - component: {fileID: 668182984}
   - component: {fileID: 668182983}
+  - component: {fileID: 668182987}
   m_Layer: 0
   m_Name: testroof
   m_TagString: Untagged
@@ -261,7 +280,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: bb094cbf74c1ad1458249a5f820d9a39, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -304,6 +323,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &668182987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 668182982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92586574039db4e4a824d284257abd3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &670540800
 GameObject:
   m_ObjectHideFlags: 0
@@ -441,6 +472,7 @@ GameObject:
   - component: {fileID: 721254458}
   - component: {fileID: 721254457}
   - component: {fileID: 721254456}
+  - component: {fileID: 721254459}
   m_Layer: 0
   m_Name: MainCamera
   m_TagString: MainCamera
@@ -526,6 +558,19 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &721254459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 721254454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ee47fec5a80eec4681ba4c70600731e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 8296172669243822882}
 --- !u!1001 &1251680510
 PrefabInstance:
   m_ObjectHideFlags: 0
