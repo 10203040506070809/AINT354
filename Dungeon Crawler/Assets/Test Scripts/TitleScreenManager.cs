@@ -33,4 +33,8 @@ public class TitleScreenManager : MonoBehaviour
     {
 
     }
+    public void OnOptionsPress()
+    {
+
+    }
 }
