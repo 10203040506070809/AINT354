@@ -1,19 +1,9 @@
 fileFormatVersion: 2
-guid: 5f9035085295f0a4292f68ad4c814eb5
+guid: 46907ba72698d76438648740ca6538c1
 ModelImporter:
   serializedVersion: 26
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Tree_Leaf
-    second: {fileID: 2100000, guid: 26656ae0b55e77c4d910011b21a7cc8b, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Tree_Trunk
-    second: {fileID: 2100000, guid: cbb40f10e9abb114997bab3b910cdace, type: 2}
+  externalObjects: {}
   materials:
     importMaterials: 1
     materialName: 0
@@ -46,7 +36,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 1
+    addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
     importVisibility: 1
