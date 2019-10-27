@@ -29,5 +29,8 @@ public class TitleScreenManager : MonoBehaviour
     {
 
     }
+    public void OnContinuePress()
+    {
 
+    }
 }
