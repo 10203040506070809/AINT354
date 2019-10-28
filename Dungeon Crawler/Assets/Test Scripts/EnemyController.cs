@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyMovement : CharacterMovement
+public class EnemyController : CharacterMovement
 {
     /// <summary>
     /// 
@@ -17,12 +17,12 @@ public class EnemyMovement : CharacterMovement
     /// </summary>
     public void Update()
     {
-        Move();
+        
     }
 
-    public override void Move()
+    public void Move()
     {
-        base.Move();
+        
     }
 
 
