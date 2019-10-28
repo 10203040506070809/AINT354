@@ -13,7 +13,8 @@ public class EnemyController : CharacterMovement
     /// </summary>
     void Start()
     {
-        
+       
+        m_navMeshAgent = GetComponent<NavMeshAgent>();
     }
 
     /// <summary>
@@ -21,13 +22,17 @@ public class EnemyController : CharacterMovement
     /// </summary>
     public void Update()
     {
-        
+
     }
 
-    public void Move()
+    public override void Move()
     {
-        
+        float distance = Vector3.Distance(m_target.transform.position, transform.position);
+        if (distance <= m_lookRadius)
+        {
+            m_navMeshAgent.SetDestination(m_target.transform.position);
+        }
     }
 
-
+    
 }
