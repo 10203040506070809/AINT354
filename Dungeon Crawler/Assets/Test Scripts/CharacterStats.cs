@@ -119,4 +119,8 @@ public class CharacterStats : MonoBehaviour
     {
         return m_movementSpeed.GetValue();
     }
+    public virtual void Attack()
+    {
+
+    }
 }

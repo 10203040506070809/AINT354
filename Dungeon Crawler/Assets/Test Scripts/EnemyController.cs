@@ -35,7 +35,7 @@ public class EnemyController : CharacterMovement
             if(distance <= m_navMeshAgent.stoppingDistance)
             {
                 ///Do attack
-
+                Attack();
                 ///Face target
                 FaceTarget();
             }
@@ -50,6 +50,14 @@ public class EnemyController : CharacterMovement
     
     private void FaceTarget()
     {
+        Vector3 direction = (m_target.transform.position - transform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+    }
 
+    private void Attack()
+    {
+        CharacterStats enemyStats = m_target.GetComponent<CharacterStats>();
+        CharacterStats myStats = this.GetComponent<CharacterStats>();
     }
 }
