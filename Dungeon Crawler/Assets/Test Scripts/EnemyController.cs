@@ -31,6 +31,14 @@ public class EnemyController : CharacterMovement
         if (distance <= m_lookRadius)
         {
             m_navMeshAgent.SetDestination(m_target.transform.position);
+
+            if(distance <= m_navMeshAgent.stoppingDistance)
+            {
+                ///Do attack
+
+                ///Face target
+                FaceTarget();
+            }
         }
     }
 
@@ -38,5 +46,10 @@ public class EnemyController : CharacterMovement
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, m_lookRadius);
+    }
+    
+    private void FaceTarget()
+    {
+
     }
 }
