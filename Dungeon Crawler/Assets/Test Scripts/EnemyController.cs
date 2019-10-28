@@ -22,7 +22,7 @@ public class EnemyController : CharacterMovement
     /// </summary>
     public void Update()
     {
-
+        Move();
     }
 
     public override void Move()
@@ -34,5 +34,9 @@ public class EnemyController : CharacterMovement
         }
     }
 
-    
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, m_lookRadius);
+    }
 }
