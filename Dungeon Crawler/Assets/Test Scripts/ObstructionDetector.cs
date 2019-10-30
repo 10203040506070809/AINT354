@@ -49,7 +49,10 @@ public class ObstructionDetector : MonoBehaviour
                 }
                 else
                 {
-                    m_lastObstructable.SetNormal();
+                    if (m_lastObstructable != null)
+                    {
+                        m_lastObstructable.SetNormal();
+                    }
                 }
             }
         }

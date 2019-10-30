@@ -54,6 +54,7 @@ public class CharacterStats : MonoBehaviour
     /// </summary>
     [SerializeField] protected Stat m_experience;
 
+    [SerializeField] protected Stat m_attackSpeed;
     /// <summary>
     /// A method which is called when the script is loaded. It calculates the entities stats.
     /// </summary>
@@ -118,5 +119,21 @@ public class CharacterStats : MonoBehaviour
     public float GetMovementSpeed()
     {
         return m_movementSpeed.GetValue();
+    }
+    public float GetAttack()
+    {
+        return m_damage.GetValue();
+    }
+    public float GetArmour()
+    {
+        return m_armour.GetValue();
+    }
+    public float GetAttackSpeed()
+    {
+        return m_attackSpeed.GetValue();
+    }
+    public float SetAttackSpeed(int input)
+    {
+        return m_attackSpeed.SetValue(input);
     }
 }

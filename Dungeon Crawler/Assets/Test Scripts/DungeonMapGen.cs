@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 public class DungeonMapGen : MonoBehaviour
 {
-    [SerializeField] private NavMeshSurface m_surface;
+    public NavMeshSurface m_surface;
     /// <summary>
     /// Map width.
     /// </summary>
@@ -38,6 +38,7 @@ public class DungeonMapGen : MonoBehaviour
     {
         GenerateMap();
         m_surface.BuildNavMesh();
+        
     }
 
     private void GenerateMap()
