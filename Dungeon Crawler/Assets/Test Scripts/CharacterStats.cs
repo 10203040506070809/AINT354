@@ -104,7 +104,7 @@ public class CharacterStats : MonoBehaviour
         //Die in some way
         //Meant to be overriden
         Debug.Log(transform.name + " died.");
-
+        Debug.Log("Aight imma head out.");
         Destroy(gameObject);
     }
 

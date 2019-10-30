@@ -63,8 +63,11 @@ public class EnemyController : CharacterMovement
         int attackSpeed = (int)myStats.GetAttackSpeed();
         if (m_lastAttacked >= attackSpeed)
         {
-            targetStats.TakeDamage((int)(myStats.GetAttack() - myStats.GetArmour()));
+            ///Clamps the value of the armour between 0 and the value of the targets armour
+            targetStats.TakeDamage((int)(myStats.GetAttack() - (Mathf.Clamp(myStats.GetArmour(), 0, myStats.GetArmour()))));
             m_lastAttacked = 0;
+            //Do attack animation
+            
             //Debug.Log("Attacked - " + m_lastAttacked);
         }
         else

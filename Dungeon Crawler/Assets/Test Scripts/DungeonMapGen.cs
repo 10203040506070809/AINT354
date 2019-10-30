@@ -473,6 +473,7 @@ public class DungeonMapGen : MonoBehaviour
         if (m_useRandomSeed)
         {
             m_seed = Time.time.ToString();
+            Debug.Log(m_seed);
         }
         System.Random pseudoRandom = new System.Random(m_seed.GetHashCode());
         /// Cycles through the map matrix.
