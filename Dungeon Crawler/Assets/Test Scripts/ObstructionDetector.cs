@@ -7,7 +7,7 @@ public class ObstructionDetector : MonoBehaviour
     /// <summary>
     /// A variable to store a reference to the player.
     /// </summary>
-    [SerializeField] private GameObject player;
+    [SerializeField] private GameObject player = null;
     /// <summary>
     /// A variable to store the last obstruction.
     /// </summary>

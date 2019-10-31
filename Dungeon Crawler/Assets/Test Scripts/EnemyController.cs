@@ -5,8 +5,8 @@ using UnityEngine.AI;
 
 public class EnemyController : CharacterMovement
 {
-    [SerializeField] private float m_lookRadius;
-    [SerializeField] private GameObject m_target;
+    [SerializeField] private float m_lookRadius = 0;
+    [SerializeField] private GameObject m_target = null;
     private float m_lastAttacked;
     private NavMeshAgent m_navMeshAgent;
     

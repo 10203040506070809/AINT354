@@ -15,7 +15,7 @@ public class Obstructable : MonoBehaviour
     /// <summary>
     /// A variable to hold the renderer of an obstruction.
     /// </summary>
-    private Renderer renderer;
+    private new Renderer renderer = null;
     /// <summary>
     /// A method which occurs when the application begins.
     /// </summary>
