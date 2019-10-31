@@ -398,7 +398,7 @@ Transform:
   m_GameObject: {fileID: 2222576119426680166}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.479, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 10, y: 10, z: 10}
   m_Children:
   - {fileID: 1453957115139292411}
   - {fileID: 1278554321923183574}
@@ -455,6 +455,8 @@ MonoBehaviour:
   m_gold:
     m_baseValue: 0
   m_experience:
+    m_baseValue: 0
+  m_attackSpeed:
     m_baseValue: 0
 --- !u!114 &2222576119426680160
 MonoBehaviour:
@@ -632,7 +634,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -876546973899608171, guid: 93d27a7f4db8ded45b605302bc6d7a8e, type: 3}
+  - {fileID: 2100000, guid: 05b0354924844564d80409d06415db09, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1577,6 +1579,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1453957115139292411}
+  - component: {fileID: 940234012}
   m_Layer: 0
   m_Name: Armature
   m_TagString: Untagged
@@ -1604,6 +1607,20 @@ Transform:
   m_Father: {fileID: 2919305543030372213}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!64 &940234012
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7796376905792902131}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 0}
 --- !u!1 &7882999938770104498
 GameObject:
   m_ObjectHideFlags: 0
