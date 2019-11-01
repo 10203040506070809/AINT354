@@ -14,9 +14,9 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField] private float m_maxDistance = 0;
 
     /// <summary>
-    /// Called at the same time once per frame. Checks in a direction for  an interactable object.
+    /// Checks in a direction for  an interactable object.
     /// </summary>
-    private void FixedUpdate()
+    private void Update()
     {
         ///This is being checked during FixedUpdate as without this, the forward direction of the player is only counted at start time.
         m_direction = transform.TransformDirection(Vector3.forward);
