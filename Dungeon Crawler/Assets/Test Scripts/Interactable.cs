@@ -10,9 +10,11 @@ public class Interactable : MonoBehaviour
         
     }
 
-    // Update is called once per frame
-    void Update()
+    /// <summary>
+    /// A method which is activated whenever a gameobject with this is interacted with. Meant to be overriden.
+    /// </summary>
+    public virtual void InteractedWith()
     {
-        
+
     }
 }
