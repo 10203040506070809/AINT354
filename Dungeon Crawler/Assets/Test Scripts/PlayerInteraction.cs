@@ -14,13 +14,6 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField] private float m_maxDistance = 0;
 
     /// <summary>
-    /// 
-    /// </summary>
-    private void Start()
-    {
-        
-    }
-    /// <summary>
     /// Called at the same time once per frame. Checks in a direction for  an interactable object.
     /// </summary>
     private void FixedUpdate()
