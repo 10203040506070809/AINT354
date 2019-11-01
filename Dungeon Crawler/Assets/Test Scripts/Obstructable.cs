@@ -7,7 +7,7 @@ public class Obstructable : MonoBehaviour
     /// <summary>
     /// A variable denoting the transparant colour of an obstruction.
     /// </summary>
-    private Color m_transparentColour;
+    private Color m_transparentColour = Color.clear;
     /// <summary>
     /// A variable denoting the original colour of an obstruction.
     /// </summary>
