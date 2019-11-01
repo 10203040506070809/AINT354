@@ -15,6 +15,6 @@ public class Interactable : MonoBehaviour
     /// </summary>
     public virtual void InteractedWith()
     {
-
+        Debug.Log("Interacted with: " + transform.name);
     }
 }

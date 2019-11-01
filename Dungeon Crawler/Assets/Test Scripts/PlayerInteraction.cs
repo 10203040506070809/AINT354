@@ -21,7 +21,7 @@ public class PlayerInteraction : MonoBehaviour
         
     }
     /// <summary>
-    /// Called at the same time once per frame. 
+    /// Called at the same time once per frame. Checks in a direction for  an interactable object.
     /// </summary>
     private void FixedUpdate()
     {
