@@ -17,6 +17,10 @@ public class GUIStatsManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        UpdateGUI();
+    }
+    void UpdateGUI()
+    {
+
     }
 }
