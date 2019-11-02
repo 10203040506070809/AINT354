@@ -11,6 +11,10 @@ public class DungeonGen : MonoBehaviour
     private List<GameObject> southConnection = new List<GameObject>();
     private List<GameObject> westConnection = new List<GameObject>();
     private GameObject startTile;
+    public GameObject justNorth;
+    public GameObject justEast;
+    public GameObject justSouth;
+    public GameObject justWest;
     public int length;
     private tile temp;
     private GameObject tempTile;
@@ -23,32 +27,51 @@ public class DungeonGen : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log(Random.Range(0,0));
         StoreTiles();
+        //Debug.Log(northConnection.Count);
         startTile = mapTiles[Random.Range(0, mapTiles.Length - 1)];
         tileList.Add(new tile(startTile, 5, 5, new Vector3(0, 0, 0), startTile.name));
         map[5, 5] = 1;
         Instantiate(tileList[Random.Range(0,tileList.Count - 1)].type, tileList[0].worldPosition, Quaternion.identity);
         //LoadSurroundingTiles(tileList[0]);
         bool changed = true;
-        while (tileList.Count < length && changed)
+        do
+        {
+            while (tileList.Count < length && changed)
+            {
+                changed = false;
+                Debug.Log("here");
+                foreach (tile itile in tileList)
+                {
+                    if (!itile.full)
+                    {
+                        Debug.Log(map);
+                        LoadSurroundingTiles(itile);
+                        changed = true;
+                    }
+                }
+                foreach (tile itile in tempTileList)
+                {
+                    tileList.Add(itile);
+                }
+                tempTileList.Clear();
+            }
+        }
+        while (tileList.Count < length);
+
+        changed = true;
+        while (changed)
         {
             changed = false;
-            Debug.Log("here");
             foreach (tile itile in tileList)
             {
                 if (!itile.full)
                 {
-                    Debug.Log("here");
-                    LoadSurroundingTiles(itile);
+                    Debug.Log(map);
+                    FinishTiles(itile);
                     changed = true;
                 }
             }
-            foreach (tile itile in tempTileList)
-            {
-                tileList.Add(itile);
-            }
-            tempTileList.Clear();
         }
 
     }
@@ -72,7 +95,7 @@ public class DungeonGen : MonoBehaviour
                 {
                     foreach (GameObject itile in connectionList[2])
                     {
-                        if (itile.name[3] != 1)
+                        if (itile.name[3] != '1')
                         {
                             TempPossibleTileList.Add(itile);
                         }
@@ -82,7 +105,7 @@ public class DungeonGen : MonoBehaviour
                 {
                     foreach (GameObject itile in connectionList[2])
                     {
-                        if (itile.name[0] != 1)
+                        if (itile.name[0] != '1')
                         {
                             TempPossibleTileList.Add(itile);
                         }
@@ -92,7 +115,7 @@ public class DungeonGen : MonoBehaviour
                 {
                     foreach (GameObject itile in connectionList[2])
                     {
-                        if (itile.name[1] != 1)
+                        if (itile.name[1] != '1')
                         {
                             TempPossibleTileList.Add(itile);
                         }
@@ -102,7 +125,7 @@ public class DungeonGen : MonoBehaviour
                 {
                     foreach (GameObject itile in connectionList[2])
                     {
-                        if (itile.name[0] != 1 && itile.name[3] != 1)
+                        if (itile.name[0] != '1' && itile.name[3] != '1')
                         {
                             TempPossibleTileList.Add(itile);
                         }
@@ -112,7 +135,7 @@ public class DungeonGen : MonoBehaviour
                 {
                     foreach (GameObject itile in connectionList[2])
                     {
-                        if (itile.name[1] != 1 && itile.name[3] != 1)
+                        if (itile.name[1] != '1' && itile.name[3] != '1')
                         {
                             TempPossibleTileList.Add(itile);
                         }
@@ -122,7 +145,7 @@ public class DungeonGen : MonoBehaviour
                 {
                     foreach (GameObject itile in connectionList[2])
                     {
-                        if (itile.name[0] != 1 && itile.name[1] != 1)
+                        if (itile.name[0] != '1' && itile.name[1] != '1')
                         {
                             TempPossibleTileList.Add(itile);
                         }
@@ -132,7 +155,7 @@ public class DungeonGen : MonoBehaviour
                 {
                     foreach (GameObject itile in connectionList[2])
                     {
-                        if (itile.name[0] != 1 && itile.name[1] != 1 && itile.name[3] != 1)
+                        if (itile.name[0] != '1' && itile.name[1] != '1' && itile.name[3] != '1')
                         {
                             TempPossibleTileList.Add(itile);
                         }
@@ -151,7 +174,7 @@ public class DungeonGen : MonoBehaviour
 
 
         }
-        if (currentTile.config[1] == '1' && currentTile.mapX != 0 && map[currentTile.mapX + 1, currentTile.mapY] != 1)
+        if (currentTile.config[1] == '1' && currentTile.mapX != 9 && map[currentTile.mapX + 1, currentTile.mapY] != 1)
         {
             if (map[currentTile.mapX + 1, currentTile.mapY - 1] == 0 && map[currentTile.mapX + 2, currentTile.mapY] == 0 && map[currentTile.mapX + 1, currentTile.mapY + 1] == 0)
             {
@@ -169,7 +192,7 @@ public class DungeonGen : MonoBehaviour
                 {
                     foreach (GameObject itile in connectionList[3])
                     {
-                        if (itile.name[0] != 1)
+                        if (itile.name[0] != '1')
                         {
                             TempPossibleTileList.Add(itile);
                         }
@@ -179,7 +202,7 @@ public class DungeonGen : MonoBehaviour
                 {
                     foreach (GameObject itile in connectionList[3])
                     {
-                        if (itile.name[1] != 1)
+                        if (itile.name[1] != '1')
                         {
                             TempPossibleTileList.Add(itile);
                         }
@@ -189,7 +212,7 @@ public class DungeonGen : MonoBehaviour
                 {
                     foreach (GameObject itile in connectionList[3])
                     {
-                        if (itile.name[2] != 1)
+                        if (itile.name[2] != '1')
                         {
                             TempPossibleTileList.Add(itile);
                         }
@@ -199,7 +222,7 @@ public class DungeonGen : MonoBehaviour
                 {
                     foreach (GameObject itile in connectionList[3])
                     {
-                        if (itile.name[0] != 1 && itile.name[1] != 1)
+                        if (itile.name[0] != '1' && itile.name[1] != '1')
                         {
                             TempPossibleTileList.Add(itile);
                         }
@@ -209,7 +232,7 @@ public class DungeonGen : MonoBehaviour
                 {
                     foreach (GameObject itile in connectionList[3])
                     {
-                        if (itile.name[0] != 1 && itile.name[2] != 1)
+                        if (itile.name[0] != '1' && itile.name[2] != '1')
                         {
                             TempPossibleTileList.Add(itile);
                         }
@@ -219,7 +242,7 @@ public class DungeonGen : MonoBehaviour
                 {
                     foreach (GameObject itile in connectionList[3])
                     {
-                        if (itile.name[1] != 1 && itile.name[2] != 1)
+                        if (itile.name[1] != '1' && itile.name[2] != '1')
                         {
                             TempPossibleTileList.Add(itile);
                         }
@@ -229,7 +252,7 @@ public class DungeonGen : MonoBehaviour
                 {
                     foreach (GameObject itile in connectionList[3])
                     {
-                        if (itile.name[0] != 1 && itile.name[1] != 1 && itile.name[2] != 1)
+                        if (itile.name[0] != '1' && itile.name[1] != '1' && itile.name[2] != '1')
                         {
                             TempPossibleTileList.Add(itile);
                         }
@@ -265,7 +288,7 @@ public class DungeonGen : MonoBehaviour
                 {
                     foreach (GameObject itile in connectionList[0])
                     {
-                        if (itile.name[1] != 1)
+                        if (itile.name[1] != '1')
                         {
                             TempPossibleTileList.Add(itile);
                         }
@@ -275,7 +298,7 @@ public class DungeonGen : MonoBehaviour
                 {
                     foreach (GameObject itile in connectionList[0])
                     {
-                        if (itile.name[2] != 1)
+                        if (itile.name[2] != '1')
                         {
                             TempPossibleTileList.Add(itile);
                         }
@@ -285,7 +308,7 @@ public class DungeonGen : MonoBehaviour
                 {
                     foreach (GameObject itile in connectionList[0])
                     {
-                        if (itile.name[3] != 1)
+                        if (itile.name[3] != '1')
                         {
                             TempPossibleTileList.Add(itile);
                         }
@@ -295,7 +318,7 @@ public class DungeonGen : MonoBehaviour
                 {
                     foreach (GameObject itile in connectionList[0])
                     {
-                        if (itile.name[1] != 1 && itile.name[2] != 1)
+                        if (itile.name[1] != '1' && itile.name[2] != '1')
                         {
                             TempPossibleTileList.Add(itile);
                         }
@@ -305,7 +328,7 @@ public class DungeonGen : MonoBehaviour
                 {
                     foreach (GameObject itile in connectionList[0])
                     {
-                        if (itile.name[1] != 1 && itile.name[3] != 1)
+                        if (itile.name[1] != '1' && itile.name[3] != '1')
                         {
                             TempPossibleTileList.Add(itile);
                         }
@@ -315,7 +338,7 @@ public class DungeonGen : MonoBehaviour
                 {
                     foreach (GameObject itile in connectionList[0])
                     {
-                        if (itile.name[2] != 1 && itile.name[3] != 1)
+                        if (itile.name[2] != '1' && itile.name[3] != '1')
                         {
                             TempPossibleTileList.Add(itile);
                         }
@@ -325,7 +348,7 @@ public class DungeonGen : MonoBehaviour
                 {
                     foreach (GameObject itile in connectionList[0])
                     {
-                        if (itile.name[1] != 1 && itile.name[2] != 1 && itile.name[3] != 1)
+                        if (itile.name[1] != '1' && itile.name[2] != '1' && itile.name[3] != '1')
                         {
                             TempPossibleTileList.Add(itile);
                         }
@@ -342,7 +365,7 @@ public class DungeonGen : MonoBehaviour
                 //currentTile.neighbour.Add(new tile(tempTile, tempPos, tempTile.name));
             }
         }
-        if (currentTile.config[3] == '1' && currentTile.mapX != 9 && map[currentTile.mapX - 1, currentTile.mapY] != 1)
+        if (currentTile.config[3] == '1' && currentTile.mapX != 0 && map[currentTile.mapX - 1, currentTile.mapY] != 1)
         {
             if (map[currentTile.mapX - 1, currentTile.mapY - 1] == 0 && map[currentTile.mapX - 2, currentTile.mapY] == 0 && map[currentTile.mapX - 1, currentTile.mapY + 1] == 0)
             {
@@ -360,7 +383,7 @@ public class DungeonGen : MonoBehaviour
                 {
                     foreach (GameObject itile in connectionList[1])
                     {
-                        if (itile.name[0] != 1)
+                        if (itile.name[0] != '1')
                         {
                             TempPossibleTileList.Add(itile);
                         }
@@ -370,7 +393,7 @@ public class DungeonGen : MonoBehaviour
                 {
                     foreach (GameObject itile in connectionList[1])
                     {
-                        if (itile.name[3] != 1)
+                        if (itile.name[3] != '1')
                         {
                             TempPossibleTileList.Add(itile);
                         }
@@ -380,7 +403,7 @@ public class DungeonGen : MonoBehaviour
                 {
                     foreach (GameObject itile in connectionList[1])
                     {
-                        if (itile.name[2] != 1)
+                        if (itile.name[2] != '1')
                         {
                             TempPossibleTileList.Add(itile);
                         }
@@ -390,7 +413,7 @@ public class DungeonGen : MonoBehaviour
                 {
                     foreach (GameObject itile in connectionList[1])
                     {
-                        if (itile.name[0] != 1 && itile.name[3] != 1)
+                        if (itile.name[0] != '1' && itile.name[3] != '1')
                         {
                             TempPossibleTileList.Add(itile);
                         }
@@ -400,7 +423,7 @@ public class DungeonGen : MonoBehaviour
                 {
                     foreach (GameObject itile in connectionList[1])
                     {
-                        if (itile.name[0] != 1 && itile.name[2] != 1)
+                        if (itile.name[0] != '1' && itile.name[2] != '1')
                         {
                             TempPossibleTileList.Add(itile);
                         }
@@ -410,7 +433,7 @@ public class DungeonGen : MonoBehaviour
                 {
                     foreach (GameObject itile in connectionList[1])
                     {
-                        if (itile.name[3] != 1 && itile.name[2] != 1)
+                        if (itile.name[3] != '1' && itile.name[2] != '1')
                         {
                             TempPossibleTileList.Add(itile);
                         }
@@ -420,7 +443,7 @@ public class DungeonGen : MonoBehaviour
                 {
                     foreach (GameObject itile in connectionList[1])
                     {
-                        if (itile.name[0] != 1 && itile.name[3] != 1 && itile.name[2] != 1)
+                        if (itile.name[0] != '1' && itile.name[3] != '1' && itile.name[2] != '1')
                         {
                             TempPossibleTileList.Add(itile);
                         }
@@ -440,6 +463,38 @@ public class DungeonGen : MonoBehaviour
         currentTile.full = true;
     }
     // Update is called once per frame
+    private void FinishTiles(tile currentTile)
+    {
+        if (currentTile.config[0] == '1')
+        {
+            tempTile = justSouth;
+            tempPos = new Vector3(currentTile.worldPosition.x, currentTile.worldPosition.y, currentTile.worldPosition.z - 500);
+            Instantiate(tempTile, tempPos, Quaternion.identity);
+            temp = new tile(tempTile, currentTile.mapX, currentTile.mapY - 1, tempPos, tempTile.name);
+        }
+        if (currentTile.config[1] == '1')
+        {
+            tempTile = justWest;
+            tempPos = new Vector3(currentTile.worldPosition.x - 500, currentTile.worldPosition.y, currentTile.worldPosition.z);
+            Instantiate(tempTile, tempPos, Quaternion.identity);
+            temp = new tile(tempTile, currentTile.mapX + 1, currentTile.mapY, tempPos, tempTile.name);
+        }
+        if (currentTile.config[2] == '1')
+        {
+            tempTile = justNorth;
+            tempPos = new Vector3(currentTile.worldPosition.x, currentTile.worldPosition.y, currentTile.worldPosition.z + 500);
+            Instantiate(tempTile, tempPos, Quaternion.identity);
+            temp = new tile(tempTile, currentTile.mapX, currentTile.mapY + 1, tempPos, tempTile.name);
+        }
+        if (currentTile.config[3] == '1')
+        {
+            tempTile = justEast;
+            tempPos = new Vector3(currentTile.worldPosition.x + 500, currentTile.worldPosition.y, currentTile.worldPosition.z);
+            Instantiate(tempTile, tempPos, Quaternion.identity);
+            temp = new tile(tempTile, currentTile.mapX - 1, currentTile.mapY, tempPos, tempTile.name);
+        }
+        currentTile.full = true;
+    }
     void Update()
     {
         
