@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.AI;
 
 public class DungeonMapGen : MonoBehaviour
 {
+    public NavMeshSurface m_surface;
     /// <summary>
     /// Map width.
     /// </summary>
@@ -35,6 +37,8 @@ public class DungeonMapGen : MonoBehaviour
     private void Start()
     {
         GenerateMap();
+        m_surface.BuildNavMesh();
+        
     }
 
     private void GenerateMap()
@@ -469,6 +473,7 @@ public class DungeonMapGen : MonoBehaviour
         if (m_useRandomSeed)
         {
             m_seed = Time.time.ToString();
+            Debug.Log(m_seed);
         }
         System.Random pseudoRandom = new System.Random(m_seed.GetHashCode());
         /// Cycles through the map matrix.

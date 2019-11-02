@@ -7,7 +7,7 @@ public class FollowCamera : MonoBehaviour
     /// <summary>
     /// A reference to the target, I.E the player.
     /// </summary>
-    [SerializeField] private GameObject m_target;
+    [SerializeField] private GameObject m_target = null;
     /// <summary>
     /// The distance between the player and the camera.
     /// </summary>
