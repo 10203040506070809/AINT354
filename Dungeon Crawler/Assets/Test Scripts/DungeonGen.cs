@@ -20,27 +20,32 @@ public class DungeonGen : MonoBehaviour
         startTile = mapTiles[Random.Range(0, mapTiles.Length - 1)];
         tileList.Add(new tile(startTile, new Vector3(0, 0, 0), startTile.name));
         Instantiate(tileList[0].type, tileList[0].position, Quaternion.identity);
-        /*for (int i = 0; i < length; i++)
-        {
-            if (mapTiles[1].name[0] == 1)
-            {
-                Instantiate(connectionList[2][Random.Range(0, connectionList[2].Count - 1)], new Vector3(0, 0, 0), Quaternion.identity);
-            }
-            if (mapTiles[1].name[1] == 1)
-            {
-                Instantiate(connectionList[3][Random.Range(0, connectionList[3].Count - 1)], new Vector3(0, 0, 0), Quaternion.identity);
-            }
-            if (mapTiles[1].name[2] == 1)
-            {
-                Instantiate(connectionList[0][Random.Range(0, connectionList[0].Count - 1)], new Vector3(0, 0, 0), Quaternion.identity);
-            }
-            if (mapTiles[1].name[3] == 1)
-            {
-                Instantiate(connectionList[1][Random.Range(0, connectionList[1].Count - 1)], new Vector3(0, 0, 0), Quaternion.identity);
-            }
-        }*/
-    }
+        LoadSurroundingTiles(tileList[0]);
 
+    }
+    private void LoadSurroundingTiles(tile currentTile)
+    {
+        if (currentTile.config[0] == '1')
+        {
+            Debug.Log(northConnection.Count);
+            Instantiate(connectionList[2][Random.Range(0, connectionList[2].Count - 1)], new Vector3(currentTile.position.x, currentTile.position.y, currentTile.position.z-500), Quaternion.identity);
+        }
+        if (currentTile.config[1] == '1')
+        {
+            Debug.Log(northConnection.Count);
+            Instantiate(connectionList[3][Random.Range(0, connectionList[3].Count - 1)], new Vector3(currentTile.position.x - 500, currentTile.position.y, currentTile.position.z), Quaternion.identity);
+        }
+        if (currentTile.config[2] == '1')
+        {
+            Debug.Log(northConnection.Count);
+            Instantiate(connectionList[0][Random.Range(0, connectionList[0].Count - 1)], new Vector3(currentTile.position.x, currentTile.position.y, currentTile.position.z+500), Quaternion.identity);
+        }
+        if (currentTile.config[3] == '1')
+        {
+            Debug.Log(northConnection.Count);
+            Instantiate(connectionList[1][Random.Range(0, connectionList[1].Count - 1)], new Vector3(currentTile.position.x+500, currentTile.position.y, currentTile.position.z), Quaternion.identity);
+        }
+    }
     // Update is called once per frame
     void Update()
     {
@@ -67,19 +72,19 @@ public class DungeonGen : MonoBehaviour
     {
         foreach (GameObject section in mapTiles)
         {
-            if (section.name[0] == 1)
+            if (section.name[0] == '1')
             {
                 northConnection.Add(section);
             }
-            if (section.name[1] == 1)
+            if (section.name[1] == '1')
             {
                 eastConnection.Add(section);
             }
-            if (section.name[2] == 1)
+            if (section.name[2] == '1')
             {
                 southConnection.Add(section);
             }
-            if (section.name[3] == 1)
+            if (section.name[3] == '1')
             {
                 westConnection.Add(section);
             }
