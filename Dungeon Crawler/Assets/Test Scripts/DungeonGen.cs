@@ -5,6 +5,7 @@ using UnityEngine;
 public class DungeonGen : MonoBehaviour
 {
     public GameObject[] mapTiles;
+    public GameObject end;
     private List<List<GameObject>> connectionList = new List<List<GameObject>>();
     private List<GameObject> northConnection = new List<GameObject>();
     private List<GameObject> eastConnection = new List<GameObject>();
@@ -73,7 +74,7 @@ public class DungeonGen : MonoBehaviour
                 }
             }
         }
-
+        Instantiate(end,tileList[tileList.Count - 1].worldPosition, Quaternion.identity);
     }
     private void LoadSurroundingTiles(tile currentTile)
     {
