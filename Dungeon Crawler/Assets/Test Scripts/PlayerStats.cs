@@ -19,10 +19,10 @@ public class PlayerStats : CharacterStats
     /// </summary>
     private void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.T))
-        //{
-        //    TakeDamage(10);
-        //}
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            TakeDamage(10);
+        }
     }
 
 

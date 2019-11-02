@@ -12,19 +12,19 @@ public class CharacterStats : MonoBehaviour
     /// <summary>
     /// Variable to store the max health of an entity.
     /// </summary>
-    [SerializeField] protected int m_maxHealth = 100;
+    [SerializeField] public int m_maxHealth = 100;
     /// <summary>
     /// Variable to store the current health of an entity.
     /// </summary>
-    [SerializeField] protected int m_currentHealth { get;  set; }
+    [SerializeField] public int m_currentHealth { get;  set; }
     /// <summary>
     /// A variable to store the maximum insanity level.
     /// </summary>
-    [SerializeField] protected Stat m_maxInsanity;
+    [SerializeField] public Stat m_maxInsanity;
     /// <summary>
     /// A variable to store the current insanity level.
     /// </summary>
-    [SerializeField] protected float m_currentInsanity = 0;
+    [SerializeField] public float m_currentInsanity = 0;
     /// <summary>
     /// A variable to store the damage an entity does.
     /// </summary>
@@ -115,7 +115,10 @@ public class CharacterStats : MonoBehaviour
     {
        
     }
-
+    /// <summary>
+    /// Gets the entities movement speed.
+    /// </summary>
+    /// <returns></returns>
     public float GetMovementSpeed()
     {
         return m_movementSpeed.GetValue();
