@@ -5,8 +5,17 @@ using UnityEngine.UI;
 
 public class GUIStatsManager : MonoBehaviour
 {
+    /// <summary>
+    /// A slider variable denoting the health slider UI element.
+    /// </summary>
     [SerializeField] private Slider m_healthSlider;
+    /// <summary>
+    /// A slider variable denoting the corruption slider UI element.
+    /// </summary>
     [SerializeField] private Slider m_corruptionSlider;
+    /// <summary>
+    /// A CharacterStats  variable denoting the entitites stats class.
+    /// </summary>
     [SerializeField] private CharacterStats m_charStats;
     // Start is called before the first frame update
     void Start()
@@ -16,11 +25,16 @@ public class GUIStatsManager : MonoBehaviour
         m_corruptionSlider.maxValue = m_charStats.m_maxInsanity.GetValue();
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// Called once per frame, calls the UpdateGUI method.
+    /// </summary>
     void Update()
     {
         UpdateGUI();
     }
+    /// <summary>
+    /// Updates all GUI elements.
+    /// </summary>
     void UpdateGUI()
     {
         m_healthSlider.value = m_charStats.m_currentHealth;
