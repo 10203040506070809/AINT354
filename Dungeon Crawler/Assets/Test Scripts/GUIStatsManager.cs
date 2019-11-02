@@ -11,7 +11,9 @@ public class GUIStatsManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       
+        ///Initialise sliders to max values
+        m_healthSlider.maxValue = m_charStats.m_maxHealth;
+        m_corruptionSlider.maxValue = m_charStats.m_maxInsanity.GetValue();
     }
 
     // Update is called once per frame
@@ -21,6 +23,7 @@ public class GUIStatsManager : MonoBehaviour
     }
     void UpdateGUI()
     {
-
+        m_healthSlider.value = m_charStats.m_currentHealth;
+        m_corruptionSlider.value = m_charStats.m_currentInsanity;
     }
 }

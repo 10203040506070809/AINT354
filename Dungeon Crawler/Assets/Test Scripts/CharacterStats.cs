@@ -20,11 +20,11 @@ public class CharacterStats : MonoBehaviour
     /// <summary>
     /// A variable to store the maximum insanity level.
     /// </summary>
-    [SerializeField] protected Stat m_maxInsanity;
+    [SerializeField] public Stat m_maxInsanity;
     /// <summary>
     /// A variable to store the current insanity level.
     /// </summary>
-    [SerializeField] protected float m_currentInsanity = 0;
+    [SerializeField] public float m_currentInsanity = 0;
     /// <summary>
     /// A variable to store the damage an entity does.
     /// </summary>
