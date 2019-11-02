@@ -59,7 +59,7 @@ public class PlayerStats : CharacterStats
     /// </summary>
     public override void Die()
     {
-        base.Die();
+        this.gameObject.SetActive(false);
         
         
         //TODO on death, give gold/experience to the thing that killed it.

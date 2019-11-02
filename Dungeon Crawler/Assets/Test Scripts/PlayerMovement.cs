@@ -85,7 +85,7 @@ public class PlayerMovement : CharacterMovement
         if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
         {
             m_moveVector = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-            m_moveVector *= m_myStats.GetMovementSpeed() / 5;
+            m_moveVector *= m_myStats.GetMovementSpeed();
           
 
             m_characterController.Move(m_moveVector * Time.deltaTime);
