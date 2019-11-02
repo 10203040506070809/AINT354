@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 2134585405903093504}
   - component: {fileID: 1729202138874519714}
   - component: {fileID: 4992288076996726237}
+  - component: {fileID: -6256647680733079260}
   - component: {fileID: 931542719376620768}
   m_Layer: 0
-  m_Name: Plane (1)
+  m_Name: 0001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -80,6 +81,20 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &-6256647680733079260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2205107598813472656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3425a8fbad0e04044869cc4041e7a5e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemy: {fileID: 8064180886618528174, guid: f551c4ab80edb784894b3ec7ffc19472, type: 3}
+  pickUp: {fileID: 7749815534087187769, guid: 7d3e2fc6b8820f54d9b60a671debb395, type: 3}
 --- !u!64 &931542719376620768
 MeshCollider:
   m_ObjectHideFlags: 0
