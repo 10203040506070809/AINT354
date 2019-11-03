@@ -7,64 +7,70 @@ public class DungeonGen : MonoBehaviour
     /// <summary>
     /// An array of game tiles consisting of every possible tile orientation.
     /// </summary>
-    public GameObject[] mapTiles;
+    public GameObject[] m_mapTiles;
     /// <summary>
     /// The object which will trigger the end of the level.
     /// </summary>
-    public GameObject end;
+    public GameObject m_end;
     /// <summary>
     /// List of tiles with a connection in the specified direction.
     /// </summary>
-    private List<List<GameObject>> connectionList = new List<List<GameObject>>();
-    private List<GameObject> northConnection = new List<GameObject>();
-    private List<GameObject> eastConnection = new List<GameObject>();
-    private List<GameObject> southConnection = new List<GameObject>();
-    private List<GameObject> westConnection = new List<GameObject>();
+    private List<List<GameObject>> m_connectionList = new List<List<GameObject>>();
+    private List<GameObject> m_northConnection = new List<GameObject>();
+    private List<GameObject> m_eastConnection = new List<GameObject>();
+    private List<GameObject> m_southConnection = new List<GameObject>();
+    private List<GameObject> m_westConnection = new List<GameObject>();
     /// <summary>
     /// Where the player spawns.
     /// </summary>
-    private tile startTile;
-    private GameObject start;
+    private tile m_startTile;
+    /// <summary>
+    /// The asset for the tile the player starts on.
+    /// </summary>
+    private GameObject m_start;
     /// <summary>
     /// Tiles which are only accessible via the specified direction.
     /// </summary>
-    public GameObject justNorth;
-    public GameObject justEast;
-    public GameObject justSouth;
-    public GameObject justWest;
+    public GameObject m_justNorth;
+    public GameObject m_justEast;
+    public GameObject m_justSouth;
+    public GameObject m_justWest;
     /// <summary>
     /// The minimum size of the dungeon.
     /// </summary>
-    public int length;
+    public int m_length;
     /// <summary>
     /// The temporary tile which will be added to the list of all tiles.
     /// </summary>
-    private tile temp;
+    private tile m_temp;
     /// <summary>
     /// The temporary game object version of the tile to be added.
     /// </summary>
-    private GameObject tempTile;
+    private GameObject m_tempTile;
     /// <summary>
     /// The temporary position of the tile to be added.
     /// </summary>
-    private Vector3 tempPos;
+    private Vector3 m_tempPos;
     /// <summary>
     /// Specifies the maximum dimensions of the map.
     /// </summary>
-    private int[,] map;
+    private int[,] m_map;
     /// <summary>
     /// The list of all tiles as they are added to the map.
     /// </summary>
-    private tile[,] claimed;
-    private List<tile> tileList = new List<tile>();
+    private List<tile> m_tileList = new List<tile>();
+    /// <summary>
+    /// A 2D grid specifying which future tiles will connect to a room.
+    /// </summary>
+    private tile[,] m_claimed;
     /// <summary>
     /// The list of tiles to be added to the map after each iteration.
     /// </summary>
-    private List<tile> tempTileList = new List<tile>();
+    private List<tile> m_tempTileList = new List<tile>();
     /// <summary>
     /// A list of possible tiles to add which fit certain conditions. A tile will be randomly selected from this list.
     /// </summary>
-    private List<GameObject> TempPossibleTileList = new List<GameObject>();
+    private List<GameObject> m_TempPossibleTileList = new List<GameObject>();
 
     // Start is called before the first frame update
     void Start()
@@ -75,30 +81,32 @@ public class DungeonGen : MonoBehaviour
         bool changed = true;
         /// Loops until the dungeon has at least the minimum number of rooms.
         do {
+            /// Clears the map.
             foreach (GameObject o in GameObject.FindGameObjectsWithTag("Tile"))
             {
                 Destroy(o);
             }
-            tileList.Clear();
-            tempTileList.Clear();
-            connectionList.Clear();
-            northConnection.Clear();
-            eastConnection.Clear();
-            southConnection.Clear();
-            westConnection.Clear();
-            map = new int[50, 50];
-            claimed = new tile[50, 50];
+            /// Resets all variables.
+            m_tileList.Clear();
+            m_tempTileList.Clear();
+            m_connectionList.Clear();
+            m_northConnection.Clear();
+            m_eastConnection.Clear();
+            m_southConnection.Clear();
+            m_westConnection.Clear();
+            m_map = new int[50, 50];
+            m_claimed = new tile[50, 50];
             StoreTiles();
+            /// Generates a start tile.
             StartTile();
             changed = true;
-            Debug.Log("Here");
             /// Loops while the map size is less than the minimum number of desired tiles.
-            while (tileList.Count < length && changed)
+            while (m_tileList.Count < m_length && changed)
                 {
                     /// No tile has been changed yet.
                     changed = false;
                     /// Loops through every tile in the current game.
-                    foreach (tile itile in tileList)
+                    foreach (tile itile in m_tileList)
                     {
                         /// Checks if every available exit of a room is connected to another room.
                         if (!itile.full)
@@ -110,19 +118,19 @@ public class DungeonGen : MonoBehaviour
                         }
                     }
                     /// Adds the tiles which were just added to the list of all tiles.
-                    foreach (tile itile in tempTileList)
+                    foreach (tile itile in m_tempTileList)
                     {
-                        tileList.Add(itile);
+                        m_tileList.Add(itile);
                     }
                     /// Resets the list of temp tiles.
-                    tempTileList.Clear();
+                    m_tempTileList.Clear();
                 }
-        }while (tileList.Count < length);
+        }while (m_tileList.Count < m_length);
         changed = true;
         while (changed)
         {
             changed = false;
-            foreach (tile itile in tileList)
+            foreach (tile itile in m_tileList)
             {
                 /// Checks if every available exit of a room is connected to another room.
                 if (!itile.full)
@@ -134,41 +142,23 @@ public class DungeonGen : MonoBehaviour
                 }
             }
         }
-
-        /// Bool to make sure the program only adds tiles while new tiles can be added.
-        /*changed = true;
-        while (changed)
-        {
-            /// No tile has been changed yet.
-            changed = false;
-            /// Loops through every tile in the current game.
-            foreach (tile itile in tileList)
-            {
-                /// Checks if every available exit of a room is connected to another room.
-                if (!itile.full)
-                {
-                    /// Adds dead end rooms to every available unconnected room left.
-                    FinishTiles(itile);
-                    /// Tile has been added so loop again.
-                    changed = true;
-                }
-            }
-        }*/
         /// Generates the end location in the last tile spawned.
-        Instantiate(end,tileList[tileList.Count - 1].worldPosition, Quaternion.identity);
+        Instantiate(m_end,m_tileList[m_tileList.Count - 1].worldPosition, Quaternion.identity);
     }
     private void StartTile()
     {
-        start = mapTiles[Random.Range(0, mapTiles.Length - 1)];
         /// Selects a random tile from the list of all tiles.
-        startTile = new tile(start, 25, 25, new Vector3(0, 0, 0), start.name);
+        m_start = m_mapTiles[Random.Range(0, m_mapTiles.Length - 1)];
+        /// Creates it as a tile.
+        m_startTile = new tile(m_start, 25, 25, new Vector3(0, 0, 0), m_start.name);
         /// Adds the start tile to the list of tiles in the game.
-        tileList.Add(startTile);
+        m_tileList.Add(m_startTile);
         /// The start tile is created in the centre of the 'map'.
-        map[25, 25] = 1;
-        UpdateMap(startTile);
+        m_map[25, 25] = 1;
+        /// Claims the surrounding accessible tiles for the room passed in.
+        UpdateMap(m_startTile);
         /// Creates the start tile at the world origin.
-        Instantiate(tileList[Random.Range(0, tileList.Count - 1)].type, tileList[0].worldPosition, Quaternion.identity);
+        Instantiate(m_tileList[Random.Range(0, m_tileList.Count - 1)].type, m_tileList[0].worldPosition, Quaternion.identity);
     }
     /// <summary>
     /// Adds tiles which meet specific conditions to every available exit of the tile passed in.
@@ -177,431 +167,434 @@ public class DungeonGen : MonoBehaviour
     private void LoadSurroundingTiles(tile currentTile)
     {
         /// Checks if the room has an exit to the north and whether instantiating a tile to the north would leave the map boundaries.
-        if (currentTile.config[0] == '1' && claimed[currentTile.mapX,currentTile.mapY - 1] == currentTile && map[currentTile.mapX, currentTile.mapY - 1] != 1)
+        if (currentTile.config[0] == '1' && m_claimed[currentTile.mapX,currentTile.mapY - 1] == currentTile && m_map[currentTile.mapX, currentTile.mapY - 1] != 1)
         {
             /// Checks if there are no rooms which would border the newly instantiated room.
-            if (claimed[currentTile.mapX - 1, currentTile.mapY - 1] == null && map[currentTile.mapX - 1, currentTile.mapY - 1] == 0 && claimed[currentTile.mapX, currentTile.mapY - 2] == null && map[currentTile.mapX, currentTile.mapY - 2] == 0 && claimed[currentTile.mapX + 1, currentTile.mapY - 1] == null && map[currentTile.mapX + 1, currentTile.mapY - 1] == 0)
+            if (m_claimed[currentTile.mapX - 1, currentTile.mapY - 1] == null && m_map[currentTile.mapX - 1, currentTile.mapY - 1] == 0 && m_claimed[currentTile.mapX, currentTile.mapY - 2] == null && m_map[currentTile.mapX, currentTile.mapY - 2] == 0 && m_claimed[currentTile.mapX + 1, currentTile.mapY - 1] == null && m_map[currentTile.mapX + 1, currentTile.mapY - 1] == 0)
             {
                 /// Selects a random room with a connection to the south.
-                tempTile = connectionList[2][Random.Range(0, connectionList[2].Count - 1)];
+                m_tempTile = m_connectionList[2][Random.Range(0, m_connectionList[2].Count - 1)];
                 /// Positions the tile correctly.
-                tempPos = new Vector3(currentTile.worldPosition.x, currentTile.worldPosition.y, currentTile.worldPosition.z - 500);
+                m_tempPos = new Vector3(currentTile.worldPosition.x, currentTile.worldPosition.y, currentTile.worldPosition.z - 500);
                 /// Spawns the new tile.
-                Instantiate(tempTile, tempPos, Quaternion.identity);
+                Instantiate(m_tempTile, m_tempPos, Quaternion.identity);
                 /// Creates the tile to be added.
-                temp = new tile(tempTile, currentTile.mapX, currentTile.mapY - 1, tempPos, tempTile.name);
+                m_temp = new tile(m_tempTile, currentTile.mapX, currentTile.mapY - 1, m_tempPos, m_tempTile.name);
                 /// Updates the map to say that a tile now exists in the current coordinate
-                map[temp.mapX, temp.mapY] = 1;
-                UpdateMap(temp);
+                m_map[m_temp.mapX, m_temp.mapY] = 1;
+                /// Claims the surrounding accessible tiles for the room passed in.
+                UpdateMap(m_temp);
                 /// Adds the newly created tile to the array of temp tiles.
-                tempTileList.Add(temp);
+                m_tempTileList.Add(m_temp);
             }
             else
             {
-                if ((claimed[currentTile.mapX - 1, currentTile.mapY - 1] != null || map[currentTile.mapX - 1, currentTile.mapY - 1] == 1) && claimed[currentTile.mapX, currentTile.mapY - 2] == null && map[currentTile.mapX, currentTile.mapY - 2] == 0 && claimed[currentTile.mapX + 1, currentTile.mapY - 1] == null && map[currentTile.mapX + 1, currentTile.mapY - 1] == 0)
+                if ((m_claimed[currentTile.mapX - 1, currentTile.mapY - 1] != null || m_map[currentTile.mapX - 1, currentTile.mapY - 1] == 1) && m_claimed[currentTile.mapX, currentTile.mapY - 2] == null && m_map[currentTile.mapX, currentTile.mapY - 2] == 0 && m_claimed[currentTile.mapX + 1, currentTile.mapY - 1] == null && m_map[currentTile.mapX + 1, currentTile.mapY - 1] == 0)
                 {
-                    foreach (GameObject itile in connectionList[2])
+                    foreach (GameObject itile in m_connectionList[2])
                     {
                         if (itile.name[3] != '1')
                         {
-                            TempPossibleTileList.Add(itile);
+                            m_TempPossibleTileList.Add(itile);
                         }
                     }
                 }
-                if (claimed[currentTile.mapX - 1, currentTile.mapY - 1] == null && map[currentTile.mapX - 1, currentTile.mapY - 1] == 0 && (claimed[currentTile.mapX, currentTile.mapY - 2] != null || map[currentTile.mapX, currentTile.mapY - 2] == 1) && claimed[currentTile.mapX + 1, currentTile.mapY - 1] == null && map[currentTile.mapX + 1, currentTile.mapY - 1] == 0)
+                if (m_claimed[currentTile.mapX - 1, currentTile.mapY - 1] == null && m_map[currentTile.mapX - 1, currentTile.mapY - 1] == 0 && (m_claimed[currentTile.mapX, currentTile.mapY - 2] != null || m_map[currentTile.mapX, currentTile.mapY - 2] == 1) && m_claimed[currentTile.mapX + 1, currentTile.mapY - 1] == null && m_map[currentTile.mapX + 1, currentTile.mapY - 1] == 0)
                 {
-                    foreach (GameObject itile in connectionList[2])
+                    foreach (GameObject itile in m_connectionList[2])
                     {
                         if (itile.name[0] != '1')
                         {
-                            TempPossibleTileList.Add(itile);
+                            m_TempPossibleTileList.Add(itile);
                         }
                     }
                 }
-                if (claimed[currentTile.mapX - 1, currentTile.mapY - 1] == null && map[currentTile.mapX - 1, currentTile.mapY - 1] == 0 && claimed[currentTile.mapX, currentTile.mapY - 2] == null && map[currentTile.mapX, currentTile.mapY - 2] == 0 && (claimed[currentTile.mapX + 1, currentTile.mapY - 1] != null || map[currentTile.mapX + 1, currentTile.mapY - 1] == 1))
+                if (m_claimed[currentTile.mapX - 1, currentTile.mapY - 1] == null && m_map[currentTile.mapX - 1, currentTile.mapY - 1] == 0 && m_claimed[currentTile.mapX, currentTile.mapY - 2] == null && m_map[currentTile.mapX, currentTile.mapY - 2] == 0 && (m_claimed[currentTile.mapX + 1, currentTile.mapY - 1] != null || m_map[currentTile.mapX + 1, currentTile.mapY - 1] == 1))
                 {
-                    foreach (GameObject itile in connectionList[2])
+                    foreach (GameObject itile in m_connectionList[2])
                     {
                         if (itile.name[1] != '1')
                         {
-                            TempPossibleTileList.Add(itile);
+                            m_TempPossibleTileList.Add(itile);
                         }
                     }
                 }
-                if ((claimed[currentTile.mapX - 1, currentTile.mapY - 1] != null || map[currentTile.mapX - 1, currentTile.mapY - 1] == 1) && (claimed[currentTile.mapX, currentTile.mapY - 2] != null || map[currentTile.mapX, currentTile.mapY - 2] == 1) && claimed[currentTile.mapX + 1, currentTile.mapY - 1] == null && map[currentTile.mapX + 1, currentTile.mapY - 1] == 0)
+                if ((m_claimed[currentTile.mapX - 1, currentTile.mapY - 1] != null || m_map[currentTile.mapX - 1, currentTile.mapY - 1] == 1) && (m_claimed[currentTile.mapX, currentTile.mapY - 2] != null || m_map[currentTile.mapX, currentTile.mapY - 2] == 1) && m_claimed[currentTile.mapX + 1, currentTile.mapY - 1] == null && m_map[currentTile.mapX + 1, currentTile.mapY - 1] == 0)
                 {
-                    foreach (GameObject itile in connectionList[2])
+                    foreach (GameObject itile in m_connectionList[2])
                     {
                         if (itile.name[0] != '1' && itile.name[3] != '1')
                         {
-                            TempPossibleTileList.Add(itile);
+                            m_TempPossibleTileList.Add(itile);
                         }
                     }
                 }
-                if ((claimed[currentTile.mapX - 1, currentTile.mapY - 1] != null || map[currentTile.mapX - 1, currentTile.mapY - 1] == 1) && claimed[currentTile.mapX, currentTile.mapY - 2] == null && map[currentTile.mapX, currentTile.mapY - 2] == 0 && (claimed[currentTile.mapX + 1, currentTile.mapY - 1] != null || map[currentTile.mapX + 1, currentTile.mapY - 1] == 1))
+                if ((m_claimed[currentTile.mapX - 1, currentTile.mapY - 1] != null || m_map[currentTile.mapX - 1, currentTile.mapY - 1] == 1) && m_claimed[currentTile.mapX, currentTile.mapY - 2] == null && m_map[currentTile.mapX, currentTile.mapY - 2] == 0 && (m_claimed[currentTile.mapX + 1, currentTile.mapY - 1] != null || m_map[currentTile.mapX + 1, currentTile.mapY - 1] == 1))
                 {
-                    foreach (GameObject itile in connectionList[2])
+                    foreach (GameObject itile in m_connectionList[2])
                     {
                         if (itile.name[1] != '1' && itile.name[3] != '1')
                         {
-                            TempPossibleTileList.Add(itile);
+                            m_TempPossibleTileList.Add(itile);
                         }
                     }
                 }
-                if (claimed[currentTile.mapX - 1, currentTile.mapY - 1] == null && map[currentTile.mapX - 1, currentTile.mapY - 1] == 0 && (claimed[currentTile.mapX, currentTile.mapY - 2] != null || map[currentTile.mapX, currentTile.mapY - 2] == 1) && (claimed[currentTile.mapX + 1, currentTile.mapY - 1] != null || map[currentTile.mapX + 1, currentTile.mapY - 1] == 1))
+                if (m_claimed[currentTile.mapX - 1, currentTile.mapY - 1] == null && m_map[currentTile.mapX - 1, currentTile.mapY - 1] == 0 && (m_claimed[currentTile.mapX, currentTile.mapY - 2] != null || m_map[currentTile.mapX, currentTile.mapY - 2] == 1) && (m_claimed[currentTile.mapX + 1, currentTile.mapY - 1] != null || m_map[currentTile.mapX + 1, currentTile.mapY - 1] == 1))
                 {
-                    foreach (GameObject itile in connectionList[2])
+                    foreach (GameObject itile in m_connectionList[2])
                     {
                         if (itile.name[0] != '1' && itile.name[1] != '1')
                         {
-                            TempPossibleTileList.Add(itile);
+                            m_TempPossibleTileList.Add(itile);
                         }
                     }
                 }
-                if ((claimed[currentTile.mapX - 1, currentTile.mapY - 1] != null || map[currentTile.mapX - 1, currentTile.mapY - 1] == 1) && (claimed[currentTile.mapX, currentTile.mapY - 2] != null || map[currentTile.mapX, currentTile.mapY - 2] == 1) && (claimed[currentTile.mapX + 1, currentTile.mapY - 1] != null || map[currentTile.mapX + 1, currentTile.mapY - 1] == 1))
+                if ((m_claimed[currentTile.mapX - 1, currentTile.mapY - 1] != null || m_map[currentTile.mapX - 1, currentTile.mapY - 1] == 1) && (m_claimed[currentTile.mapX, currentTile.mapY - 2] != null || m_map[currentTile.mapX, currentTile.mapY - 2] == 1) && (m_claimed[currentTile.mapX + 1, currentTile.mapY - 1] != null || m_map[currentTile.mapX + 1, currentTile.mapY - 1] == 1))
                 {
-                    foreach (GameObject itile in connectionList[2])
+                    foreach (GameObject itile in m_connectionList[2])
                     {
                         if (itile.name[0] != '1' && itile.name[1] != '1' && itile.name[3] != '1')
                         {
-                            TempPossibleTileList.Add(itile);
+                            m_TempPossibleTileList.Add(itile);
                         }
                     }
                 }
-                Debug.Log(TempPossibleTileList.Count);
-                tempTile = TempPossibleTileList[Random.Range(0, TempPossibleTileList.Count - 1)];
-                tempPos = new Vector3(currentTile.worldPosition.x, currentTile.worldPosition.y, currentTile.worldPosition.z - 500);
-                Instantiate(tempTile, tempPos, Quaternion.identity);
-                temp = new tile(tempTile, currentTile.mapX, currentTile.mapY - 1, tempPos, tempTile.name);
-                map[temp.mapX, temp.mapY] = 1;
-                UpdateMap(temp);
-                tempTileList.Add(temp);
-                TempPossibleTileList.Clear();
+                Debug.Log(m_TempPossibleTileList.Count);
+                m_tempTile = m_TempPossibleTileList[Random.Range(0, m_TempPossibleTileList.Count - 1)];
+                m_tempPos = new Vector3(currentTile.worldPosition.x, currentTile.worldPosition.y, currentTile.worldPosition.z - 500);
+                Instantiate(m_tempTile, m_tempPos, Quaternion.identity);
+                m_temp = new tile(m_tempTile, currentTile.mapX, currentTile.mapY - 1, m_tempPos, m_tempTile.name);
+                m_map[m_temp.mapX, m_temp.mapY] = 1;
+                UpdateMap(m_temp);
+                m_tempTileList.Add(m_temp);
+                m_TempPossibleTileList.Clear();
             }
-            //UpdateMap(currentTile, 'N');
 
         }
         /// Checks if the room has an exit to the east and whether instantiating a tile to the north would leave the map boundaries.
-        if (currentTile.config[1] == '1' && claimed[currentTile.mapX + 1, currentTile.mapY] == currentTile && map[currentTile.mapX + 1, currentTile.mapY] != 1)
+        if (currentTile.config[1] == '1' && m_claimed[currentTile.mapX + 1, currentTile.mapY] == currentTile && m_map[currentTile.mapX + 1, currentTile.mapY] != 1)
         {
             /// Checks if there are no rooms which would border the newly instantiated room.
-            if (claimed[currentTile.mapX + 1, currentTile.mapY - 1] == null && map[currentTile.mapX + 1, currentTile.mapY - 1] == 0 && claimed[currentTile.mapX + 2, currentTile.mapY] == null && map[currentTile.mapX + 2, currentTile.mapY] == 0 && claimed[currentTile.mapX + 1, currentTile.mapY + 1] == null && map[currentTile.mapX + 1, currentTile.mapY + 1] == 0)
+            if (m_claimed[currentTile.mapX + 1, currentTile.mapY - 1] == null && m_map[currentTile.mapX + 1, currentTile.mapY - 1] == 0 && m_claimed[currentTile.mapX + 2, currentTile.mapY] == null && m_map[currentTile.mapX + 2, currentTile.mapY] == 0 && m_claimed[currentTile.mapX + 1, currentTile.mapY + 1] == null && m_map[currentTile.mapX + 1, currentTile.mapY + 1] == 0)
             {
                 /// Selects a random room with a connection to the west.
-                tempTile = connectionList[3][Random.Range(0, connectionList[3].Count - 1)];
+                m_tempTile = m_connectionList[3][Random.Range(0, m_connectionList[3].Count - 1)];
                 /// Positions the tile correctly.
-                tempPos = new Vector3(currentTile.worldPosition.x - 500, currentTile.worldPosition.y, currentTile.worldPosition.z);
+                m_tempPos = new Vector3(currentTile.worldPosition.x - 500, currentTile.worldPosition.y, currentTile.worldPosition.z);
                 /// Spawns the new tile.
-                Instantiate(tempTile, tempPos, Quaternion.identity);
+                Instantiate(m_tempTile, m_tempPos, Quaternion.identity);
                 /// Creates the tile to be added.
-                temp = new tile(tempTile, currentTile.mapX + 1, currentTile.mapY, tempPos, tempTile.name);
+                m_temp = new tile(m_tempTile, currentTile.mapX + 1, currentTile.mapY, m_tempPos, m_tempTile.name);
                 /// Updates the map to say that a tile now exists in the current coordinate
-                map[temp.mapX, temp.mapY] = 1;
-                UpdateMap(temp);
+                m_map[m_temp.mapX, m_temp.mapY] = 1;
+                /// Claims the surrounding accessible tiles for the room passed in.
+                UpdateMap(m_temp);
                 /// Adds the newly created tile to the array of temp tiles.
-                tempTileList.Add(temp);
+                m_tempTileList.Add(m_temp);
             }
             else
             {
                 /// Loops through every possible arrangement of surrounding rooms of the tile to be instantiated which would block a connection.
                 /// It then randomly selects a tile to be added which fits the conditions.
-                if ((claimed[currentTile.mapX + 1, currentTile.mapY - 1] != null || map[currentTile.mapX + 1, currentTile.mapY - 1] == 1) && claimed[currentTile.mapX + 2, currentTile.mapY] == null && map[currentTile.mapX + 2, currentTile.mapY] == 0 && claimed[currentTile.mapX + 1, currentTile.mapY + 1] == null && map[currentTile.mapX + 1, currentTile.mapY + 1] == 0)
+                if ((m_claimed[currentTile.mapX + 1, currentTile.mapY - 1] != null || m_map[currentTile.mapX + 1, currentTile.mapY - 1] == 1) && m_claimed[currentTile.mapX + 2, currentTile.mapY] == null && m_map[currentTile.mapX + 2, currentTile.mapY] == 0 && m_claimed[currentTile.mapX + 1, currentTile.mapY + 1] == null && m_map[currentTile.mapX + 1, currentTile.mapY + 1] == 0)
                 {
                     Debug.Log("Gothere");
-                    foreach (GameObject itile in connectionList[3])
+                    foreach (GameObject itile in m_connectionList[3])
                     {
                         if (itile.name[0] != '1')
                         {
-                            TempPossibleTileList.Add(itile);
+                            m_TempPossibleTileList.Add(itile);
                         }
                     }
                 }
-                if (claimed[currentTile.mapX + 1, currentTile.mapY - 1] == null && map[currentTile.mapX + 1, currentTile.mapY - 1] == 0 && (claimed[currentTile.mapX + 2, currentTile.mapY] != null || map[currentTile.mapX + 2, currentTile.mapY] == 1) && claimed[currentTile.mapX + 1, currentTile.mapY + 1] == null && map[currentTile.mapX + 1, currentTile.mapY + 1] == 0)
+                if (m_claimed[currentTile.mapX + 1, currentTile.mapY - 1] == null && m_map[currentTile.mapX + 1, currentTile.mapY - 1] == 0 && (m_claimed[currentTile.mapX + 2, currentTile.mapY] != null || m_map[currentTile.mapX + 2, currentTile.mapY] == 1) && m_claimed[currentTile.mapX + 1, currentTile.mapY + 1] == null && m_map[currentTile.mapX + 1, currentTile.mapY + 1] == 0)
                 {
                     Debug.Log("Gothere");
-                    foreach (GameObject itile in connectionList[3])
+                    foreach (GameObject itile in m_connectionList[3])
                     {
                         if (itile.name[1] != '1')
                         {
-                            TempPossibleTileList.Add(itile);
+                            m_TempPossibleTileList.Add(itile);
                         }
                     }
                 }
-                if (claimed[currentTile.mapX + 1, currentTile.mapY - 1] == null && map[currentTile.mapX + 1, currentTile.mapY - 1] == 0 && claimed[currentTile.mapX + 2, currentTile.mapY] == null && map[currentTile.mapX + 2, currentTile.mapY] == 0 && (claimed[currentTile.mapX + 1, currentTile.mapY + 1] != null || map[currentTile.mapX + 1, currentTile.mapY + 1] == 1))
+                if (m_claimed[currentTile.mapX + 1, currentTile.mapY - 1] == null && m_map[currentTile.mapX + 1, currentTile.mapY - 1] == 0 && m_claimed[currentTile.mapX + 2, currentTile.mapY] == null && m_map[currentTile.mapX + 2, currentTile.mapY] == 0 && (m_claimed[currentTile.mapX + 1, currentTile.mapY + 1] != null || m_map[currentTile.mapX + 1, currentTile.mapY + 1] == 1))
                 {
                     Debug.Log("Gothere");
-                    foreach (GameObject itile in connectionList[3])
+                    foreach (GameObject itile in m_connectionList[3])
                     {
                         if (itile.name[2] != '1')
                         {
-                            TempPossibleTileList.Add(itile);
+                            m_TempPossibleTileList.Add(itile);
                         }
                     }
                 }
-                if ((claimed[currentTile.mapX + 1, currentTile.mapY - 1] != null || map[currentTile.mapX + 1, currentTile.mapY - 1] == 1) && (claimed[currentTile.mapX + 2, currentTile.mapY] != null || map[currentTile.mapX + 2, currentTile.mapY] == 1) && claimed[currentTile.mapX + 1, currentTile.mapY + 1] == null && map[currentTile.mapX + 1, currentTile.mapY + 1] == 0)
+                if ((m_claimed[currentTile.mapX + 1, currentTile.mapY - 1] != null || m_map[currentTile.mapX + 1, currentTile.mapY - 1] == 1) && (m_claimed[currentTile.mapX + 2, currentTile.mapY] != null || m_map[currentTile.mapX + 2, currentTile.mapY] == 1) && m_claimed[currentTile.mapX + 1, currentTile.mapY + 1] == null && m_map[currentTile.mapX + 1, currentTile.mapY + 1] == 0)
                 {
                     Debug.Log("Gothere");
-                    foreach (GameObject itile in connectionList[3])
+                    foreach (GameObject itile in m_connectionList[3])
                     {
                         if (itile.name[0] != '1' && itile.name[1] != '1')
                         {
-                            TempPossibleTileList.Add(itile);
+                            m_TempPossibleTileList.Add(itile);
                         }
                     }
                 }
-                if ((claimed[currentTile.mapX + 1, currentTile.mapY - 1] != null || map[currentTile.mapX + 1, currentTile.mapY - 1] == 1) && claimed[currentTile.mapX + 2, currentTile.mapY] == null && map[currentTile.mapX + 2, currentTile.mapY] == 0 && (claimed[currentTile.mapX + 1, currentTile.mapY + 1] != null || map[currentTile.mapX + 1, currentTile.mapY + 1] == 1))
+                if ((m_claimed[currentTile.mapX + 1, currentTile.mapY - 1] != null || m_map[currentTile.mapX + 1, currentTile.mapY - 1] == 1) && m_claimed[currentTile.mapX + 2, currentTile.mapY] == null && m_map[currentTile.mapX + 2, currentTile.mapY] == 0 && (m_claimed[currentTile.mapX + 1, currentTile.mapY + 1] != null || m_map[currentTile.mapX + 1, currentTile.mapY + 1] == 1))
                 {
                     Debug.Log("Gothere");
-                    foreach (GameObject itile in connectionList[3])
+                    foreach (GameObject itile in m_connectionList[3])
                     {
                         if (itile.name[0] != '1' && itile.name[2] != '1')
                         {
-                            TempPossibleTileList.Add(itile);
+                            m_TempPossibleTileList.Add(itile);
                         }
                     }
                 }
-                if (claimed[currentTile.mapX + 1, currentTile.mapY - 1] == null && map[currentTile.mapX + 1, currentTile.mapY - 1] == 0 && (claimed[currentTile.mapX + 2, currentTile.mapY] != null || map[currentTile.mapX + 2, currentTile.mapY] == 1) && (claimed[currentTile.mapX + 1, currentTile.mapY + 1] != null || map[currentTile.mapX + 1, currentTile.mapY + 1] == 1))
+                if (m_claimed[currentTile.mapX + 1, currentTile.mapY - 1] == null && m_map[currentTile.mapX + 1, currentTile.mapY - 1] == 0 && (m_claimed[currentTile.mapX + 2, currentTile.mapY] != null || m_map[currentTile.mapX + 2, currentTile.mapY] == 1) && (m_claimed[currentTile.mapX + 1, currentTile.mapY + 1] != null || m_map[currentTile.mapX + 1, currentTile.mapY + 1] == 1))
                 {
                     Debug.Log("Gothere");
-                    foreach (GameObject itile in connectionList[3])
+                    foreach (GameObject itile in m_connectionList[3])
                     {
                         if (itile.name[1] != '1' && itile.name[2] != '1')
                         {
-                            TempPossibleTileList.Add(itile);
+                            m_TempPossibleTileList.Add(itile);
                         }
                     }
                 }
-                if ((claimed[currentTile.mapX + 1, currentTile.mapY - 1] != null || map[currentTile.mapX + 1, currentTile.mapY - 1] == 1) && (claimed[currentTile.mapX + 2, currentTile.mapY] != null || map[currentTile.mapX + 2, currentTile.mapY] == 1) && (claimed[currentTile.mapX + 1, currentTile.mapY + 1] != null || map[currentTile.mapX + 1, currentTile.mapY + 1] == 1))
+                if ((m_claimed[currentTile.mapX + 1, currentTile.mapY - 1] != null || m_map[currentTile.mapX + 1, currentTile.mapY - 1] == 1) && (m_claimed[currentTile.mapX + 2, currentTile.mapY] != null || m_map[currentTile.mapX + 2, currentTile.mapY] == 1) && (m_claimed[currentTile.mapX + 1, currentTile.mapY + 1] != null || m_map[currentTile.mapX + 1, currentTile.mapY + 1] == 1))
                 {
                     Debug.Log("Gothere");
-                    foreach (GameObject itile in connectionList[3])
+                    foreach (GameObject itile in m_connectionList[3])
                     {
                         if (itile.name[0] != '1' && itile.name[1] != '1' && itile.name[2] != '1')
                         {
-                            TempPossibleTileList.Add(itile);
+                            m_TempPossibleTileList.Add(itile);
                         }
                     }
                 }
-                Debug.Log(TempPossibleTileList.Count);
-                tempTile = TempPossibleTileList[Random.Range(0, TempPossibleTileList.Count - 1)];
-                tempPos = new Vector3(currentTile.worldPosition.x - 500, currentTile.worldPosition.y, currentTile.worldPosition.z);
-                Instantiate(tempTile, tempPos, Quaternion.identity);
-                temp = new tile(tempTile, currentTile.mapX + 1, currentTile.mapY, tempPos, tempTile.name);
-                map[temp.mapX, temp.mapY] = 1;
-                UpdateMap(temp);
-                tempTileList.Add(temp);
-                TempPossibleTileList.Clear();
+                Debug.Log(m_TempPossibleTileList.Count);
+                m_tempTile = m_TempPossibleTileList[Random.Range(0, m_TempPossibleTileList.Count - 1)];
+                m_tempPos = new Vector3(currentTile.worldPosition.x - 500, currentTile.worldPosition.y, currentTile.worldPosition.z);
+                Instantiate(m_tempTile, m_tempPos, Quaternion.identity);
+                m_temp = new tile(m_tempTile, currentTile.mapX + 1, currentTile.mapY, m_tempPos, m_tempTile.name);
+                m_map[m_temp.mapX, m_temp.mapY] = 1;
+                UpdateMap(m_temp);
+                m_tempTileList.Add(m_temp);
+                m_TempPossibleTileList.Clear();
             }
 
         }
         /// Checks if the room has an exit to the south and whether instantiating a tile to the north would leave the map boundaries.
-        if (currentTile.config[2] == '1' && claimed[currentTile.mapX, currentTile.mapY + 1] == currentTile && map[currentTile.mapX, currentTile.mapY + 1] != 1)
+        if (currentTile.config[2] == '1' && m_claimed[currentTile.mapX, currentTile.mapY + 1] == currentTile && m_map[currentTile.mapX, currentTile.mapY + 1] != 1)
         {
             /// Checks if there are no rooms which would border the newly instantiated room.
-            if (claimed[currentTile.mapX + 1, currentTile.mapY + 1] == null && map[currentTile.mapX + 1, currentTile.mapY + 1] == 0 && claimed[currentTile.mapX, currentTile.mapY + 2] == null && map[currentTile.mapX, currentTile.mapY + 2] == 0 && claimed[currentTile.mapX - 1, currentTile.mapY + 1] == null && map[currentTile.mapX - 1, currentTile.mapY + 1] == 0)
+            if (m_claimed[currentTile.mapX + 1, currentTile.mapY + 1] == null && m_map[currentTile.mapX + 1, currentTile.mapY + 1] == 0 && m_claimed[currentTile.mapX, currentTile.mapY + 2] == null && m_map[currentTile.mapX, currentTile.mapY + 2] == 0 && m_claimed[currentTile.mapX - 1, currentTile.mapY + 1] == null && m_map[currentTile.mapX - 1, currentTile.mapY + 1] == 0)
             {
                 /// Selects a random room with a connection to the north.
-                tempTile = connectionList[0][Random.Range(0, connectionList[0].Count - 1)];
+                m_tempTile = m_connectionList[0][Random.Range(0, m_connectionList[0].Count - 1)];
                 /// Positions the tile correctly.
-                tempPos = new Vector3(currentTile.worldPosition.x, currentTile.worldPosition.y, currentTile.worldPosition.z + 500);
+                m_tempPos = new Vector3(currentTile.worldPosition.x, currentTile.worldPosition.y, currentTile.worldPosition.z + 500);
                 /// Spawns the new tile.
-                Instantiate(tempTile, tempPos, Quaternion.identity);
+                Instantiate(m_tempTile, m_tempPos, Quaternion.identity);
                 /// Creates the tile to be added.
-                temp = new tile(tempTile, currentTile.mapX, currentTile.mapY + 1, tempPos, tempTile.name);
+                m_temp = new tile(m_tempTile, currentTile.mapX, currentTile.mapY + 1, m_tempPos, m_tempTile.name);
                 /// Updates the map to say that a tile now exists in the current coordinate
-                map[temp.mapX, temp.mapY] = 1;
-                UpdateMap(temp);
+                m_map[m_temp.mapX, m_temp.mapY] = 1;
+                /// Claims the surrounding accessible tiles for the room passed in.
+                UpdateMap(m_temp);
                 /// Adds the newly created tile to the array of temp tiles.
-                tempTileList.Add(temp);
+                m_tempTileList.Add(m_temp);
             }
             else
             {
                 /// Loops through every possible arrangement of surrounding rooms of the tile to be instantiated which would block a connection.
                 /// It then randomly selects a tile to be added which fits the conditions.
-                if ((claimed[currentTile.mapX + 1, currentTile.mapY + 1] != null || map[currentTile.mapX + 1, currentTile.mapY + 1] == 1) && claimed[currentTile.mapX, currentTile.mapY + 2] == null && map[currentTile.mapX, currentTile.mapY + 2] == 0 && claimed[currentTile.mapX - 1, currentTile.mapY + 1] == null && map[currentTile.mapX - 1, currentTile.mapY + 1] == 0)
+                if ((m_claimed[currentTile.mapX + 1, currentTile.mapY + 1] != null || m_map[currentTile.mapX + 1, currentTile.mapY + 1] == 1) && m_claimed[currentTile.mapX, currentTile.mapY + 2] == null && m_map[currentTile.mapX, currentTile.mapY + 2] == 0 && m_claimed[currentTile.mapX - 1, currentTile.mapY + 1] == null && m_map[currentTile.mapX - 1, currentTile.mapY + 1] == 0)
                 {
-                    foreach (GameObject itile in connectionList[0])
+                    foreach (GameObject itile in m_connectionList[0])
                     {
                         if (itile.name[1] != '1')
                         {
-                            TempPossibleTileList.Add(itile);
+                            m_TempPossibleTileList.Add(itile);
                         }
                     }
                 }
-                if (claimed[currentTile.mapX + 1, currentTile.mapY + 1] == null && map[currentTile.mapX + 1, currentTile.mapY + 1] == 0 && (claimed[currentTile.mapX, currentTile.mapY + 2] != null || map[currentTile.mapX, currentTile.mapY + 2] == 1) && claimed[currentTile.mapX - 1, currentTile.mapY + 1] == null && map[currentTile.mapX - 1, currentTile.mapY + 1] == 0)
+                if (m_claimed[currentTile.mapX + 1, currentTile.mapY + 1] == null && m_map[currentTile.mapX + 1, currentTile.mapY + 1] == 0 && (m_claimed[currentTile.mapX, currentTile.mapY + 2] != null || m_map[currentTile.mapX, currentTile.mapY + 2] == 1) && m_claimed[currentTile.mapX - 1, currentTile.mapY + 1] == null && m_map[currentTile.mapX - 1, currentTile.mapY + 1] == 0)
                 {
-                    foreach (GameObject itile in connectionList[0])
+                    foreach (GameObject itile in m_connectionList[0])
                     {
                         if (itile.name[2] != '1')
                         {
-                            TempPossibleTileList.Add(itile);
+                            m_TempPossibleTileList.Add(itile);
                         }
                     }
                 }
-                if (claimed[currentTile.mapX + 1, currentTile.mapY + 1] == null && map[currentTile.mapX + 1, currentTile.mapY + 1] == 0 && claimed[currentTile.mapX, currentTile.mapY + 2] == null && map[currentTile.mapX, currentTile.mapY + 2] == 0 && (claimed[currentTile.mapX - 1, currentTile.mapY + 1] != null || map[currentTile.mapX - 1, currentTile.mapY + 1] == 1))
+                if (m_claimed[currentTile.mapX + 1, currentTile.mapY + 1] == null && m_map[currentTile.mapX + 1, currentTile.mapY + 1] == 0 && m_claimed[currentTile.mapX, currentTile.mapY + 2] == null && m_map[currentTile.mapX, currentTile.mapY + 2] == 0 && (m_claimed[currentTile.mapX - 1, currentTile.mapY + 1] != null || m_map[currentTile.mapX - 1, currentTile.mapY + 1] == 1))
                 {
-                    foreach (GameObject itile in connectionList[0])
+                    foreach (GameObject itile in m_connectionList[0])
                     {
                         if (itile.name[3] != '1')
                         {
-                            TempPossibleTileList.Add(itile);
+                            m_TempPossibleTileList.Add(itile);
                         }
                     }
                 }
-                if ((claimed[currentTile.mapX + 1, currentTile.mapY + 1] != null || map[currentTile.mapX + 1, currentTile.mapY + 1] == 1) && (claimed[currentTile.mapX, currentTile.mapY + 2] != null || map[currentTile.mapX, currentTile.mapY + 2] == 1) && claimed[currentTile.mapX - 1, currentTile.mapY + 1] == null && map[currentTile.mapX - 1, currentTile.mapY + 1] == 0)
+                if ((m_claimed[currentTile.mapX + 1, currentTile.mapY + 1] != null || m_map[currentTile.mapX + 1, currentTile.mapY + 1] == 1) && (m_claimed[currentTile.mapX, currentTile.mapY + 2] != null || m_map[currentTile.mapX, currentTile.mapY + 2] == 1) && m_claimed[currentTile.mapX - 1, currentTile.mapY + 1] == null && m_map[currentTile.mapX - 1, currentTile.mapY + 1] == 0)
                 {
-                    foreach (GameObject itile in connectionList[0])
+                    foreach (GameObject itile in m_connectionList[0])
                     {
                         if (itile.name[1] != '1' && itile.name[2] != '1')
                         {
-                            TempPossibleTileList.Add(itile);
+                            m_TempPossibleTileList.Add(itile);
                         }
                     }
                 }
-                if ((claimed[currentTile.mapX + 1, currentTile.mapY + 1] != null || map[currentTile.mapX + 1, currentTile.mapY + 1] == 1) && claimed[currentTile.mapX, currentTile.mapY + 2] == null && map[currentTile.mapX, currentTile.mapY + 2] == 0 && (claimed[currentTile.mapX - 1, currentTile.mapY + 1] != null || map[currentTile.mapX - 1, currentTile.mapY + 1] == 1))
+                if ((m_claimed[currentTile.mapX + 1, currentTile.mapY + 1] != null || m_map[currentTile.mapX + 1, currentTile.mapY + 1] == 1) && m_claimed[currentTile.mapX, currentTile.mapY + 2] == null && m_map[currentTile.mapX, currentTile.mapY + 2] == 0 && (m_claimed[currentTile.mapX - 1, currentTile.mapY + 1] != null || m_map[currentTile.mapX - 1, currentTile.mapY + 1] == 1))
                 {
-                    foreach (GameObject itile in connectionList[0])
+                    foreach (GameObject itile in m_connectionList[0])
                     {
                         if (itile.name[1] != '1' && itile.name[3] != '1')
                         {
-                            TempPossibleTileList.Add(itile);
+                            m_TempPossibleTileList.Add(itile);
                         }
                     }
                 }
-                if (claimed[currentTile.mapX + 1, currentTile.mapY + 1] == null && map[currentTile.mapX + 1, currentTile.mapY + 1] == 0 && (claimed[currentTile.mapX, currentTile.mapY + 2] != null || map[currentTile.mapX, currentTile.mapY + 2] == 1) && (claimed[currentTile.mapX - 1, currentTile.mapY + 1] != null || map[currentTile.mapX - 1, currentTile.mapY + 1] == 1))
+                if (m_claimed[currentTile.mapX + 1, currentTile.mapY + 1] == null && m_map[currentTile.mapX + 1, currentTile.mapY + 1] == 0 && (m_claimed[currentTile.mapX, currentTile.mapY + 2] != null || m_map[currentTile.mapX, currentTile.mapY + 2] == 1) && (m_claimed[currentTile.mapX - 1, currentTile.mapY + 1] != null || m_map[currentTile.mapX - 1, currentTile.mapY + 1] == 1))
                 {
-                    foreach (GameObject itile in connectionList[0])
+                    foreach (GameObject itile in m_connectionList[0])
                     {
                         if (itile.name[2] != '1' && itile.name[3] != '1')
                         {
-                            TempPossibleTileList.Add(itile);
+                            m_TempPossibleTileList.Add(itile);
                         }
                     }
                 }
-                if ((claimed[currentTile.mapX + 1, currentTile.mapY + 1] != null || map[currentTile.mapX + 1, currentTile.mapY + 1] == 1) && (claimed[currentTile.mapX, currentTile.mapY + 2] != null || map[currentTile.mapX, currentTile.mapY + 2] == 1) && (claimed[currentTile.mapX - 1, currentTile.mapY + 1] != null || map[currentTile.mapX - 1, currentTile.mapY + 1] == 1))
+                if ((m_claimed[currentTile.mapX + 1, currentTile.mapY + 1] != null || m_map[currentTile.mapX + 1, currentTile.mapY + 1] == 1) && (m_claimed[currentTile.mapX, currentTile.mapY + 2] != null || m_map[currentTile.mapX, currentTile.mapY + 2] == 1) && (m_claimed[currentTile.mapX - 1, currentTile.mapY + 1] != null || m_map[currentTile.mapX - 1, currentTile.mapY + 1] == 1))
                 {
-                    foreach (GameObject itile in connectionList[0])
+                    foreach (GameObject itile in m_connectionList[0])
                     {
                         if (itile.name[1] != '1' && itile.name[2] != '1' && itile.name[3] != '1')
                         {
-                            TempPossibleTileList.Add(itile);
+                            m_TempPossibleTileList.Add(itile);
                         }
                     }
                 }
-                Debug.Log(TempPossibleTileList.Count);
-                tempTile = TempPossibleTileList[Random.Range(0, TempPossibleTileList.Count - 1)];
-                tempPos = new Vector3(currentTile.worldPosition.x, currentTile.worldPosition.y, currentTile.worldPosition.z + 500);
-                Instantiate(tempTile, tempPos, Quaternion.identity);
-                temp = new tile(tempTile, currentTile.mapX, currentTile.mapY + 1, tempPos, tempTile.name);
-                map[temp.mapX, temp.mapY] = 1;
-                tempTileList.Add(temp);
-                UpdateMap(temp);
-                TempPossibleTileList.Clear();
+                Debug.Log(m_TempPossibleTileList.Count);
+                m_tempTile = m_TempPossibleTileList[Random.Range(0, m_TempPossibleTileList.Count - 1)];
+                m_tempPos = new Vector3(currentTile.worldPosition.x, currentTile.worldPosition.y, currentTile.worldPosition.z + 500);
+                Instantiate(m_tempTile, m_tempPos, Quaternion.identity);
+                m_temp = new tile(m_tempTile, currentTile.mapX, currentTile.mapY + 1, m_tempPos, m_tempTile.name);
+                m_map[m_temp.mapX, m_temp.mapY] = 1;
+                m_tempTileList.Add(m_temp);
+                UpdateMap(m_temp);
+                m_TempPossibleTileList.Clear();
             }
         }
         /// Checks if the room has an exit to the west and whether instantiating a tile to the north would leave the map boundaries.
-        if (currentTile.config[3] == '1' && claimed[currentTile.mapX - 1, currentTile.mapY] == currentTile && map[currentTile.mapX - 1, currentTile.mapY] != 1)
+        if (currentTile.config[3] == '1' && m_claimed[currentTile.mapX - 1, currentTile.mapY] == currentTile && m_map[currentTile.mapX - 1, currentTile.mapY] != 1)
         {
             /// Checks if there are no rooms which would border the newly instantiated room.
-            if (claimed[currentTile.mapX - 1, currentTile.mapY - 1] == null && map[currentTile.mapX - 1, currentTile.mapY - 1] == 0 && claimed[currentTile.mapX - 2, currentTile.mapY] == null && map[currentTile.mapX - 2, currentTile.mapY] == 0 && claimed[currentTile.mapX - 1, currentTile.mapY + 1] == null && map[currentTile.mapX - 1, currentTile.mapY + 1] == 0)
+            if (m_claimed[currentTile.mapX - 1, currentTile.mapY - 1] == null && m_map[currentTile.mapX - 1, currentTile.mapY - 1] == 0 && m_claimed[currentTile.mapX - 2, currentTile.mapY] == null && m_map[currentTile.mapX - 2, currentTile.mapY] == 0 && m_claimed[currentTile.mapX - 1, currentTile.mapY + 1] == null && m_map[currentTile.mapX - 1, currentTile.mapY + 1] == 0)
             {
                 /// Selects a random room with a connection to the east.
-                tempTile = connectionList[1][Random.Range(0, connectionList[1].Count - 1)];
+                m_tempTile = m_connectionList[1][Random.Range(0, m_connectionList[1].Count - 1)];
                 /// Positions the tile correctly.
-                tempPos = new Vector3(currentTile.worldPosition.x + 500, currentTile.worldPosition.y, currentTile.worldPosition.z);
+                m_tempPos = new Vector3(currentTile.worldPosition.x + 500, currentTile.worldPosition.y, currentTile.worldPosition.z);
                 /// Spawns the new tile.
-                Instantiate(tempTile, tempPos, Quaternion.identity);
+                Instantiate(m_tempTile, m_tempPos, Quaternion.identity);
                 /// Creates the tile to be added.
-                temp = new tile(tempTile, currentTile.mapX - 1, currentTile.mapY, tempPos, tempTile.name);
+                m_temp = new tile(m_tempTile, currentTile.mapX - 1, currentTile.mapY, m_tempPos, m_tempTile.name);
                 /// Updates the map to say that a tile now exists in the current coordinate
-                map[temp.mapX, temp.mapY] = 1;
-                UpdateMap(temp);
+                m_map[m_temp.mapX, m_temp.mapY] = 1;
+                /// Claims the surrounding accessible tiles for the room passed in.
+                UpdateMap(m_temp);
                 /// Adds the newly created tile to the array of temp tiles.
-                tempTileList.Add(temp);
+                m_tempTileList.Add(m_temp);
             }
             else
             {
                 /// Loops through every possible arrangement of surrounding rooms of the tile to be instantiated which would block a connection.
                 /// It then randomly selects a tile to be added which fits the conditions.
-                if ((claimed[currentTile.mapX - 1, currentTile.mapY - 1] != null || map[currentTile.mapX - 1, currentTile.mapY - 1] == 1) && claimed[currentTile.mapX - 2, currentTile.mapY] == null && map[currentTile.mapX - 2, currentTile.mapY] == 0 && claimed[currentTile.mapX - 1, currentTile.mapY + 1] == null && map[currentTile.mapX - 1, currentTile.mapY + 1] == 0)
+                if ((m_claimed[currentTile.mapX - 1, currentTile.mapY - 1] != null || m_map[currentTile.mapX - 1, currentTile.mapY - 1] == 1) && m_claimed[currentTile.mapX - 2, currentTile.mapY] == null && m_map[currentTile.mapX - 2, currentTile.mapY] == 0 && m_claimed[currentTile.mapX - 1, currentTile.mapY + 1] == null && m_map[currentTile.mapX - 1, currentTile.mapY + 1] == 0)
                 {
-                    foreach (GameObject itile in connectionList[1])
+                    foreach (GameObject itile in m_connectionList[1])
                     {
                         if (itile.name[0] != '1')
                         {
-                            TempPossibleTileList.Add(itile);
+                            m_TempPossibleTileList.Add(itile);
                         }
                     }
                 }
-                if (claimed[currentTile.mapX - 1, currentTile.mapY - 1] == null && map[currentTile.mapX - 1, currentTile.mapY - 1] == 0 && (claimed[currentTile.mapX - 2, currentTile.mapY] != null || map[currentTile.mapX - 2, currentTile.mapY] == 1) && claimed[currentTile.mapX - 1, currentTile.mapY + 1] == null && map[currentTile.mapX - 1, currentTile.mapY + 1] == 0)
+                if (m_claimed[currentTile.mapX - 1, currentTile.mapY - 1] == null && m_map[currentTile.mapX - 1, currentTile.mapY - 1] == 0 && (m_claimed[currentTile.mapX - 2, currentTile.mapY] != null || m_map[currentTile.mapX - 2, currentTile.mapY] == 1) && m_claimed[currentTile.mapX - 1, currentTile.mapY + 1] == null && m_map[currentTile.mapX - 1, currentTile.mapY + 1] == 0)
                 {
-                    foreach (GameObject itile in connectionList[1])
+                    foreach (GameObject itile in m_connectionList[1])
                     {
                         if (itile.name[3] != '1')
                         {
-                            TempPossibleTileList.Add(itile);
+                            m_TempPossibleTileList.Add(itile);
                         }
                     }
                 }
-                if (claimed[currentTile.mapX - 1, currentTile.mapY - 1] == null && map[currentTile.mapX - 1, currentTile.mapY - 1] == 0 && claimed[currentTile.mapX - 2, currentTile.mapY] == null && map[currentTile.mapX - 2, currentTile.mapY] == 0 && (claimed[currentTile.mapX - 1, currentTile.mapY + 1] != null || map[currentTile.mapX - 1, currentTile.mapY + 1] == 1))
+                if (m_claimed[currentTile.mapX - 1, currentTile.mapY - 1] == null && m_map[currentTile.mapX - 1, currentTile.mapY - 1] == 0 && m_claimed[currentTile.mapX - 2, currentTile.mapY] == null && m_map[currentTile.mapX - 2, currentTile.mapY] == 0 && (m_claimed[currentTile.mapX - 1, currentTile.mapY + 1] != null || m_map[currentTile.mapX - 1, currentTile.mapY + 1] == 1))
                 {
-                    foreach (GameObject itile in connectionList[1])
+                    foreach (GameObject itile in m_connectionList[1])
                     {
                         if (itile.name[2] != '1')
                         {
-                            TempPossibleTileList.Add(itile);
+                            m_TempPossibleTileList.Add(itile);
                         }
                     }
                 }
-                if ((claimed[currentTile.mapX - 1, currentTile.mapY - 1] != null || map[currentTile.mapX - 1, currentTile.mapY - 1] == 1) && (claimed[currentTile.mapX - 2, currentTile.mapY] != null || map[currentTile.mapX - 2, currentTile.mapY] == 1) && claimed[currentTile.mapX - 1, currentTile.mapY + 1] == null && map[currentTile.mapX - 1, currentTile.mapY + 1] == 0)
+                if ((m_claimed[currentTile.mapX - 1, currentTile.mapY - 1] != null || m_map[currentTile.mapX - 1, currentTile.mapY - 1] == 1) && (m_claimed[currentTile.mapX - 2, currentTile.mapY] != null || m_map[currentTile.mapX - 2, currentTile.mapY] == 1) && m_claimed[currentTile.mapX - 1, currentTile.mapY + 1] == null && m_map[currentTile.mapX - 1, currentTile.mapY + 1] == 0)
                 {
-                    foreach (GameObject itile in connectionList[1])
+                    foreach (GameObject itile in m_connectionList[1])
                     {
                         if (itile.name[0] != '1' && itile.name[3] != '1')
                         {
-                            TempPossibleTileList.Add(itile);
+                            m_TempPossibleTileList.Add(itile);
                         }
                     }
                 }
-                if ((claimed[currentTile.mapX - 1, currentTile.mapY - 1] != null || map[currentTile.mapX - 1, currentTile.mapY - 1] == 1) && claimed[currentTile.mapX - 2, currentTile.mapY] == null && map[currentTile.mapX - 2, currentTile.mapY] == 0 && (claimed[currentTile.mapX - 1, currentTile.mapY + 1] != null || map[currentTile.mapX - 1, currentTile.mapY + 1] == 1))
+                if ((m_claimed[currentTile.mapX - 1, currentTile.mapY - 1] != null || m_map[currentTile.mapX - 1, currentTile.mapY - 1] == 1) && m_claimed[currentTile.mapX - 2, currentTile.mapY] == null && m_map[currentTile.mapX - 2, currentTile.mapY] == 0 && (m_claimed[currentTile.mapX - 1, currentTile.mapY + 1] != null || m_map[currentTile.mapX - 1, currentTile.mapY + 1] == 1))
                 {
-                    foreach (GameObject itile in connectionList[1])
+                    foreach (GameObject itile in m_connectionList[1])
                     {
                         if (itile.name[0] != '1' && itile.name[2] != '1')
                         {
-                            TempPossibleTileList.Add(itile);
+                            m_TempPossibleTileList.Add(itile);
                         }
                     }
                 }
-                if (claimed[currentTile.mapX - 1, currentTile.mapY - 1] == null && map[currentTile.mapX - 1, currentTile.mapY - 1] == 0 && (claimed[currentTile.mapX - 2, currentTile.mapY] != null || map[currentTile.mapX - 2, currentTile.mapY] == 1) && (claimed[currentTile.mapX - 1, currentTile.mapY + 1] != null || map[currentTile.mapX - 1, currentTile.mapY + 1] == 1))
+                if (m_claimed[currentTile.mapX - 1, currentTile.mapY - 1] == null && m_map[currentTile.mapX - 1, currentTile.mapY - 1] == 0 && (m_claimed[currentTile.mapX - 2, currentTile.mapY] != null || m_map[currentTile.mapX - 2, currentTile.mapY] == 1) && (m_claimed[currentTile.mapX - 1, currentTile.mapY + 1] != null || m_map[currentTile.mapX - 1, currentTile.mapY + 1] == 1))
                 {
-                    foreach (GameObject itile in connectionList[1])
+                    foreach (GameObject itile in m_connectionList[1])
                     {
                         if (itile.name[3] != '1' && itile.name[2] != '1')
                         {
-                            TempPossibleTileList.Add(itile);
+                            m_TempPossibleTileList.Add(itile);
                         }
                     }
                 }
-                if ((claimed[currentTile.mapX - 1, currentTile.mapY - 1] != null || map[currentTile.mapX - 1, currentTile.mapY - 1] == 1) && (claimed[currentTile.mapX - 2, currentTile.mapY] != null || map[currentTile.mapX - 2, currentTile.mapY] == 1) && (claimed[currentTile.mapX - 1, currentTile.mapY + 1] != null || map[currentTile.mapX - 1, currentTile.mapY + 1] == 1))
+                if ((m_claimed[currentTile.mapX - 1, currentTile.mapY - 1] != null || m_map[currentTile.mapX - 1, currentTile.mapY - 1] == 1) && (m_claimed[currentTile.mapX - 2, currentTile.mapY] != null || m_map[currentTile.mapX - 2, currentTile.mapY] == 1) && (m_claimed[currentTile.mapX - 1, currentTile.mapY + 1] != null || m_map[currentTile.mapX - 1, currentTile.mapY + 1] == 1))
                 {
-                    foreach (GameObject itile in connectionList[1])
+                    foreach (GameObject itile in m_connectionList[1])
                     {
                         if (itile.name[0] != '1' && itile.name[3] != '1' && itile.name[2] != '1')
                         {
-                            TempPossibleTileList.Add(itile);
+                            m_TempPossibleTileList.Add(itile);
                         }
                     }
                 }
-                Debug.Log(TempPossibleTileList.Count);
-                tempTile = TempPossibleTileList[Random.Range(0, TempPossibleTileList.Count - 1)];
-                tempPos = new Vector3(currentTile.worldPosition.x + 500, currentTile.worldPosition.y, currentTile.worldPosition.z);
-                Instantiate(tempTile, tempPos, Quaternion.identity);
-                temp = new tile(tempTile, currentTile.mapX - 1, currentTile.mapY, tempPos, tempTile.name);
-                map[temp.mapX, temp.mapY] = 1;
-                tempTileList.Add(temp);
-                UpdateMap(temp);
-                TempPossibleTileList.Clear();
+                Debug.Log(m_TempPossibleTileList.Count);
+                m_tempTile = m_TempPossibleTileList[Random.Range(0, m_TempPossibleTileList.Count - 1)];
+                m_tempPos = new Vector3(currentTile.worldPosition.x + 500, currentTile.worldPosition.y, currentTile.worldPosition.z);
+                Instantiate(m_tempTile, m_tempPos, Quaternion.identity);
+                m_temp = new tile(m_tempTile, currentTile.mapX - 1, currentTile.mapY, m_tempPos, m_tempTile.name);
+                m_map[m_temp.mapX, m_temp.mapY] = 1;
+                m_tempTileList.Add(m_temp);
+                UpdateMap(m_temp);
+                m_TempPossibleTileList.Clear();
             }
         }
         /// After every possible situation is checked, the current tile is marked as full.
@@ -614,130 +607,118 @@ public class DungeonGen : MonoBehaviour
     private void FinishTiles(tile currentTile)
     {
         /// Checks if the tile has a north exit.
-        if (currentTile.config[0] == '1' && map[currentTile.mapX,currentTile.mapY - 1] != 1)
+        if (currentTile.config[0] == '1' && m_map[currentTile.mapX,currentTile.mapY - 1] != 1)
         {
             /// Adds a dead end tile with a south connection.
-            tempTile = justSouth;
+            m_tempTile = m_justSouth;
             /// Positions the tile correctly.
-            tempPos = new Vector3(currentTile.worldPosition.x, currentTile.worldPosition.y, currentTile.worldPosition.z - 500);
+            m_tempPos = new Vector3(currentTile.worldPosition.x, currentTile.worldPosition.y, currentTile.worldPosition.z - 500);
             /// Spawns the new tile.
-            Instantiate(tempTile, tempPos, Quaternion.identity);
-            temp = new tile(tempTile, currentTile.mapX, currentTile.mapY - 1, tempPos, tempTile.name);
+            Instantiate(m_tempTile, m_tempPos, Quaternion.identity);
+            m_temp = new tile(m_tempTile, currentTile.mapX, currentTile.mapY - 1, m_tempPos, m_tempTile.name);
         }
         /// Checks if the tile has a east exit.
-        if (currentTile.config[1] == '1' && map[currentTile.mapX + 1, currentTile.mapY] != 1)
+        if (currentTile.config[1] == '1' && m_map[currentTile.mapX + 1, currentTile.mapY] != 1)
         {
             /// Adds a dead end tile with a west connection.
-            tempTile = justWest;
+            m_tempTile = m_justWest;
             /// Positions the tile correctly.
-            tempPos = new Vector3(currentTile.worldPosition.x - 500, currentTile.worldPosition.y, currentTile.worldPosition.z);
+            m_tempPos = new Vector3(currentTile.worldPosition.x - 500, currentTile.worldPosition.y, currentTile.worldPosition.z);
             /// Spawns the new tile.
-            Instantiate(tempTile, tempPos, Quaternion.identity);
-            temp = new tile(tempTile, currentTile.mapX + 1, currentTile.mapY, tempPos, tempTile.name);
+            Instantiate(m_tempTile, m_tempPos, Quaternion.identity);
+            m_temp = new tile(m_tempTile, currentTile.mapX + 1, currentTile.mapY, m_tempPos, m_tempTile.name);
         }
         /// Checks if the tile has a south exit.
-        if (currentTile.config[2] == '1' && map[currentTile.mapX, currentTile.mapY + 1] != 1)
+        if (currentTile.config[2] == '1' && m_map[currentTile.mapX, currentTile.mapY + 1] != 1)
         {
             /// Adds a dead end tile with a north connection.
-            tempTile = justNorth;
+            m_tempTile = m_justNorth;
             /// Positions the tile correctly.
-            tempPos = new Vector3(currentTile.worldPosition.x, currentTile.worldPosition.y, currentTile.worldPosition.z + 500);
+            m_tempPos = new Vector3(currentTile.worldPosition.x, currentTile.worldPosition.y, currentTile.worldPosition.z + 500);
             /// Spawns the new tile.
-            Instantiate(tempTile, tempPos, Quaternion.identity);
-            temp = new tile(tempTile, currentTile.mapX, currentTile.mapY + 1, tempPos, tempTile.name);
+            Instantiate(m_tempTile, m_tempPos, Quaternion.identity);
+            m_temp = new tile(m_tempTile, currentTile.mapX, currentTile.mapY + 1, m_tempPos, m_tempTile.name);
         }
         /// Checks if the tile has a west exit.
-        if (currentTile.config[3] == '1' && map[currentTile.mapX - 1, currentTile.mapY ] != 1)
+        if (currentTile.config[3] == '1' && m_map[currentTile.mapX - 1, currentTile.mapY ] != 1)
         {
             /// Adds a dead end tile with a east connection.
-            tempTile = justEast;
+            m_tempTile = m_justEast;
             /// Positions the tile correctly.
-            tempPos = new Vector3(currentTile.worldPosition.x + 500, currentTile.worldPosition.y, currentTile.worldPosition.z);
+            m_tempPos = new Vector3(currentTile.worldPosition.x + 500, currentTile.worldPosition.y, currentTile.worldPosition.z);
             /// Spawns the new tile.
-            Instantiate(tempTile, tempPos, Quaternion.identity);
-            temp = new tile(tempTile, currentTile.mapX - 1, currentTile.mapY, tempPos, tempTile.name);
+            Instantiate(m_tempTile, m_tempPos, Quaternion.identity);
+            m_temp = new tile(m_tempTile, currentTile.mapX - 1, currentTile.mapY, m_tempPos, m_tempTile.name);
         }
         /// After every possible situation is checked, the current tile is marked as full.
         currentTile.full = true;
     }
+    /// <summary>
+    /// Claims the surrounding accessible tiles for the room passed in.
+    /// </summary>
+    /// <param name="currentTile"> The room which will claim the surrounding accessible tiles.</param>
     private void UpdateMap(tile currentTile)
     {
-        /*if (type == 'N' && claimed[currentTile.mapX, currentTile.mapY - 1] == null)
+        /// Checks if the tile to the north is accessible and whether it has already been claimed.
+        if (currentTile.config[0] == '1' && m_claimed[currentTile.mapX, currentTile.mapY - 1] == null && m_map[currentTile.mapX, currentTile.mapY - 1] != 1)
         {
-            claimed[currentTile.mapX, currentTile.mapY - 1] = currentTile;
+            m_claimed[currentTile.mapX, currentTile.mapY - 1] = currentTile;
         }
-        if (type == 'E' && claimed[currentTile.mapX + 1, currentTile.mapY] == null)
+        /// Checks if the tile to the east is accessible and whether it has already been claimed.
+        if (currentTile.config[1] == '1' && m_claimed[currentTile.mapX + 1, currentTile.mapY] == null && m_map[currentTile.mapX + 1, currentTile.mapY] != 1)
         {
-            claimed[currentTile.mapX + 1, currentTile.mapY] = currentTile;
+            m_claimed[currentTile.mapX + 1, currentTile.mapY] = currentTile;
         }
-        if (type == 'S' && claimed[currentTile.mapX, currentTile.mapY + 1] == null)
+        /// Checks if the tile to the south is accessible and whether it has already been claimed.
+        if (currentTile.config[2] == '1' && m_claimed[currentTile.mapX, currentTile.mapY + 1] == null && m_map[currentTile.mapX, currentTile.mapY + 1] != 1)
         {
-            claimed[currentTile.mapX, currentTile.mapY + 1] = currentTile;
+            m_claimed[currentTile.mapX, currentTile.mapY + 1] = currentTile;
         }
-        if (type == 'W' && claimed[currentTile.mapX - 1, currentTile.mapY] == null)
+        /// Checks if the tile to the west is accessible and whether it has already been claimed.
+        if (currentTile.config[3] == '1' && m_claimed[currentTile.mapX - 1, currentTile.mapY] == null && m_map[currentTile.mapX - 1, currentTile.mapY] != 1)
         {
-            claimed[currentTile.mapX - 1, currentTile.mapY] = currentTile;
+            m_claimed[currentTile.mapX - 1, currentTile.mapY] = currentTile;
         }
-        if (type == 'A')
-        {*/
-            if (currentTile.config[0] == '1' && claimed[currentTile.mapX, currentTile.mapY - 1] == null && map[currentTile.mapX, currentTile.mapY - 1] != 1)
-            {
-                claimed[currentTile.mapX, currentTile.mapY - 1] = currentTile;
-            }
-            if (currentTile.config[1] == '1' && claimed[currentTile.mapX + 1, currentTile.mapY] == null && map[currentTile.mapX + 1, currentTile.mapY] != 1)
-            {
-                claimed[currentTile.mapX + 1, currentTile.mapY] = currentTile;
-            }
-            if (currentTile.config[2] == '1' && claimed[currentTile.mapX, currentTile.mapY + 1] == null && map[currentTile.mapX, currentTile.mapY + 1] != 1)
-            {
-                claimed[currentTile.mapX, currentTile.mapY + 1] = currentTile;
-            }
-            if (currentTile.config[3] == '1' && claimed[currentTile.mapX - 1, currentTile.mapY] == null && map[currentTile.mapX - 1, currentTile.mapY] != 1)
-            {
-                claimed[currentTile.mapX - 1, currentTile.mapY] = currentTile;
-            }
-        
-        //claimed[currentTile.mapX, currentTile.mapY] = currentTile;
     }
     /// <summary>
     /// Sorts the tiles by their binary representation of exits.
     /// </summary>
     private void StoreTiles()
     {
-        foreach (GameObject section in mapTiles)
+        foreach (GameObject section in m_mapTiles)
         {
             /// Checks if the tile has an exit to the north.
             if (section.name[0] == '1')
             {
                 /// Adds the tile to the list of tiles which have a north exit.
-                northConnection.Add(section);
+                m_northConnection.Add(section);
             }
             /// Checks if the tile has an exit to the east.
             if (section.name[1] == '1')
             {
                 /// Adds the tile to the list of tiles which have a east exit.
-                eastConnection.Add(section);
+                m_eastConnection.Add(section);
             }
             /// Checks if the tile has an exit to the south.
             if (section.name[2] == '1')
             {
                 /// Adds the tile to the list of tiles which have a south exit.
-                southConnection.Add(section);
+                m_southConnection.Add(section);
             }
             /// Checks if the tile has an exit to the west.
             if (section.name[3] == '1')
             {
                 /// Adds the tile to the list of tiles which have a west exit.
-                westConnection.Add(section);
+                m_westConnection.Add(section);
             }
             /// Adds the list of north connections to the list of all collections.
-            connectionList.Add(northConnection);
+            m_connectionList.Add(m_northConnection);
             /// Adds the list of east connections to the list of all collections.
-            connectionList.Add(eastConnection);
+            m_connectionList.Add(m_eastConnection);
             /// Adds the list of south connections to the list of all collections.
-            connectionList.Add(southConnection);
+            m_connectionList.Add(m_southConnection);
             /// Adds the list of west connections to the list of all collections.
-            connectionList.Add(westConnection);
+            m_connectionList.Add(m_westConnection);
         }
     }
     /// <summary>

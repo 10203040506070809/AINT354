@@ -338,7 +338,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2084053939ad4a84c9018c1d5724b595, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapTiles:
+  m_mapTiles:
   - {fileID: 2205107598813472656, guid: 3c4968249f14f2348a6592f958dc8bd8, type: 3}
   - {fileID: 77183364363070004, guid: b0d5f120d431bbb479b5abc26935002a, type: 3}
   - {fileID: 8980685631899269958, guid: a3cd67c07ae955e44951b804b5577049, type: 3}
@@ -354,15 +354,16 @@ MonoBehaviour:
   - {fileID: 4127648803665922754, guid: b94f768fd2bb10845b497492811447cf, type: 3}
   - {fileID: 4734577037617250270, guid: f7d62d74a9dd72645b10df0839237fda, type: 3}
   - {fileID: 5234100113508006564, guid: 7139525d669fdbc43b599395064d847b, type: 3}
-  end: {fileID: 553686761566615255, guid: a2e5e6b8b698949408fdb39c54c7f40e, type: 3}
-  justNorth: {fileID: 8353540447337744837, guid: 4fdc73347fb38f04c8bce53518a81728,
+  m_end: {fileID: 553686761566615255, guid: a2e5e6b8b698949408fdb39c54c7f40e, type: 3}
+  m_justNorth: {fileID: 8353540447337744837, guid: 4fdc73347fb38f04c8bce53518a81728,
     type: 3}
-  justEast: {fileID: 8611814919349356036, guid: 8da856991b13c974e9ff57159d9bd8ce,
+  m_justEast: {fileID: 8611814919349356036, guid: 8da856991b13c974e9ff57159d9bd8ce,
     type: 3}
-  justSouth: {fileID: 77183364363070004, guid: b0d5f120d431bbb479b5abc26935002a, type: 3}
-  justWest: {fileID: 2205107598813472656, guid: 3c4968249f14f2348a6592f958dc8bd8,
+  m_justSouth: {fileID: 77183364363070004, guid: b0d5f120d431bbb479b5abc26935002a,
     type: 3}
-  length: 20
+  m_justWest: {fileID: 2205107598813472656, guid: 3c4968249f14f2348a6592f958dc8bd8,
+    type: 3}
+  m_length: 15
 --- !u!4 &1235968336
 Transform:
   m_ObjectHideFlags: 0
