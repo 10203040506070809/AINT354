@@ -291,7 +291,7 @@ GameObject:
   - component: {fileID: 3035882892735700329}
   m_Layer: 0
   m_Name: 1011
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -386,4 +386,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 8064180886618528174, guid: f551c4ab80edb784894b3ec7ffc19472, type: 3}
-  pickUp: {fileID: 7749815534087187769, guid: 7d3e2fc6b8820f54d9b60a671debb395, type: 3}
+  ChanceOfEnemySpawn: 0

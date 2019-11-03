@@ -362,7 +362,7 @@ MonoBehaviour:
   justSouth: {fileID: 77183364363070004, guid: b0d5f120d431bbb479b5abc26935002a, type: 3}
   justWest: {fileID: 2205107598813472656, guid: 3c4968249f14f2348a6592f958dc8bd8,
     type: 3}
-  length: 5
+  length: 20
 --- !u!4 &1235968336
 Transform:
   m_ObjectHideFlags: 0
