@@ -6,25 +6,25 @@ using UnityEngine.UI;
 public class SoundManager : MonoBehaviour
 {
     /// <summary>
-    /// 
+    /// A slider for Ambient volume
     /// </summary>
     [SerializeField] private Slider m_ambient_Slider;
     /// <summary>
-    /// 
+    ///  A slider for SFX volume
     /// </summary>
     [SerializeField] private Slider m_sfx_Slider;
     /// <summary>
-    /// 
+    /// a Slider for voice volume
     /// </summary>
     [SerializeField] private Slider m_voice_Slider;
 
     /// <summary>
-    /// 
+    /// a Toggle for global mute
     /// </summary>
     [SerializeField] private Toggle m_globalMute;
 
     /// <summary>
-    /// 
+    /// Initialises variables and checks playerprefs
     /// </summary>
     private void Start()
     {
@@ -46,7 +46,7 @@ public class SoundManager : MonoBehaviour
         Debug.Log(PlayerPrefs.GetFloat("Ambient_Sound"));
     }
     /// <summary>
-    /// 
+    /// Occurs every frame, checks for sound updates
     /// </summary>
     private void Update()
     {
