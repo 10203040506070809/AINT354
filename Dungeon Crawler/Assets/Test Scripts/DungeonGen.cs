@@ -145,6 +145,9 @@ public class DungeonGen : MonoBehaviour
         /// Generates the end location in the last tile spawned.
         Instantiate(m_end,m_tileList[m_tileList.Count - 1].worldPosition, Quaternion.identity);
     }
+    /// <summary>
+    /// Spawns a start tile and adds the tile to the list of tiles in the map. Also updates the 2D map arrays with info about the start tile.
+    /// </summary>
     private void StartTile()
     {
         /// Selects a random tile from the list of all tiles.
@@ -750,7 +753,6 @@ public class DungeonGen : MonoBehaviour
         /// Whether the room has exits which aren't connected.
         /// </summary>
         public bool full;
-        public int counter;
         public tile()
         {
 
