@@ -26,6 +26,28 @@ public class SoundManager : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
+    private void Start()
+    {
+        m_ambient_Slider.value = PlayerPrefs.GetFloat("Ambient_Sound", 1f);
+        m_sfx_Slider.value = PlayerPrefs.GetFloat("SFX_Sound", 1f);
+        m_voice_Slider.value = PlayerPrefs.GetFloat("Voice_Sound", 1f);
+        PlayerPrefs.GetString("Global_Mute", "Off");
+
+        if (PlayerPrefs.GetString("Global_Mute") == "On")
+        {
+            m_globalMute.isOn = true;
+        }
+
+        else
+        {
+            m_globalMute.isOn = false;
+        }
+
+        Debug.Log(PlayerPrefs.GetFloat("Ambient_Sound"));
+    }
+    /// <summary>
+    /// 
+    /// </summary>
     private void Update()
     {
         UpdateMusicSounds();
@@ -38,8 +60,10 @@ public class SoundManager : MonoBehaviour
         ///If sound is not globalled muted, continue
         if (!m_globalMute.isOn)
         {
+            PlayerPrefs.SetString("Global_Mute", "Off");
             ///redundancy check - Make sure audiolistener is active.
             AudioListener.volume = 1;
+            AudioListener.pause = false;
             ///Check all objects marked SFX and set their volume to the slider value
             foreach (GameObject audiosource in GameObject.FindGameObjectsWithTag("SFX"))
             {   
@@ -47,7 +71,8 @@ public class SoundManager : MonoBehaviour
                 if (audiosource.GetComponent<AudioSource>() != null)
                 {
                     audiosource.GetComponent<AudioSource>().volume = m_sfx_Slider.value;
-                   
+                    PlayerPrefs.SetFloat("SFX_Sound", m_sfx_Slider.value);
+
                 }
             }
             ///Check all objects marked Ambient and set their volume to the slider value
@@ -57,6 +82,8 @@ public class SoundManager : MonoBehaviour
                 if (audiosource.GetComponent<AudioSource>() != null)
                 {
                     audiosource.GetComponent<AudioSource>().volume = m_ambient_Slider.value;
+                    PlayerPrefs.SetFloat("Ambient_Sound", m_ambient_Slider.value);
+
                 }
             }
             ///Check all objects marked Voices and set their volume to the slider value
@@ -66,13 +93,17 @@ public class SoundManager : MonoBehaviour
                 if (audiosource.GetComponent<AudioSource>() != null)
                 {
                     audiosource.GetComponent<AudioSource>().volume = m_voice_Slider.value;
+                    PlayerPrefs.SetFloat("Voice_Sound", m_voice_Slider.value);
+
                 }
             }
         }
         ///Else mutes all audio because global mute is enabled.
         else
         {
+            AudioListener.pause = true;
             AudioListener.volume = 0;
+            PlayerPrefs.SetString("Global_Mute", "On");
         }
     }
 
