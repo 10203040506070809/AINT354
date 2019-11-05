@@ -37,7 +37,7 @@ public class PlayerMovement : CharacterMovement
     /// <summary>
     /// A movement vector for the players' movement.
     /// </summary>
-    private Vector3 m_moveVector; 
+    private Vector3 m_moveVector;
     /// <summary>
     /// Start is called before the first frame update
     /// </summary>
@@ -76,6 +76,7 @@ public class PlayerMovement : CharacterMovement
             m_characterController.Move(m_moveVector);
         }
         Move();
+        Attack();
     }
     /// <summary>
     /// Moves the player based on input.
@@ -84,13 +85,42 @@ public class PlayerMovement : CharacterMovement
     {
         if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
         {
+            m_animator.SetBool("isWalking", true);
+
             m_moveVector = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
             m_moveVector *= m_myStats.GetMovementSpeed();
           
 
             m_characterController.Move(m_moveVector * Time.deltaTime);
             transform.rotation = Quaternion.LookRotation(m_moveVector);
+                        
         }
+        else
+        {
+            m_animator.SetBool("isWalking", false);
+        }
+    }
+
+    /// <summary>
+    /// Allows the player to attack by pressing the Left Mouse Button
+    /// </summary>
+    private void Attack()
+    {
+        if (Input.GetMouseButton(0)){
+            if (m_animator.GetBool("isAttacking") == false)
+            {
+                m_animator.SetBool("isAttacking", true);
+                Invoke("AttackCooldown", 1);
+                Debug.Log("attack");
+            }
+        }
+    }
+    /// <summary>
+    /// After a set delay, re-enable attack
+    /// </summary>
+    private void AttackCooldown()
+    {
+        m_animator.SetBool("isAttacking", false);
     }
    
 

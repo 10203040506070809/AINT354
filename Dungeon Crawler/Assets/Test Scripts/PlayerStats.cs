@@ -3,12 +3,16 @@ using UnityEngine;
 
 public class PlayerStats : CharacterStats
 {
+    private Animator m_animator;
+
+
 
     /// <summary>
     /// A method that is called when the script is loaded.
     /// </summary>
     private void Awake()
     {
+        m_animator = this.GetComponent<Animator>();
         CalculateStats();
     }
 
@@ -25,13 +29,16 @@ public class PlayerStats : CharacterStats
         }
     }
 
-
+    
     public override void TakeDamage(int damage)
     {
         base.TakeDamage(damage);
 
         //Play audio clip
         Debug.Log("OOF");
+        m_animator.SetBool("isHit", true);
+        Invoke("HitReset", 0.5f);
+        
     }
     /// <summary>
     /// A method which calculates stats according to a formula. This allows variation between players and specific enemies.
@@ -64,4 +71,9 @@ public class PlayerStats : CharacterStats
         
         //TODO on death, give gold/experience to the thing that killed it.
     }
+
+    private void HitReset()
+    {
+        m_animator.SetBool("isHit", false);
+    } 
 }
