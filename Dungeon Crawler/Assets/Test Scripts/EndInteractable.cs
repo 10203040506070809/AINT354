@@ -12,6 +12,9 @@ public class EndInteractable : Interactable
     /// The dungeon generator script.
     /// </summary>
     [SerializeField] private DungeonGen m_dungeon;
+    [SerializeField] private PlayerMovement m_movement;
+    [SerializeField]
+    private int counter = 1;
     /// <summary>
     /// Checks if the player has interacted with the end.
     /// </summary>
@@ -19,6 +22,7 @@ public class EndInteractable : Interactable
     {
         /// Gets the dungeonGen script from the dungeon gen game object.
         m_dungeon = GameObject.FindGameObjectWithTag("Dungeon").GetComponent<DungeonGen>();
+        m_movement = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
         /// Gets the player object.
         m_player = GameObject.FindGameObjectWithTag("Player");
         /// Debug.
@@ -26,6 +30,9 @@ public class EndInteractable : Interactable
         /// Rebuilds a new dungeon.
         m_dungeon.Start();
         /// Moves the player to the start position of the new dungeon.
-        m_player.transform.position = new Vector3(m_dungeon.m_startTile.worldPosition.x, m_dungeon.m_startTile.worldPosition.y + (m_player.GetComponent<CharacterController>().bounds.size.y / 2), m_dungeon.m_startTile.worldPosition.y);
+        m_movement.reset = true;
+        
+
     }
+
 }
