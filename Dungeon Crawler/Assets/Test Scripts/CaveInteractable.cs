@@ -7,6 +7,6 @@ public class CaveInteractable : Interactable
     public override void InteractedWith()
     {
         base.InteractedWith();
-
+      
     }
 }
