@@ -75,12 +75,14 @@ public class DungeonGen : MonoBehaviour
     /// A list of possible tiles to add which fit certain conditions. A tile will be randomly selected from this list.
     /// </summary>
     private List<GameObject> m_TempPossibleTileList = new List<GameObject>();
+    private GameObject m_player;
 
     // Start is called before the first frame update
     public void Start()
     {
         /// Sorts all the tiles into lists specifying which connections they have.
         StoreTiles();
+        m_player = GameObject.FindGameObjectWithTag("Player");
         width = m_northConnection[0].GetComponentInChildren<Renderer>().bounds.size.x;
         Debug.Log(width);
         /// Bool to make sure the program only adds tiles while new tiles can be added.
@@ -150,6 +152,8 @@ public class DungeonGen : MonoBehaviour
         }
         /// Generates the end location in the last tile spawned.
         Instantiate(m_end,new Vector3(m_tileList[m_tileList.Count - 1].worldPosition.x, m_tileList[m_tileList.Count - 1].worldPosition.y + (m_end.GetComponent<Renderer>().bounds.size.y / 2), m_tileList[m_tileList.Count - 1].worldPosition.z), Quaternion.identity);
+        //m_player.transform.position = new Vector3(m_startTile.worldPosition.x, (m_startTile.worldPosition.y + m_player.GetComponent<CharacterController>().bounds.size.y), m_startTile.worldPosition.z);
+
     }
     /// <summary>
     /// Spawns a start tile and adds the tile to the list of tiles in the map. Also updates the 2D map arrays with info about the start tile.

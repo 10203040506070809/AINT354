@@ -37,12 +37,17 @@ public class PlayerMovement : CharacterMovement
     /// <summary>
     /// A movement vector for the players' movement.
     /// </summary>
-    private Vector3 m_moveVector; 
+    private Vector3 m_moveVector;
+    private GameObject m_player;
+    private DungeonGen m_dungeon;
+    public bool reset = false;
     /// <summary>
     /// Start is called before the first frame update
     /// </summary>
     public void Start()
     {      
+        m_player = GameObject.FindGameObjectWithTag("Player");
+        m_dungeon = GameObject.FindGameObjectWithTag("Dungeon").GetComponent<DungeonGen>();
         m_myStats = this.GetComponent<CharacterStats>();
 
         m_characterController = this.GetComponent<CharacterController>();
@@ -59,29 +64,39 @@ public class PlayerMovement : CharacterMovement
     /// </summary>
     public void FixedUpdate()
     {
-       
-        ///If the player is grounded, do this.
-        if (m_characterController.isGrounded)
+        if (reset == false)
         {
-            m_verticalVelocity -= 0;
-            //Debug.Log("Grounded.");
-        }
-        ///Otherwise, do this. Note, this is not an else statement in case of edge cases.
-        if (!m_characterController.isGrounded)
-        {
+            ///If the player is grounded, do this.
+            if (m_characterController.isGrounded)
+            {
+                m_verticalVelocity -= 0;
+                //Debug.Log("Grounded.");
+            }
+            ///Otherwise, do this. Note, this is not an else statement in case of edge cases.
+            if (!m_characterController.isGrounded)
+            {
 
-            m_verticalVelocity -= 2;
-            //Debug.Log("Not Grounded.");
-            m_moveVector = new Vector3(0, m_verticalVelocity, 0);
-            m_characterController.Move(m_moveVector);
+                m_verticalVelocity -= 2;
+                //Debug.Log("Not Grounded.");
+                m_moveVector = new Vector3(0, m_verticalVelocity, 0);
+                m_characterController.Move(m_moveVector);
+            }
+            Move();
         }
-        Move();
+        else
+        {
+            m_player.transform.position = new Vector3(m_dungeon.m_startTile.worldPosition.x, (m_dungeon.m_startTile.worldPosition.y + m_player.GetComponent<CharacterController>().bounds.size.y / 2), m_dungeon.m_startTile.worldPosition.z);
+            reset = false;
+        }
+
     }
     /// <summary>
     /// Moves the player based on input.
     /// </summary>
     public override void Move()
     {
+        m_inputX = Input.GetAxis("Horizontal");
+        m_inputZ = Input.GetAxis("Vertical");
         if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
         {
             m_moveVector = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
