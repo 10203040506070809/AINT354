@@ -23,7 +23,7 @@ public class DungeonGen : MonoBehaviour
     /// <summary>
     /// Where the player spawns.
     /// </summary>
-    private tile m_startTile;
+    public tile m_startTile;
     /// <summary>
     /// The asset for the tile the player starts on.
     /// </summary>
@@ -56,6 +56,10 @@ public class DungeonGen : MonoBehaviour
     /// </summary>
     private int[,] m_map;
     /// <summary>
+    /// The width of the tiles.
+    /// </summary>
+    private float width;
+    /// <summary>
     /// The list of all tiles as they are added to the map.
     /// </summary>
     private List<tile> m_tileList = new List<tile>();
@@ -73,10 +77,12 @@ public class DungeonGen : MonoBehaviour
     private List<GameObject> m_TempPossibleTileList = new List<GameObject>();
 
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         /// Sorts all the tiles into lists specifying which connections they have.
         StoreTiles();
+        width = m_northConnection[0].GetComponentInChildren<Renderer>().bounds.size.x;
+        Debug.Log(width);
         /// Bool to make sure the program only adds tiles while new tiles can be added.
         bool changed = true;
         /// Loops until the dungeon has at least the minimum number of rooms.
@@ -143,7 +149,7 @@ public class DungeonGen : MonoBehaviour
             }
         }
         /// Generates the end location in the last tile spawned.
-        Instantiate(m_end,m_tileList[m_tileList.Count - 1].worldPosition, Quaternion.identity);
+        Instantiate(m_end,new Vector3(m_tileList[m_tileList.Count - 1].worldPosition.x, m_tileList[m_tileList.Count - 1].worldPosition.y + (m_end.GetComponent<Renderer>().bounds.size.y / 2), m_tileList[m_tileList.Count - 1].worldPosition.z), Quaternion.identity);
     }
     /// <summary>
     /// Spawns a start tile and adds the tile to the list of tiles in the map. Also updates the 2D map arrays with info about the start tile.
@@ -153,7 +159,7 @@ public class DungeonGen : MonoBehaviour
         /// Selects a random tile from the list of all tiles.
         m_start = m_mapTiles[Random.Range(0, m_mapTiles.Length - 1)];
         /// Creates it as a tile.
-        m_startTile = new tile(m_start, 25, 25, new Vector3(0, 0, 0), m_start.name);
+        m_startTile = new tile(m_start, 25, 25, new Vector3(0, -500, 0), m_start.name);
         /// Adds the start tile to the list of tiles in the game.
         m_tileList.Add(m_startTile);
         /// The start tile is created in the centre of the 'map'.
@@ -161,7 +167,7 @@ public class DungeonGen : MonoBehaviour
         /// Claims the surrounding accessible tiles for the room passed in.
         UpdateMap(m_startTile);
         /// Creates the start tile at the world origin.
-        Instantiate(m_tileList[Random.Range(0, m_tileList.Count - 1)].type, m_tileList[0].worldPosition, Quaternion.identity);
+        Instantiate(m_tileList[Random.Range(0, m_tileList.Count - 1)].type, m_tileList[0].worldPosition, m_start.transform.rotation);
     }
     /// <summary>
     /// Adds tiles which meet specific conditions to every available exit of the tile passed in.
@@ -178,9 +184,9 @@ public class DungeonGen : MonoBehaviour
                 /// Selects a random room with a connection to the south.
                 m_tempTile = m_connectionList[2][Random.Range(0, m_connectionList[2].Count - 1)];
                 /// Positions the tile correctly.
-                m_tempPos = new Vector3(currentTile.worldPosition.x, currentTile.worldPosition.y, currentTile.worldPosition.z - 500);
+                m_tempPos = new Vector3(currentTile.worldPosition.x, currentTile.worldPosition.y, currentTile.worldPosition.z - width);
                 /// Spawns the new tile.
-                Instantiate(m_tempTile, m_tempPos, Quaternion.identity);
+                Instantiate(m_tempTile, m_tempPos, m_tempTile.transform.rotation);
                 /// Creates the tile to be added.
                 m_temp = new tile(m_tempTile, currentTile.mapX, currentTile.mapY - 1, m_tempPos, m_tempTile.name);
                 /// Updates the map to say that a tile now exists in the current coordinate
@@ -264,8 +270,8 @@ public class DungeonGen : MonoBehaviour
                 }
                 Debug.Log(m_TempPossibleTileList.Count);
                 m_tempTile = m_TempPossibleTileList[Random.Range(0, m_TempPossibleTileList.Count - 1)];
-                m_tempPos = new Vector3(currentTile.worldPosition.x, currentTile.worldPosition.y, currentTile.worldPosition.z - 500);
-                Instantiate(m_tempTile, m_tempPos, Quaternion.identity);
+                m_tempPos = new Vector3(currentTile.worldPosition.x, currentTile.worldPosition.y, currentTile.worldPosition.z - width);
+                Instantiate(m_tempTile, m_tempPos, m_tempTile.transform.rotation);
                 m_temp = new tile(m_tempTile, currentTile.mapX, currentTile.mapY - 1, m_tempPos, m_tempTile.name);
                 m_map[m_temp.mapX, m_temp.mapY] = 1;
                 UpdateMap(m_temp);
@@ -283,9 +289,9 @@ public class DungeonGen : MonoBehaviour
                 /// Selects a random room with a connection to the west.
                 m_tempTile = m_connectionList[3][Random.Range(0, m_connectionList[3].Count - 1)];
                 /// Positions the tile correctly.
-                m_tempPos = new Vector3(currentTile.worldPosition.x - 500, currentTile.worldPosition.y, currentTile.worldPosition.z);
+                m_tempPos = new Vector3(currentTile.worldPosition.x - width, currentTile.worldPosition.y, currentTile.worldPosition.z);
                 /// Spawns the new tile.
-                Instantiate(m_tempTile, m_tempPos, Quaternion.identity);
+                Instantiate(m_tempTile, m_tempPos, m_tempTile.transform.rotation);
                 /// Creates the tile to be added.
                 m_temp = new tile(m_tempTile, currentTile.mapX + 1, currentTile.mapY, m_tempPos, m_tempTile.name);
                 /// Updates the map to say that a tile now exists in the current coordinate
@@ -378,8 +384,8 @@ public class DungeonGen : MonoBehaviour
                 }
                 Debug.Log(m_TempPossibleTileList.Count);
                 m_tempTile = m_TempPossibleTileList[Random.Range(0, m_TempPossibleTileList.Count - 1)];
-                m_tempPos = new Vector3(currentTile.worldPosition.x - 500, currentTile.worldPosition.y, currentTile.worldPosition.z);
-                Instantiate(m_tempTile, m_tempPos, Quaternion.identity);
+                m_tempPos = new Vector3(currentTile.worldPosition.x - width, currentTile.worldPosition.y, currentTile.worldPosition.z);
+                Instantiate(m_tempTile, m_tempPos, m_tempTile.transform.rotation);
                 m_temp = new tile(m_tempTile, currentTile.mapX + 1, currentTile.mapY, m_tempPos, m_tempTile.name);
                 m_map[m_temp.mapX, m_temp.mapY] = 1;
                 UpdateMap(m_temp);
@@ -397,9 +403,9 @@ public class DungeonGen : MonoBehaviour
                 /// Selects a random room with a connection to the north.
                 m_tempTile = m_connectionList[0][Random.Range(0, m_connectionList[0].Count - 1)];
                 /// Positions the tile correctly.
-                m_tempPos = new Vector3(currentTile.worldPosition.x, currentTile.worldPosition.y, currentTile.worldPosition.z + 500);
+                m_tempPos = new Vector3(currentTile.worldPosition.x, currentTile.worldPosition.y, currentTile.worldPosition.z + width);
                 /// Spawns the new tile.
-                Instantiate(m_tempTile, m_tempPos, Quaternion.identity);
+                Instantiate(m_tempTile, m_tempPos, m_tempTile.transform.rotation);
                 /// Creates the tile to be added.
                 m_temp = new tile(m_tempTile, currentTile.mapX, currentTile.mapY + 1, m_tempPos, m_tempTile.name);
                 /// Updates the map to say that a tile now exists in the current coordinate
@@ -485,8 +491,8 @@ public class DungeonGen : MonoBehaviour
                 }
                 Debug.Log(m_TempPossibleTileList.Count);
                 m_tempTile = m_TempPossibleTileList[Random.Range(0, m_TempPossibleTileList.Count - 1)];
-                m_tempPos = new Vector3(currentTile.worldPosition.x, currentTile.worldPosition.y, currentTile.worldPosition.z + 500);
-                Instantiate(m_tempTile, m_tempPos, Quaternion.identity);
+                m_tempPos = new Vector3(currentTile.worldPosition.x, currentTile.worldPosition.y, currentTile.worldPosition.z + width);
+                Instantiate(m_tempTile, m_tempPos, m_tempTile.transform.rotation);
                 m_temp = new tile(m_tempTile, currentTile.mapX, currentTile.mapY + 1, m_tempPos, m_tempTile.name);
                 m_map[m_temp.mapX, m_temp.mapY] = 1;
                 m_tempTileList.Add(m_temp);
@@ -503,9 +509,9 @@ public class DungeonGen : MonoBehaviour
                 /// Selects a random room with a connection to the east.
                 m_tempTile = m_connectionList[1][Random.Range(0, m_connectionList[1].Count - 1)];
                 /// Positions the tile correctly.
-                m_tempPos = new Vector3(currentTile.worldPosition.x + 500, currentTile.worldPosition.y, currentTile.worldPosition.z);
+                m_tempPos = new Vector3(currentTile.worldPosition.x + width, currentTile.worldPosition.y, currentTile.worldPosition.z);
                 /// Spawns the new tile.
-                Instantiate(m_tempTile, m_tempPos, Quaternion.identity);
+                Instantiate(m_tempTile, m_tempPos, m_tempTile.transform.rotation);
                 /// Creates the tile to be added.
                 m_temp = new tile(m_tempTile, currentTile.mapX - 1, currentTile.mapY, m_tempPos, m_tempTile.name);
                 /// Updates the map to say that a tile now exists in the current coordinate
@@ -591,8 +597,8 @@ public class DungeonGen : MonoBehaviour
                 }
                 Debug.Log(m_TempPossibleTileList.Count);
                 m_tempTile = m_TempPossibleTileList[Random.Range(0, m_TempPossibleTileList.Count - 1)];
-                m_tempPos = new Vector3(currentTile.worldPosition.x + 500, currentTile.worldPosition.y, currentTile.worldPosition.z);
-                Instantiate(m_tempTile, m_tempPos, Quaternion.identity);
+                m_tempPos = new Vector3(currentTile.worldPosition.x + width, currentTile.worldPosition.y, currentTile.worldPosition.z);
+                Instantiate(m_tempTile, m_tempPos, m_tempTile.transform.rotation);
                 m_temp = new tile(m_tempTile, currentTile.mapX - 1, currentTile.mapY, m_tempPos, m_tempTile.name);
                 m_map[m_temp.mapX, m_temp.mapY] = 1;
                 m_tempTileList.Add(m_temp);
@@ -615,9 +621,9 @@ public class DungeonGen : MonoBehaviour
             /// Adds a dead end tile with a south connection.
             m_tempTile = m_justSouth;
             /// Positions the tile correctly.
-            m_tempPos = new Vector3(currentTile.worldPosition.x, currentTile.worldPosition.y, currentTile.worldPosition.z - 500);
+            m_tempPos = new Vector3(currentTile.worldPosition.x, currentTile.worldPosition.y, currentTile.worldPosition.z - width);
             /// Spawns the new tile.
-            Instantiate(m_tempTile, m_tempPos, Quaternion.identity);
+            Instantiate(m_tempTile, m_tempPos, m_tempTile.transform.rotation);
             m_temp = new tile(m_tempTile, currentTile.mapX, currentTile.mapY - 1, m_tempPos, m_tempTile.name);
         }
         /// Checks if the tile has a east exit.
@@ -626,9 +632,9 @@ public class DungeonGen : MonoBehaviour
             /// Adds a dead end tile with a west connection.
             m_tempTile = m_justWest;
             /// Positions the tile correctly.
-            m_tempPos = new Vector3(currentTile.worldPosition.x - 500, currentTile.worldPosition.y, currentTile.worldPosition.z);
+            m_tempPos = new Vector3(currentTile.worldPosition.x - width, currentTile.worldPosition.y, currentTile.worldPosition.z);
             /// Spawns the new tile.
-            Instantiate(m_tempTile, m_tempPos, Quaternion.identity);
+            Instantiate(m_tempTile, m_tempPos, m_tempTile.transform.rotation);
             m_temp = new tile(m_tempTile, currentTile.mapX + 1, currentTile.mapY, m_tempPos, m_tempTile.name);
         }
         /// Checks if the tile has a south exit.
@@ -637,9 +643,9 @@ public class DungeonGen : MonoBehaviour
             /// Adds a dead end tile with a north connection.
             m_tempTile = m_justNorth;
             /// Positions the tile correctly.
-            m_tempPos = new Vector3(currentTile.worldPosition.x, currentTile.worldPosition.y, currentTile.worldPosition.z + 500);
+            m_tempPos = new Vector3(currentTile.worldPosition.x, currentTile.worldPosition.y, currentTile.worldPosition.z + width);
             /// Spawns the new tile.
-            Instantiate(m_tempTile, m_tempPos, Quaternion.identity);
+            Instantiate(m_tempTile, m_tempPos, m_tempTile.transform.rotation);
             m_temp = new tile(m_tempTile, currentTile.mapX, currentTile.mapY + 1, m_tempPos, m_tempTile.name);
         }
         /// Checks if the tile has a west exit.
@@ -648,9 +654,9 @@ public class DungeonGen : MonoBehaviour
             /// Adds a dead end tile with a east connection.
             m_tempTile = m_justEast;
             /// Positions the tile correctly.
-            m_tempPos = new Vector3(currentTile.worldPosition.x + 500, currentTile.worldPosition.y, currentTile.worldPosition.z);
+            m_tempPos = new Vector3(currentTile.worldPosition.x + width, currentTile.worldPosition.y, currentTile.worldPosition.z);
             /// Spawns the new tile.
-            Instantiate(m_tempTile, m_tempPos, Quaternion.identity);
+            Instantiate(m_tempTile, m_tempPos, m_tempTile.transform.rotation);
             m_temp = new tile(m_tempTile, currentTile.mapX - 1, currentTile.mapY, m_tempPos, m_tempTile.name);
         }
         /// After every possible situation is checked, the current tile is marked as full.
@@ -727,7 +733,7 @@ public class DungeonGen : MonoBehaviour
     /// <summary>
     /// A tile made up of a visual asset, position, configuration of exits and position in the 2D array of the game map.
     /// </summary>
-    private class tile
+    public class tile
     {
         /// <summary>
         /// The tile prefab the tile consists of.
