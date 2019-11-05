@@ -72,6 +72,9 @@ public class PlayerStats : CharacterStats
         //TODO on death, give gold/experience to the thing that killed it.
     }
 
+    /// <summary>
+    /// After the player is hit, reset animation
+    /// </summary>
     private void HitReset()
     {
         m_animator.SetBool("isHit", false);
