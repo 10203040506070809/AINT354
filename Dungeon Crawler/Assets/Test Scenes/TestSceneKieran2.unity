@@ -235,6 +235,8 @@ MonoBehaviour:
     m_baseValue: 0
   m_experience:
     m_baseValue: 0
+  m_attackSpeed:
+    m_baseValue: 0
 --- !u!95 &53972231
 Animator:
   serializedVersion: 3
@@ -262,7 +264,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 53972227}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.479, z: 0}
+  m_LocalPosition: {x: 0, y: 136, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1377014118}
@@ -1156,11 +1158,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebd0bac29da947541a477e5da17a685d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_width: 200
-  m_height: 200
-  m_seed: 23
-  m_useRandomSeed: 0
-  m_fillPercent: 51
 --- !u!4 &1183964829
 Transform:
   m_ObjectHideFlags: 0
@@ -1188,7 +1185,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 030bc007698ddbe4b92d76d6f7bd7614, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_walls: {fileID: 0}
 --- !u!23 &1183964831
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1386,29 +1382,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_mapTiles:
-  - {fileID: 2205107598813472656, guid: 3c4968249f14f2348a6592f958dc8bd8, type: 3}
-  - {fileID: 77183364363070004, guid: b0d5f120d431bbb479b5abc26935002a, type: 3}
-  - {fileID: 8980685631899269958, guid: a3cd67c07ae955e44951b804b5577049, type: 3}
-  - {fileID: 8611814919349356036, guid: 8da856991b13c974e9ff57159d9bd8ce, type: 3}
-  - {fileID: 801977589446990331, guid: 982d56c102421e74d976649ba2251274, type: 3}
-  - {fileID: 309250264158537800, guid: 50e7052bf08cd174abfbc6248bfe6962, type: 3}
-  - {fileID: 965662669518118629, guid: dfccff75c08cb524aa77838862eba527, type: 3}
-  - {fileID: 8353540447337744837, guid: 4fdc73347fb38f04c8bce53518a81728, type: 3}
-  - {fileID: 142389281564419110, guid: 123ca952a9dcd024990570da10ca6fc0, type: 3}
-  - {fileID: 5401371510826793475, guid: 57165cc1cd4ff6a419115a09acbe3952, type: 3}
-  - {fileID: 5168871833287274017, guid: 2ae8f75a354ef66438d15aaf0262155a, type: 3}
-  - {fileID: 2491302358747846189, guid: e7dc01e1de3ad3348b4d61bcb11f682e, type: 3}
-  - {fileID: 4127648803665922754, guid: b94f768fd2bb10845b497492811447cf, type: 3}
-  - {fileID: 4734577037617250270, guid: f7d62d74a9dd72645b10df0839237fda, type: 3}
-  - {fileID: 5234100113508006564, guid: 7139525d669fdbc43b599395064d847b, type: 3}
+  - {fileID: 8846132356821113977, guid: 3da2670b03b40064e94d2f18f91290e5, type: 3}
+  - {fileID: 4442475995859475289, guid: 74f69237e415a0e4b8bdcff644f09fbb, type: 3}
+  - {fileID: 592660683333154623, guid: ae8053c8326a563448006f93ab5bc698, type: 3}
+  - {fileID: 7614938785287131519, guid: 3c5baf4bb4157b44baa79799b9c994fb, type: 3}
+  - {fileID: 51587351369850468, guid: 326d373529a22c0449551eac98302c3c, type: 3}
+  - {fileID: 6867809244555642894, guid: fb6f5a222ab996c40ab95abb29dce113, type: 3}
+  - {fileID: 7643862170188288315, guid: 5cf4c5cd4c0529641aa31b56f1221a18, type: 3}
+  - {fileID: 3168516676156367310, guid: 1d643620f1e423e40a7a1f46a4079549, type: 3}
+  - {fileID: 2107297403879944555, guid: 12cc8866c720b394b9b01761fbb0b839, type: 3}
+  - {fileID: 8790694210237106430, guid: beda5796e4292114ead884067536de72, type: 3}
+  - {fileID: 1530549621912164694, guid: 10fe912e958fbfb4689181d3b0ec0a6a, type: 3}
+  - {fileID: 5648731781243939931, guid: c0b593ce84ef8f0448de16e6bfe131a8, type: 3}
+  - {fileID: 5307624630513812849, guid: de170c070c3b42944b67063263f7e2a3, type: 3}
+  - {fileID: 1394075572937379542, guid: 5ae3d8664c1ecca428ccfd69353029f5, type: 3}
+  - {fileID: 2967429609566006081, guid: 7a46d56c384ea414c97e147b6d7b22b5, type: 3}
   m_end: {fileID: 553686761566615255, guid: a2e5e6b8b698949408fdb39c54c7f40e, type: 3}
-  m_justNorth: {fileID: 8353540447337744837, guid: 4fdc73347fb38f04c8bce53518a81728,
+  m_justNorth: {fileID: 3168516676156367310, guid: 1d643620f1e423e40a7a1f46a4079549,
     type: 3}
-  m_justEast: {fileID: 8611814919349356036, guid: 8da856991b13c974e9ff57159d9bd8ce,
+  m_justEast: {fileID: 7614938785287131519, guid: 3c5baf4bb4157b44baa79799b9c994fb,
     type: 3}
-  m_justSouth: {fileID: 77183364363070004, guid: b0d5f120d431bbb479b5abc26935002a,
+  m_justSouth: {fileID: 4442475995859475289, guid: 74f69237e415a0e4b8bdcff644f09fbb,
     type: 3}
-  m_justWest: {fileID: 2205107598813472656, guid: 3c4968249f14f2348a6592f958dc8bd8,
+  m_justWest: {fileID: 8846132356821113977, guid: 3da2670b03b40064e94d2f18f91290e5,
     type: 3}
   m_length: 15
 --- !u!4 &1235968336
