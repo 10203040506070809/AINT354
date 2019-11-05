@@ -159,7 +159,7 @@ public class DungeonGen : MonoBehaviour
         /// Selects a random tile from the list of all tiles.
         m_start = m_mapTiles[Random.Range(0, m_mapTiles.Length - 1)];
         /// Creates it as a tile.
-        m_startTile = new tile(m_start, 25, 25, new Vector3(0, 0, 0), m_start.name);
+        m_startTile = new tile(m_start, 25, 25, new Vector3(0, -500, 0), m_start.name);
         /// Adds the start tile to the list of tiles in the game.
         m_tileList.Add(m_startTile);
         /// The start tile is created in the centre of the 'map'.
