@@ -149,7 +149,7 @@ public class DungeonGen : MonoBehaviour
             }
         }
         /// Generates the end location in the last tile spawned.
-        Instantiate(m_end,m_tileList[m_tileList.Count - 1].worldPosition, Quaternion.identity);
+        Instantiate(m_end,new Vector3(m_tileList[m_tileList.Count - 1].worldPosition.x, m_tileList[m_tileList.Count - 1].worldPosition.y + (m_end.GetComponent<Renderer>().bounds.size.y / 2), m_tileList[m_tileList.Count - 1].worldPosition.z), Quaternion.identity);
     }
     /// <summary>
     /// Spawns a start tile and adds the tile to the list of tiles in the map. Also updates the 2D map arrays with info about the start tile.
