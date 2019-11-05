@@ -23,7 +23,7 @@ public class DungeonGen : MonoBehaviour
     /// <summary>
     /// Where the player spawns.
     /// </summary>
-    private tile m_startTile;
+    public tile m_startTile;
     /// <summary>
     /// The asset for the tile the player starts on.
     /// </summary>
@@ -77,7 +77,7 @@ public class DungeonGen : MonoBehaviour
     private List<GameObject> m_TempPossibleTileList = new List<GameObject>();
 
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         /// Sorts all the tiles into lists specifying which connections they have.
         StoreTiles();
@@ -733,7 +733,7 @@ public class DungeonGen : MonoBehaviour
     /// <summary>
     /// A tile made up of a visual asset, position, configuration of exits and position in the 2D array of the game map.
     /// </summary>
-    private class tile
+    public class tile
     {
         /// <summary>
         /// The tile prefab the tile consists of.
