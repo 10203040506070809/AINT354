@@ -56,4 +56,9 @@ public class PauseManager : MonoBehaviour
         m_pauseMenu.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
     }
+    
+    public void Quit()
+    {
+        Application.Quit();
+    }
 }

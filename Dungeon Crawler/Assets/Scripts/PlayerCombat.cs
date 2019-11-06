@@ -41,7 +41,8 @@ public class PlayerCombat : MonoBehaviour
 
                     other.gameObject.GetComponent<EnemyStats>().TakeDamage((int)m_myStats.GetAttack());
                     other.gameObject.GetComponent<Rigidbody>().AddForce(new Vector3(10, 10, 10));
-                    Instantiate(m_bloodSystem, other.GetComponent<Collider>().ClosestPointOnBounds(transform.position), Quaternion.identity);
+                    ParticleSystem Clone = Instantiate(m_bloodSystem, other.GetComponent<Collider>().ClosestPointOnBounds(transform.position), Quaternion.identity);
+                    Destroy(Clone.gameObject, 1.0f);
                 }
                 else
                 {
