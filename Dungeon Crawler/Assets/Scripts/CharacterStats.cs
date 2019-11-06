@@ -16,7 +16,7 @@ public class CharacterStats : MonoBehaviour
     /// <summary>
     /// Variable to store the current health of an entity.
     /// </summary>
-    [SerializeField] public int m_currentHealth { get;  set; }
+    [SerializeField] public int m_currentHealth;
     /// <summary>
     /// A variable to store the maximum insanity level.
     /// </summary>

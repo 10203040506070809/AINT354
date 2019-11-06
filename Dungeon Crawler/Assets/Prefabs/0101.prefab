@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 370470039675989666}
   - component: {fileID: -3370184297091586318}
+  - component: {fileID: 5840993310745920616}
   m_Layer: 0
   m_Name: 0101
   m_TagString: Tile
@@ -26,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 423904002815061910}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 1878996012795495087}
   m_Father: {fileID: 0}
@@ -44,8 +45,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3425a8fbad0e04044869cc4041e7a5e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_enemy: {fileID: 8064180886618528174, guid: f551c4ab80edb784894b3ec7ffc19472, type: 3}
+  m_enemy: {fileID: 5142493658647638993, guid: a367ce32a4b223645bcd2b2c567c3d93, type: 3}
   m_ChanceOfEnemySpawn: 100
+--- !u!114 &5840993310745920616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 423904002815061910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 1
+  m_Area: 0
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1001 &7444248200037340353
 PrefabInstance:
   m_ObjectHideFlags: 0

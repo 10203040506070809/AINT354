@@ -39,7 +39,7 @@ public class EnemyController : CharacterMovement
         m_myStats = GetComponent<EnemyStats>();
         
         m_attackSpeed = (int)m_myStats.GetAttackSpeed();
-        Debug.Log(m_attackSpeed);
+        m_target = GameObject.FindGameObjectWithTag("Player");
     }
 
     /// <summary>

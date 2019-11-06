@@ -1,9 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.AI;
 public class DungeonGen : MonoBehaviour
 {
+    /// <summary>
+    /// A reference to the navmeshsurface.
+    /// </summary>
+    [SerializeField] private NavMeshSurface m_surface;
     /// <summary>
     /// An array of game tiles consisting of every possible tile orientation.
     /// </summary>
@@ -94,6 +98,10 @@ public class DungeonGen : MonoBehaviour
             {
                 Destroy(o);
             }
+            foreach (GameObject e in GameObject.FindGameObjectsWithTag("Enemy")) 
+            {
+                Destroy(e);
+            }
             /// Resets all variables.
             m_tileList.Clear();
             m_tempTileList.Clear();
@@ -154,6 +162,7 @@ public class DungeonGen : MonoBehaviour
         Instantiate(m_end,new Vector3(m_tileList[m_tileList.Count - 1].worldPosition.x, m_tileList[m_tileList.Count - 1].worldPosition.y + (m_end.GetComponent<Renderer>().bounds.size.y / 2), m_tileList[m_tileList.Count - 1].worldPosition.z), Quaternion.identity);
         //m_player.transform.position = new Vector3(m_startTile.worldPosition.x, (m_startTile.worldPosition.y + m_player.GetComponent<CharacterController>().bounds.size.y), m_startTile.worldPosition.z);
 
+        m_surface.BuildNavMesh();
     }
     /// <summary>
     /// Spawns a start tile and adds the tile to the list of tiles in the map. Also updates the 2D map arrays with info about the start tile.
@@ -191,6 +200,7 @@ public class DungeonGen : MonoBehaviour
                 m_tempPos = new Vector3(currentTile.worldPosition.x, currentTile.worldPosition.y, currentTile.worldPosition.z - width);
                 /// Spawns the new tile.
                 Instantiate(m_tempTile, m_tempPos, m_tempTile.transform.rotation);
+                
                 /// Creates the tile to be added.
                 m_temp = new tile(m_tempTile, currentTile.mapX, currentTile.mapY - 1, m_tempPos, m_tempTile.name);
                 /// Updates the map to say that a tile now exists in the current coordinate
@@ -410,6 +420,7 @@ public class DungeonGen : MonoBehaviour
                 m_tempPos = new Vector3(currentTile.worldPosition.x, currentTile.worldPosition.y, currentTile.worldPosition.z + width);
                 /// Spawns the new tile.
                 Instantiate(m_tempTile, m_tempPos, m_tempTile.transform.rotation);
+                
                 /// Creates the tile to be added.
                 m_temp = new tile(m_tempTile, currentTile.mapX, currentTile.mapY + 1, m_tempPos, m_tempTile.name);
                 /// Updates the map to say that a tile now exists in the current coordinate

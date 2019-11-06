@@ -56,13 +56,14 @@ public class PlayerMovement : CharacterMovement
 
         m_speed = m_myStats.GetMovementSpeed();
 
+        
     }
     /// <summary>
     /// FixedUpdate is called once per frame. Because we're dealing with Rigidbody physics,
     /// it's better to use FixedUpdate
     /// as it occurs at the same time every frame.
     /// </summary>
-    public void FixedUpdate()
+    public void Update()
     {
         if (reset == false)
         {
@@ -81,15 +82,20 @@ public class PlayerMovement : CharacterMovement
                 m_moveVector = new Vector3(0, m_verticalVelocity, 0);
                 m_characterController.Move(m_moveVector);
             }
-            Move();
+
         }
         else
         {
             m_player.transform.position = new Vector3(m_dungeon.m_startTile.worldPosition.x, (m_dungeon.m_startTile.worldPosition.y + m_player.GetComponent<CharacterController>().bounds.size.y / 2), m_dungeon.m_startTile.worldPosition.z);
             reset = false;
         }
-        Move();
         Attack();
+        if (m_animator.GetBool("isAttacking") == false)
+        {
+            Move();
+        }
+       
+       
     }
     /// <summary>
     /// Moves the player based on input.
@@ -98,20 +104,24 @@ public class PlayerMovement : CharacterMovement
     {
         m_inputX = Input.GetAxis("Horizontal");
         m_inputZ = Input.GetAxis("Vertical");
-        if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
+        if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
         {
             m_animator.SetBool("isWalking", true);
 
+            ///Character controller method
             m_moveVector = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-            m_moveVector *= m_myStats.GetMovementSpeed();
-          
+            m_moveVector *= m_speed;
 
+            //this.GetComponent<Rigidbody>().velocity = m_moveVector
             m_characterController.Move(m_moveVector * Time.deltaTime);
+
+
             transform.rotation = Quaternion.LookRotation(m_moveVector);
                         
         }
         else
         {
+            m_moveVector = new Vector3(0, 0, 0);
             m_animator.SetBool("isWalking", false);
         }
     }

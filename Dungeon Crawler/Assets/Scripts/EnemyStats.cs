@@ -31,6 +31,7 @@ public class EnemyStats : CharacterStats
     {
         base.TakeDamage(damage);
 
+        this.GetComponent<Rigidbody>().AddForce(transform.forward * -10, ForceMode.Impulse);
         //Play audio clip
         Debug.Log("OOF");
     }

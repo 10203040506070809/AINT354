@@ -57,7 +57,7 @@ public class PlayerStats : CharacterStats
 
             m_maxHealth = m_vitality.GetValue() * 10;
 
-            m_damage.SetValue(m_strength.GetValue() * 5);
+            m_damage.SetValue(m_strength.GetValue() * 2);
         }
     }
 
@@ -66,9 +66,11 @@ public class PlayerStats : CharacterStats
     /// </summary>
     public override void Die()
     {
-        this.gameObject.SetActive(false);
-        
-        
+        //this.gameObject.SetActive(false);
+
+        this.gameObject.transform.position = new Vector3(0, 0, 0);
+        m_currentHealth = m_maxHealth;
+        m_currentInsanity = 0;
         //TODO on death, give gold/experience to the thing that killed it.
     }
 
