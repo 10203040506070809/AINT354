@@ -851,9 +851,11 @@ GameObject:
   - component: {fileID: 5142493658647639007}
   - component: {fileID: 5142493658647639006}
   - component: {fileID: 5142493658647639005}
+  - component: {fileID: 8533745290253673786}
+  - component: {fileID: 8596634714512920928}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -906,8 +908,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_isLinked: 1
-  m_level: 5
+  m_level: 1
   m_maxHealth: 100
+  m_currentHealth: 0
   m_maxInsanity:
     m_baseValue: 0
   m_currentInsanity: 0
@@ -926,7 +929,7 @@ MonoBehaviour:
   m_experience:
     m_baseValue: 0
   m_attackSpeed:
-    m_baseValue: 0
+    m_baseValue: 4
 --- !u!114 &5142493658647639007
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -940,7 +943,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_lookRadius: 10
-  m_target: {fileID: 0}
+  m_target: {fileID: 4859750551911778040, guid: 22eda2f43104f4246bcdbc98d4c5ed7d,
+    type: 3}
 --- !u!195 &5142493658647639006
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -955,7 +959,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 3
+  m_StoppingDistance: 5
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -977,6 +981,60 @@ CapsuleCollider:
   m_Height: 0.5712804
   m_Direction: 1
   m_Center: {x: -0.0018520355, y: 0.30083758, z: 0}
+--- !u!23 &8533745290253673786
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5142493658647638993}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!54 &8596634714512920928
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5142493658647638993}
+  serializedVersion: 2
+  m_Mass: 1000
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &5212902723038964725
 GameObject:
   m_ObjectHideFlags: 0
