@@ -13,8 +13,7 @@ public class EndInteractable : Interactable
     /// </summary>
     [SerializeField] private DungeonGen m_dungeon;
     [SerializeField] private PlayerMovement m_movement;
-    [SerializeField]
-    private int counter = 1;
+
     /// <summary>
     /// Checks if the player has interacted with the end.
     /// </summary>
@@ -30,7 +29,6 @@ public class EndInteractable : Interactable
         /// Rebuilds a new dungeon.
         m_dungeon.Start();
         /// Moves the player to the start position of the new dungeon.
-        m_movement.reset = true;
         
 
     }

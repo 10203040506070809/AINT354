@@ -12,7 +12,7 @@ public class SpawnObjectInRoom : MonoBehaviour
     /// Percentage chance of enemy spawning.
     /// </summary>
     [Range(0.0f, 100.0f)]
-    [SerializeField] private float m_ChanceOfEnemySpawn;
+    [SerializeField] private float m_ChanceOfEnemySpawn = 0;
     private float m_tileWidth;
     private float m_enemyWidth;
     // Start is called before the first frame update

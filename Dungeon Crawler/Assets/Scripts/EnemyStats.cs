@@ -15,18 +15,6 @@ public class EnemyStats : CharacterStats
         CalculateStats();
     }
 
-    /// <summary>
-    /// Update is called every frame.
-    /// </summary>
-    void Update()
-    {
-        //if (Input.GetKeyDown(KeyCode.T))
-        //{
-        //    TakeDamage(10);
-        //}
-    }
-
-
     public override void TakeDamage(int damage)
     {
         base.TakeDamage(damage);
@@ -53,6 +41,9 @@ public class EnemyStats : CharacterStats
             m_damage.SetValue(m_strength.GetValue() * (2));
 
             m_currentInsanity = 10;
+
+            m_gold.SetValue(m_level);
+            m_experience.SetValue(m_level);
         }
     }
 

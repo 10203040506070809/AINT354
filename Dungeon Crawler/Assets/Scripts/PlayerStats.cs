@@ -13,6 +13,18 @@ public class PlayerStats : CharacterStats
     private void Awake()
     {
         m_animator = this.GetComponent<Animator>();
+
+        ///If in the unity editor, use stats from inspector - This is useful for debugging.
+#if UNITY_EDITOR
+        Debug.Log("Using Unity Editor");
+#endif
+
+        ///In standalone, prefer using the player level from playerprefs.
+#if UNITY_STANDALONE
+        m_level = PlayerPrefs.GetInt("Level", 1);
+        m_gold.SetValue(PlayerPrefs.GetInt("Gold", 1));
+        m_experience.SetValue(PlayerPrefs.GetInt("Experience", 0));
+#endif
         CalculateStats();
     }
 
@@ -23,10 +35,7 @@ public class PlayerStats : CharacterStats
     /// </summary>
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            TakeDamage(10);
-        }
+        CheckForLevelUp();
     }
 
     
@@ -73,12 +82,17 @@ public class PlayerStats : CharacterStats
         m_currentInsanity = 0;
         //TODO on death, give gold/experience to the thing that killed it.
     }
-
     /// <summary>
     /// After the player is hit, reset animation
     /// </summary>
     private void HitReset()
     {
         m_animator.SetBool("isHit", false);
-    } 
+    }
+
+    private void CheckForLevelUp()
+    {
+
+    }
+
 }

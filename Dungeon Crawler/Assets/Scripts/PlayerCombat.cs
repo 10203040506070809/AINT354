@@ -11,15 +11,15 @@ public class PlayerCombat : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    [SerializeField] private CharacterStats m_myStats;
+    [SerializeField] private CharacterStats m_myStats = null;
     /// <summary>
     /// 
     /// </summary>
-    [SerializeField] private Animator m_playerAnimator;
+    [SerializeField] private Animator m_playerAnimator = null;
     /// <summary>
     /// 
     /// </summary>
-    [SerializeField] private ParticleSystem m_bloodSystem;
+    [SerializeField] private ParticleSystem m_bloodSystem = null;
     private CharacterStats m_enemyStats;
     /// <summary>
     /// 
@@ -39,8 +39,16 @@ public class PlayerCombat : MonoBehaviour
                 {
                     m_enemyStats = other.gameObject.GetComponent<EnemyStats>();
 
-                    other.gameObject.GetComponent<EnemyStats>().TakeDamage((int)m_myStats.GetAttack());
-                    other.gameObject.GetComponent<Rigidbody>().AddForce(new Vector3(10, 10, 10));
+                    m_enemyStats.TakeDamage((int)m_myStats.GetAttack());
+                    
+                  if (m_enemyStats.m_currentHealth <= 0)
+                    {
+                        ///Gives gold and experience on kill
+                        m_myStats.m_gold.SetValue(m_myStats.m_gold.GetValue() + m_enemyStats.m_gold.GetValue());
+                        m_myStats.m_experience.SetValue(m_myStats.m_experience.GetValue() + m_enemyStats.m_experience.GetValue());
+                        PlayerPrefs.SetInt("Gold", m_myStats.m_gold.GetValue());
+                        Debug.Log("Got gold and experience!");
+                    }
                     ParticleSystem Clone = Instantiate(m_bloodSystem, other.GetComponent<Collider>().ClosestPointOnBounds(transform.position), Quaternion.identity);
                     Destroy(Clone.gameObject, 1.0f);
                 }

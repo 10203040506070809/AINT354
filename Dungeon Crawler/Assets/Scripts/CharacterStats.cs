@@ -20,11 +20,11 @@ public class CharacterStats : MonoBehaviour
     /// <summary>
     /// A variable to store the maximum insanity level.
     /// </summary>
-    [SerializeField] public Stat m_maxInsanity;
+    public Stat m_maxInsanity;
     /// <summary>
     /// A variable to store the current insanity level.
     /// </summary>
-    [SerializeField] public float m_currentInsanity = 0;
+    public float m_currentInsanity = 0;
     /// <summary>
     /// A variable to store the damage an entity does.
     /// </summary>
@@ -48,11 +48,11 @@ public class CharacterStats : MonoBehaviour
     /// <summary>
     /// A variable to store the gold a player has; or the gold an enemy gives on death.
     /// </summary>
-    [SerializeField] protected Stat m_gold;
+    public Stat m_gold;
     /// <summary>
     /// A variable to store the experience a player has; or the experience an enemy gives on death.
     /// </summary>
-    [SerializeField] protected Stat m_experience;
+    public Stat m_experience;
 
     [SerializeField] protected Stat m_attackSpeed;
     /// <summary>

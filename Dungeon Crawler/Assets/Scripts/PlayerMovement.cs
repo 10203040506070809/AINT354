@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[RequireComponent(typeof(CharacterStats), typeof(CharacterController))]
+[RequireComponent(typeof(CharacterStats))]
 public class PlayerMovement : CharacterMovement
 {
     /// <summary>
@@ -11,9 +11,9 @@ public class PlayerMovement : CharacterMovement
     /// </summary>
     private CharacterStats m_myStats;
     /// <summary>
-    /// A reference to the character controller attached to the player.
+    /// A reference to the Rigidbody attached to the player.
     /// </summary>
-    private CharacterController m_characterController;
+    private Rigidbody m_rigidBody;
     /// <summary>
     /// A reference to the animator attached to the player.
     /// </summary>
@@ -38,25 +38,15 @@ public class PlayerMovement : CharacterMovement
     /// A movement vector for the players' movement.
     /// </summary>
     private Vector3 m_moveVector;
-    private GameObject m_player;
-    private DungeonGen m_dungeon;
-    public bool reset = false;
     /// <summary>
     /// Start is called before the first frame update
     /// </summary>
     public void Start()
     {      
-        m_player = GameObject.FindGameObjectWithTag("Player");
-        m_dungeon = GameObject.FindGameObjectWithTag("Dungeon").GetComponent<DungeonGen>();
         m_myStats = this.GetComponent<CharacterStats>();
-
-        m_characterController = this.GetComponent<CharacterController>();
-
         m_animator = this.GetComponent<Animator>();
-
         m_speed = m_myStats.GetMovementSpeed();
-
-        
+        m_rigidBody = this.GetComponent<Rigidbody>();
     }
     /// <summary>
     /// FixedUpdate is called once per frame. Because we're dealing with Rigidbody physics,
@@ -65,37 +55,9 @@ public class PlayerMovement : CharacterMovement
     /// </summary>
     public void Update()
     {
-        if (reset == false)
-        {
-            ///If the player is grounded, do this.
-            if (m_characterController.isGrounded)
-            {
-                m_verticalVelocity -= 0;
-                //Debug.Log("Grounded.");
-            }
-            ///Otherwise, do this. Note, this is not an else statement in case of edge cases.
-            if (!m_characterController.isGrounded)
-            {
-
-                m_verticalVelocity -= 2;
-                //Debug.Log("Not Grounded.");
-                m_moveVector = new Vector3(0, m_verticalVelocity, 0);
-                m_characterController.Move(m_moveVector);
-            }
-
-        }
-        else
-        {
-            m_player.transform.position = new Vector3(m_dungeon.m_startTile.worldPosition.x, (m_dungeon.m_startTile.worldPosition.y + m_player.GetComponent<CharacterController>().bounds.size.y / 2), m_dungeon.m_startTile.worldPosition.z);
-            reset = false;
-        }
+        Move();
+        Rotation();
         Attack();
-        if (m_animator.GetBool("isAttacking") == false)
-        {
-            Move();
-        }
-       
-       
     }
     /// <summary>
     /// Moves the player based on input.
@@ -104,24 +66,19 @@ public class PlayerMovement : CharacterMovement
     {
         m_inputX = Input.GetAxis("Horizontal");
         m_inputZ = Input.GetAxis("Vertical");
-        if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
+        if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
         {
             m_animator.SetBool("isWalking", true);
+            m_moveVector = new Vector3(m_inputX, 0, m_inputZ);
+           
+            m_moveVector.Normalize();
 
-            ///Character controller method
-            m_moveVector = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-            m_moveVector *= m_speed;
+            m_moveVector /= 5;
 
-            //this.GetComponent<Rigidbody>().velocity = m_moveVector
-            m_characterController.Move(m_moveVector * Time.deltaTime);
-
-
-            transform.rotation = Quaternion.LookRotation(m_moveVector);
-                        
+            m_rigidBody.MovePosition(transform.position + m_moveVector);                        
         }
         else
         {
-            m_moveVector = new Vector3(0, 0, 0);
             m_animator.SetBool("isWalking", false);
         }
     }
@@ -131,12 +88,22 @@ public class PlayerMovement : CharacterMovement
     /// </summary>
     private void Attack()
     {
-        if (Input.GetMouseButton(0)){
+        //Main attack - Slash
+        if (Input.GetButton("Fire1"))
+        {
             if (m_animator.GetBool("isAttacking") == false)
             {
                 m_animator.SetBool("isAttacking", true);
-                Invoke("AttackCooldown", 1);
-                Debug.Log("attack");
+                Invoke("AttackCooldown", 1f);
+            }
+        }
+
+        //Alt attack - Stab
+        if (Input.GetButton("Fire2")){
+            if (m_animator.GetBool("isAttacking") == false)
+            {
+                m_animator.SetBool("isAttacking", true);
+                Invoke("AttackCooldown", 0.5f);
             }
         }
     }
@@ -147,6 +114,22 @@ public class PlayerMovement : CharacterMovement
     {
         m_animator.SetBool("isAttacking", false);
     }
-   
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private void Rotation()
+    {
+        var groundPlane = new Plane(Vector3.up, -transform.position.y);
+        var mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+        float hitDistance;
+
+        if (groundPlane.Raycast(mouseRay, out hitDistance))
+        {
+            Vector3 lookAtPosition = mouseRay.GetPoint(hitDistance);
+            transform.LookAt(lookAtPosition, Vector3.up);
+        }
+    }
+
 
 }

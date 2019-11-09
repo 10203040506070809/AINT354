@@ -7,7 +7,7 @@ public class DungeonGen : MonoBehaviour
     /// <summary>
     /// A reference to the navmeshsurface.
     /// </summary>
-    [SerializeField] private NavMeshSurface m_surface;
+    [SerializeField] private NavMeshSurface m_surface = null;
     /// <summary>
     /// An array of game tiles consisting of every possible tile orientation.
     /// </summary>
@@ -79,14 +79,13 @@ public class DungeonGen : MonoBehaviour
     /// A list of possible tiles to add which fit certain conditions. A tile will be randomly selected from this list.
     /// </summary>
     private List<GameObject> m_TempPossibleTileList = new List<GameObject>();
-    private GameObject m_player;
+    [SerializeField] private GameObject m_player = null;
 
     // Start is called before the first frame update
     public void Start()
     {
         /// Sorts all the tiles into lists specifying which connections they have.
-        StoreTiles();
-        m_player = GameObject.FindGameObjectWithTag("Player");
+        StoreTiles();        
         width = m_northConnection[0].GetComponentInChildren<Renderer>().bounds.size.x;
         Debug.Log(width);
         /// Bool to make sure the program only adds tiles while new tiles can be added.
@@ -101,6 +100,11 @@ public class DungeonGen : MonoBehaviour
             foreach (GameObject e in GameObject.FindGameObjectsWithTag("Enemy")) 
             {
                 Destroy(e);
+            }
+
+            foreach  (GameObject p in GameObject.FindGameObjectsWithTag("Player"))
+            {
+                Destroy(p);
             }
             /// Resets all variables.
             m_tileList.Clear();
@@ -163,6 +167,9 @@ public class DungeonGen : MonoBehaviour
         //m_player.transform.position = new Vector3(m_startTile.worldPosition.x, (m_startTile.worldPosition.y + m_player.GetComponent<CharacterController>().bounds.size.y), m_startTile.worldPosition.z);
 
         m_surface.BuildNavMesh();
+
+        Instantiate(m_player, new Vector3(m_start.transform.position.x, m_start.transform.position.y + 6, m_start.transform.position.z), Quaternion.identity);
+        Debug.Log(m_player.GetComponent<Collider>().bounds.size.y);
     }
     /// <summary>
     /// Spawns a start tile and adds the tile to the list of tiles in the map. Also updates the 2D map arrays with info about the start tile.
@@ -172,7 +179,7 @@ public class DungeonGen : MonoBehaviour
         /// Selects a random tile from the list of all tiles.
         m_start = m_mapTiles[Random.Range(0, m_mapTiles.Length - 1)];
         /// Creates it as a tile.
-        m_startTile = new tile(m_start, 25, 25, new Vector3(0, -500, 0), m_start.name);
+        m_startTile = new tile(m_start, 25, 25, new Vector3(0, 0, 0), m_start.name);
         /// Adds the start tile to the list of tiles in the game.
         m_tileList.Add(m_startTile);
         /// The start tile is created in the centre of the 'map'.

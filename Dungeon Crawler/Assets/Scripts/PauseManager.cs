@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class PauseManager : MonoBehaviour
 {
     private bool m_isPaused = false;
-    [SerializeField] private GameObject m_pauseMenu;
+    [SerializeField] private GameObject m_pauseMenu = null;
     private void Start()
     {
         m_isPaused = false;
@@ -33,7 +33,6 @@ public class PauseManager : MonoBehaviour
                 Time.timeScale = 0f;
                 m_isPaused = true;
                 m_pauseMenu.SetActive(true);
-                Cursor.lockState = CursorLockMode.None;
             }
         }
         else
@@ -43,8 +42,6 @@ public class PauseManager : MonoBehaviour
                 Time.timeScale = 1f;
                 m_isPaused = false;
                 m_pauseMenu.SetActive(false);
-                Cursor.lockState = CursorLockMode.Locked;
-
             }
         }
     }
