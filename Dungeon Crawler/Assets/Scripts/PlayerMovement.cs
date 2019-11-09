@@ -116,7 +116,7 @@ public class PlayerMovement : CharacterMovement
     }
 
     /// <summary>
-    /// 
+    /// Rotates the player
     /// </summary>
     private void Rotation()
     {

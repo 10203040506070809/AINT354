@@ -79,6 +79,9 @@ public class DungeonGen : MonoBehaviour
     /// A list of possible tiles to add which fit certain conditions. A tile will be randomly selected from this list.
     /// </summary>
     private List<GameObject> m_TempPossibleTileList = new List<GameObject>();
+    /// <summary>
+    /// A reference to the player GameObject that will be instantiated to the start position.
+    /// </summary>
     [SerializeField] private GameObject m_player = null;
 
     // Start is called before the first frame update

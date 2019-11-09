@@ -13,17 +13,14 @@ public class FollowCamera : MonoBehaviour
     /// </summary>
     [SerializeField] private float distance = 0f;
 
-
+    /// <summary>
+    /// Occurs before the first update loop - Initialise variables here.
+    /// </summary>
     private void Start()
     {
         
     }
 
-    private void Awake()
-    {
-        
-
-    }
     /// <summary>
     /// Makes certain the distance between the camera and the player is always the same.
     /// </summary>

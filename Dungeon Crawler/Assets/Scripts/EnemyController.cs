@@ -64,8 +64,7 @@ public class EnemyController : CharacterMovement
             {
                 ///Do attack
                 Attack();
-                ///Face target
-                FaceTarget();
+
             }
             ///This is reset when the player leaves stopping distance so the enemy instantly attacks whenever the player moves. This may not be required when actual combat is implemented due to knockback, but is a reasonable failsafe.
             else
@@ -82,13 +81,7 @@ public class EnemyController : CharacterMovement
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, m_lookRadius);
     }
-    /// <summary>
-    /// 
-    /// </summary>
-    private void FaceTarget()
-    {
 
-    }
     /// <summary>
     /// Attacks the target when within the stopping distance of the character. 
     /// </summary>

@@ -5,8 +5,6 @@ public class PlayerStats : CharacterStats
 {
     private Animator m_animator;
 
-
-
     /// <summary>
     /// A method that is called when the script is loaded.
     /// </summary>
@@ -89,7 +87,9 @@ public class PlayerStats : CharacterStats
     {
         m_animator.SetBool("isHit", false);
     }
-
+    /// <summary>
+    /// Checks for a level up to increase player level - Put experience formula in here.
+    /// </summary>
     private void CheckForLevelUp()
     {
 

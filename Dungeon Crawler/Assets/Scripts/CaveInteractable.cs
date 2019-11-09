@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class CaveInteractable : Interactable
 {
+    /// <summary>
+    /// An override for the InteractedWith method - Loads the dungeon scene.
+    /// </summary>
     public override void InteractedWith()
     {
 

@@ -5,8 +5,18 @@ using UnityEngine.UI;
 
 public class PauseManager : MonoBehaviour
 {
+    /// <summary>
+    /// Bool that checks if the game is paused or not.
+    /// </summary>
     private bool m_isPaused = false;
+    /// <summary>
+    /// A reference to the pause menu gameobject.
+    /// </summary>
     [SerializeField] private GameObject m_pauseMenu = null;
+
+    /// <summary>
+    /// Occurs before the first update loop.
+    /// </summary>
     private void Start()
     {
         m_isPaused = false;
@@ -22,7 +32,7 @@ public class PauseManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// Checks if there's any input, if so pauses/unpaused the game
     /// </summary>
     public void CheckForInput()
     {
@@ -46,16 +56,25 @@ public class PauseManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// A method used for the button click event - Resumes the game
+    /// </summary>
     public void Resume()
     {
         Time.timeScale = 1f;
         m_isPaused = false;
         m_pauseMenu.SetActive(false);
-        Cursor.lockState = CursorLockMode.Locked;
+        
     }
     
+    /// <summary>
+    /// Quits the game in runtime, if in editor it debugs to log.
+    /// </summary>
     public void Quit()
     {
         Application.Quit();
+#if UNITY_EDITOR
+        Debug.Log("Application quit.");
+#endif
     }
 }
