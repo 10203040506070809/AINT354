@@ -49,7 +49,7 @@ public class TitleScreenManager : MonoBehaviour
 
         PlayerPrefs.DeleteAll();
         Debug.Log("PlayerPrefs deleted");
-        ///SceneManager.LoadScene("Overworld");
+        SceneManager.LoadScene("Overworld");
         
         Debug.Log("New Game Selected");
     }
@@ -59,7 +59,7 @@ public class TitleScreenManager : MonoBehaviour
     public void OnContinuePress()
     {
         ///Open new scene, keep all playerprefs progress
-        ///SceneManager.LoadScene("Overworld");
+        SceneManager.LoadScene("Overworld");
         Debug.Log("Continue Game Selected");
     }
     /// <summary>
