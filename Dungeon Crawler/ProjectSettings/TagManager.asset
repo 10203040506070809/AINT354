@@ -4,6 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
+  - Tile
+  - Dungeon
+  - Enemy
   - SFX
   - Ambient
   - Voices
