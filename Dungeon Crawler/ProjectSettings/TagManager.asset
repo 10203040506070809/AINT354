@@ -7,6 +7,9 @@ TagManager:
   - Tile
   - Dungeon
   - Enemy
+  - SFX
+  - Ambient
+  - Voices
   layers:
   - Default
   - TransparentFX
