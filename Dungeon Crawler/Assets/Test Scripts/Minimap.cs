@@ -11,6 +11,8 @@ public class Minimap : MonoBehaviour
     private Vector3 m_direction;
     private GameObject map;
     private Vector3 tempVec;
+    private GameObject tempTile;
+    private int[,] grid = new int[9,9];
     /// <summary>
     /// A float value denoting the distance the raycast will check.
     /// </summary>
@@ -30,8 +32,38 @@ public class Minimap : MonoBehaviour
             ///Check if the hit object has an interactable script
             if (hit.collider.gameObject.transform.parent.tag == "Tile")
             {
-                tempVec = hit.collider.gameObject.transform.position;
-                map.transform.GetChild(40-(Mathf.RoundToInt((tempVec.z)/40)*9)+(Mathf.RoundToInt(tempVec.x/40))).GetComponent<Image>().color = Color.green;
+                tempTile = hit.collider.gameObject.transform.parent.gameObject;
+                tempVec = tempTile.transform.position;
+                map.transform.GetChild((40-(Mathf.RoundToInt(tempVec.z/40)*9))+(Mathf.RoundToInt(tempVec.x/40))).GetComponent<Image>().color = Color.green;
+                grid[Mathf.RoundToInt(tempVec.x / 40) + 4, 4 - Mathf.RoundToInt(tempVec.z / 40)] = 1;
+                if (tempTile.name[0] == '1')
+                {
+                    if (grid[Mathf.RoundToInt(tempVec.x / 40) + 4, 3 - Mathf.RoundToInt(tempVec.z / 40)] != 1)
+                    {
+                        map.transform.GetChild((40 - (Mathf.RoundToInt(tempVec.z / 40) * 9) + (Mathf.RoundToInt(tempVec.x / 40)))-9).GetComponent<Image>().color = Color.blue;
+                    }
+                }
+                if (tempTile.name[1] == '1')
+                {
+                    if (grid[Mathf.RoundToInt(tempVec.x / 40) + 5, 4 - Mathf.RoundToInt(tempVec.z / 40)] != 1)
+                    {
+                        map.transform.GetChild((40 - (Mathf.RoundToInt(tempVec.z / 40) * 9) + (Mathf.RoundToInt(tempVec.x / 40))) +1).GetComponent<Image>().color = Color.blue;
+                    }
+                }
+                if (tempTile.name[2] == '1')
+                {
+                    if (grid[Mathf.RoundToInt(tempVec.x / 40) + 4, 5 - Mathf.RoundToInt(tempVec.z / 40)] != 1)
+                    {
+                        map.transform.GetChild((40 - (Mathf.RoundToInt(tempVec.z / 40) * 9) + (Mathf.RoundToInt(tempVec.x / 40))) + 9).GetComponent<Image>().color = Color.blue;
+                    }
+                }
+                if (tempTile.name[3] == '1')
+                {
+                    if (grid[3 + Mathf.RoundToInt(tempVec.x / 40),4 - Mathf.RoundToInt(tempVec.z / 40)] != 1)
+                    {
+                        map.transform.GetChild((40 - (Mathf.RoundToInt(tempVec.z / 40) * 9) + (Mathf.RoundToInt(tempVec.x / 40))) -1).GetComponent<Image>().color = Color.blue;
+                    }
+                }
                 Debug.Log(hit.collider.gameObject.transform.parent.name);
             }
         }
