@@ -631,6 +631,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8442583232236696811}
   - component: {fileID: 1990616846947555729}
+  - component: {fileID: 970769625782430092}
   - component: {fileID: 2666904554502813155}
   - component: {fileID: 357270742488975176}
   - component: {fileID: 1778822870856342843}
@@ -678,6 +679,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &970769625782430092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4859750551911778040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa65e83c5c74b2c4a865457fb5c0a2e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_maxDistance: 5
 --- !u!114 &2666904554502813155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1566,6 +1580,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sword
       objectReference: {fileID: 0}
+    - target: {fileID: -6860895033569716450, guid: a17fc141df99d394285fcab655f12d25,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6860895033569716450, guid: a17fc141df99d394285fcab655f12d25,
+        type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: a17fc141df99d394285fcab655f12d25,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1635,16 +1659,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 0.7
-      objectReference: {fileID: 0}
-    - target: {fileID: -6860895033569716450, guid: a17fc141df99d394285fcab655f12d25,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -6860895033569716450, guid: a17fc141df99d394285fcab655f12d25,
-        type: 3}
-      propertyPath: m_Convex
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a17fc141df99d394285fcab655f12d25, type: 3}
