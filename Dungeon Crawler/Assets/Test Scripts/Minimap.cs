@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
+using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,7 +15,7 @@ public class Minimap : MonoBehaviour
     private Vector3 tempVec;
     private GameObject tempTile;
     private int[,] grid = new int[9,9];
-    public Sprite img;
+    public Sprite[] imgs;
     /// <summary>
     /// A float value denoting the distance the raycast will check.
     /// </summary>
@@ -29,41 +31,46 @@ public class Minimap : MonoBehaviour
         ///If the raycast hits something within the max distance in the direction of m_direction
         if (Physics.Raycast(transform.position, m_direction, out hit, m_maxDistance))
         {
-            Debug.Log("here");
             ///Check if the hit object has an interactable script
             if (hit.collider.gameObject.transform.parent.tag == "Tile")
             {
                 tempTile = hit.collider.gameObject.transform.parent.gameObject;
                 tempVec = tempTile.transform.position;
-                map.transform.GetChild((40-(Mathf.RoundToInt(tempVec.z/40)*9))+(Mathf.RoundToInt(tempVec.x/40))).GetComponent<Image>().sprite = img;
+                Debug.Log(tempTile.name);
+                string str = tempTile.name.Substring(0, 4);
+                map.transform.GetChild((40-(Mathf.RoundToInt(tempVec.z/40)*9))+(Mathf.RoundToInt(tempVec.x/40))).GetComponent<Image>().sprite = imgs[(Convert.ToInt32(str, 2))-1];
                 map.transform.GetChild((40 - (Mathf.RoundToInt(tempVec.z / 40) * 9)) + (Mathf.RoundToInt(tempVec.x / 40))).GetComponent<Image>().color = Color.gray;
                 grid[Mathf.RoundToInt(tempVec.x / 40) + 4, 4 - Mathf.RoundToInt(tempVec.z / 40)] = 1;
                 if (tempTile.name[0] == '1')
                 {
                     if (grid[Mathf.RoundToInt(tempVec.x / 40) + 4, 3 - Mathf.RoundToInt(tempVec.z / 40)] != 1)
                     {
-                        map.transform.GetChild((40 - (Mathf.RoundToInt(tempVec.z / 40) * 9) + (Mathf.RoundToInt(tempVec.x / 40)))-9).GetComponent<Image>().color = Color.blue;
+                        map.transform.GetChild((40 - (Mathf.RoundToInt(tempVec.z / 40) * 9) + (Mathf.RoundToInt(tempVec.x / 40))) - 9).GetComponent<Image>().color = Color.gray;
+                        map.transform.GetChild((40 - (Mathf.RoundToInt(tempVec.z / 40) * 9) + (Mathf.RoundToInt(tempVec.x / 40)))-9).GetComponent<Image>().sprite = imgs[16];
                     }
                 }
                 if (tempTile.name[1] == '1')
                 {
                     if (grid[Mathf.RoundToInt(tempVec.x / 40) + 5, 4 - Mathf.RoundToInt(tempVec.z / 40)] != 1)
                     {
-                        map.transform.GetChild((40 - (Mathf.RoundToInt(tempVec.z / 40) * 9) + (Mathf.RoundToInt(tempVec.x / 40))) +1).GetComponent<Image>().color = Color.blue;
+                        map.transform.GetChild((40 - (Mathf.RoundToInt(tempVec.z / 40) * 9) + (Mathf.RoundToInt(tempVec.x / 40))) + 1).GetComponent<Image>().color = Color.gray;
+                        map.transform.GetChild((40 - (Mathf.RoundToInt(tempVec.z / 40) * 9) + (Mathf.RoundToInt(tempVec.x / 40))) +1).GetComponent<Image>().sprite = imgs[15];
                     }
                 }
                 if (tempTile.name[2] == '1')
                 {
                     if (grid[Mathf.RoundToInt(tempVec.x / 40) + 4, 5 - Mathf.RoundToInt(tempVec.z / 40)] != 1)
                     {
-                        map.transform.GetChild((40 - (Mathf.RoundToInt(tempVec.z / 40) * 9) + (Mathf.RoundToInt(tempVec.x / 40))) + 9).GetComponent<Image>().color = Color.blue;
+                        map.transform.GetChild((40 - (Mathf.RoundToInt(tempVec.z / 40) * 9) + (Mathf.RoundToInt(tempVec.x / 40))) + 9).GetComponent<Image>().color = Color.gray;
+                        map.transform.GetChild((40 - (Mathf.RoundToInt(tempVec.z / 40) * 9) + (Mathf.RoundToInt(tempVec.x / 40))) + 9).GetComponent<Image>().sprite = imgs[17];
                     }
                 }
                 if (tempTile.name[3] == '1')
                 {
                     if (grid[3 + Mathf.RoundToInt(tempVec.x / 40),4 - Mathf.RoundToInt(tempVec.z / 40)] != 1)
                     {
-                        map.transform.GetChild((40 - (Mathf.RoundToInt(tempVec.z / 40) * 9) + (Mathf.RoundToInt(tempVec.x / 40))) -1).GetComponent<Image>().color = Color.blue;
+                        map.transform.GetChild((40 - (Mathf.RoundToInt(tempVec.z / 40) * 9) + (Mathf.RoundToInt(tempVec.x / 40))) - 1).GetComponent<Image>().color = Color.gray;
+                        map.transform.GetChild((40 - (Mathf.RoundToInt(tempVec.z / 40) * 9) + (Mathf.RoundToInt(tempVec.x / 40))) -1).GetComponent<Image>().sprite = imgs[18];
                     }
                 }
                 Debug.Log(hit.collider.gameObject.transform.parent.name);
