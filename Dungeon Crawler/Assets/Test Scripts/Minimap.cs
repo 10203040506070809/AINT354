@@ -39,13 +39,13 @@ public class Minimap : MonoBehaviour
                 Debug.Log(tempTile.name);
                 string str = tempTile.name.Substring(0, 4);
                 map.transform.GetChild((40-(Mathf.RoundToInt(tempVec.z/40)*9))+(Mathf.RoundToInt(tempVec.x/40))).GetComponent<Image>().sprite = imgs[(Convert.ToInt32(str, 2))-1];
-                map.transform.GetChild((40 - (Mathf.RoundToInt(tempVec.z / 40) * 9)) + (Mathf.RoundToInt(tempVec.x / 40))).GetComponent<Image>().color = Color.gray;
+                //map.transform.GetChild((40 - (Mathf.RoundToInt(tempVec.z / 40) * 9)) + (Mathf.RoundToInt(tempVec.x / 40))).GetComponent<Image>().color = Color.gray;
                 grid[Mathf.RoundToInt(tempVec.x / 40) + 4, 4 - Mathf.RoundToInt(tempVec.z / 40)] = 1;
                 if (tempTile.name[0] == '1')
                 {
                     if (grid[Mathf.RoundToInt(tempVec.x / 40) + 4, 3 - Mathf.RoundToInt(tempVec.z / 40)] != 1)
                     {
-                        map.transform.GetChild((40 - (Mathf.RoundToInt(tempVec.z / 40) * 9) + (Mathf.RoundToInt(tempVec.x / 40))) - 9).GetComponent<Image>().color = Color.gray;
+                        //map.transform.GetChild((40 - (Mathf.RoundToInt(tempVec.z / 40) * 9) + (Mathf.RoundToInt(tempVec.x / 40))) - 9).GetComponent<Image>().color = Color.gray;
                         map.transform.GetChild((40 - (Mathf.RoundToInt(tempVec.z / 40) * 9) + (Mathf.RoundToInt(tempVec.x / 40)))-9).GetComponent<Image>().sprite = imgs[16];
                     }
                 }
@@ -53,7 +53,7 @@ public class Minimap : MonoBehaviour
                 {
                     if (grid[Mathf.RoundToInt(tempVec.x / 40) + 5, 4 - Mathf.RoundToInt(tempVec.z / 40)] != 1)
                     {
-                        map.transform.GetChild((40 - (Mathf.RoundToInt(tempVec.z / 40) * 9) + (Mathf.RoundToInt(tempVec.x / 40))) + 1).GetComponent<Image>().color = Color.gray;
+                        //map.transform.GetChild((40 - (Mathf.RoundToInt(tempVec.z / 40) * 9) + (Mathf.RoundToInt(tempVec.x / 40))) + 1).GetComponent<Image>().color = Color.gray;
                         map.transform.GetChild((40 - (Mathf.RoundToInt(tempVec.z / 40) * 9) + (Mathf.RoundToInt(tempVec.x / 40))) +1).GetComponent<Image>().sprite = imgs[15];
                     }
                 }
@@ -61,7 +61,7 @@ public class Minimap : MonoBehaviour
                 {
                     if (grid[Mathf.RoundToInt(tempVec.x / 40) + 4, 5 - Mathf.RoundToInt(tempVec.z / 40)] != 1)
                     {
-                        map.transform.GetChild((40 - (Mathf.RoundToInt(tempVec.z / 40) * 9) + (Mathf.RoundToInt(tempVec.x / 40))) + 9).GetComponent<Image>().color = Color.gray;
+                       // map.transform.GetChild((40 - (Mathf.RoundToInt(tempVec.z / 40) * 9) + (Mathf.RoundToInt(tempVec.x / 40))) + 9).GetComponent<Image>().color = Color.gray;
                         map.transform.GetChild((40 - (Mathf.RoundToInt(tempVec.z / 40) * 9) + (Mathf.RoundToInt(tempVec.x / 40))) + 9).GetComponent<Image>().sprite = imgs[17];
                     }
                 }
@@ -69,7 +69,7 @@ public class Minimap : MonoBehaviour
                 {
                     if (grid[3 + Mathf.RoundToInt(tempVec.x / 40),4 - Mathf.RoundToInt(tempVec.z / 40)] != 1)
                     {
-                        map.transform.GetChild((40 - (Mathf.RoundToInt(tempVec.z / 40) * 9) + (Mathf.RoundToInt(tempVec.x / 40))) - 1).GetComponent<Image>().color = Color.gray;
+                       // map.transform.GetChild((40 - (Mathf.RoundToInt(tempVec.z / 40) * 9) + (Mathf.RoundToInt(tempVec.x / 40))) - 1).GetComponent<Image>().color = Color.gray;
                         map.transform.GetChild((40 - (Mathf.RoundToInt(tempVec.z / 40) * 9) + (Mathf.RoundToInt(tempVec.x / 40))) -1).GetComponent<Image>().sprite = imgs[18];
                     }
                 }
