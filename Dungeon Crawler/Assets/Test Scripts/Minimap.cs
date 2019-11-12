@@ -13,6 +13,7 @@ public class Minimap : MonoBehaviour
     private Vector3 tempVec;
     private GameObject tempTile;
     private int[,] grid = new int[9,9];
+    public Sprite img;
     /// <summary>
     /// A float value denoting the distance the raycast will check.
     /// </summary>
@@ -34,7 +35,8 @@ public class Minimap : MonoBehaviour
             {
                 tempTile = hit.collider.gameObject.transform.parent.gameObject;
                 tempVec = tempTile.transform.position;
-                map.transform.GetChild((40-(Mathf.RoundToInt(tempVec.z/40)*9))+(Mathf.RoundToInt(tempVec.x/40))).GetComponent<Image>().color = Color.green;
+                map.transform.GetChild((40-(Mathf.RoundToInt(tempVec.z/40)*9))+(Mathf.RoundToInt(tempVec.x/40))).GetComponent<Image>().sprite = img;
+                map.transform.GetChild((40 - (Mathf.RoundToInt(tempVec.z / 40) * 9)) + (Mathf.RoundToInt(tempVec.x / 40))).GetComponent<Image>().color = Color.gray;
                 grid[Mathf.RoundToInt(tempVec.x / 40) + 4, 4 - Mathf.RoundToInt(tempVec.z / 40)] = 1;
                 if (tempTile.name[0] == '1')
                 {
