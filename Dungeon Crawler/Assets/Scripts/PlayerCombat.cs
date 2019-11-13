@@ -55,6 +55,7 @@ public class PlayerCombat : MonoBehaviour
                         m_myStats.m_gold.SetValue(m_myStats.m_gold.GetValue() + m_enemyStats.m_gold.GetValue());
                         m_myStats.m_experience.SetValue(m_myStats.m_experience.GetValue() + m_enemyStats.m_experience.GetValue());
                         PlayerPrefs.SetInt("Gold", m_myStats.m_gold.GetValue());
+                        PlayerPrefs.SetInt("Experience", m_myStats.m_experience.GetValue());
                         Debug.Log("Got gold and experience!");
                     }
                   ///Creates a blood particle  effect

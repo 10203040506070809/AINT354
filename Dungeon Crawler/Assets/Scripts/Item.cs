@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
+    /// <summary>
+    /// An integer value denoting how many of the item can be stored in a single slot.
+    /// </summary>
+    [SerializeField] private int m_maxNumberInSlot;
 
     /// <summary>
     /// Occurs when an item interacts with this. Checks that the other GameObject is a player and if so, activeates the OnPickUp script.

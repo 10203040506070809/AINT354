@@ -22,6 +22,7 @@ public class PlayerStats : CharacterStats
         m_level = PlayerPrefs.GetInt("Level", 1);
         m_gold.SetValue(PlayerPrefs.GetInt("Gold", 1));
         m_experience.SetValue(PlayerPrefs.GetInt("Experience", 0));
+        Debug.Log("Did standalone thing");
 #endif
         CalculateStats();
     }
