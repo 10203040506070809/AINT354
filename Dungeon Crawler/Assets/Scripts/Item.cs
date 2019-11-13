@@ -11,10 +11,14 @@ public class Item : MonoBehaviour
     /// <param name="other">A reference to the other GameObjects collider.</param>
     public virtual void OnTriggerEnter(Collider other)
     {
-        
+        if (other.tag == "Player")
+        {
+            Debug.Log("Trigger entered.");
+            OnPickUp();
+        }
     }
     /// <summary>
-    /// A method which 
+    /// A method which handles the interaction between player and item - Adds it to their inventory, plays animation/sound or uses it. Meant to be overriden.
     /// </summary>
     public virtual void OnPickUp()
     {
