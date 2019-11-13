@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+
+    /// <summary>
+    /// Occurs when an item interacts with this. Checks that the other GameObject is a player and if so, activeates the OnPickUp script.
+    /// </summary>
+    /// <param name="other"></param>
+    public virtual void OnTriggerEnter(Collider other)
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
