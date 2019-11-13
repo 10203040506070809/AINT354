@@ -22,6 +22,7 @@ public class Potion : Item
        if (m_isAvailable)
         {
             m_isAvailable = false;
+            StartCoroutine("PotionCooldown");
             ///Activate potion effect here
             ActivateEffect();
         }
@@ -41,6 +42,16 @@ public class Potion : Item
     /// </summary>
     public virtual void ActivateEffect()
     {
+        Debug.Log("Regular potion activated.");
+    }
+    public override void OnTriggerEnter(Collider other)
+    {
+        base.OnTriggerEnter(other);
+        OnPickUp();
+    }
 
+    public override void OnPickUp()
+    {
+        base.OnPickUp();
     }
 }

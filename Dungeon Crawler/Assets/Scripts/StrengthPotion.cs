@@ -22,8 +22,4 @@ public class StrengthPotion : Potion
         base.ActivatePotion();
     }
 
-    public override void OnTriggerEnter(Collider other)
-    {
-        base.OnTriggerEnter(other);
-    }
 }

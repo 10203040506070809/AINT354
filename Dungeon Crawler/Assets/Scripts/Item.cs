@@ -5,7 +5,7 @@ using UnityEngine;
 public class Item : MonoBehaviour
 {
     /// <summary>
-    /// An integer value denoting how many of the item can be stored in a single slot.
+    /// An integer value denoting how many of the item can be stored in a single slot in the hotbar.
     /// </summary>
     [SerializeField] private int m_maxNumberInSlot;
 
@@ -27,5 +27,7 @@ public class Item : MonoBehaviour
     public virtual void OnPickUp()
     {
         Debug.Log("Picked up.");
+        ///Add to hotbar
+        
     }
 }

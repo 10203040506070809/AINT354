@@ -439,7 +439,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_maxNumberInSlot: 1
   m_potionTimer: 0.21
-  m_potionCooldown: 0.12
+  m_potionCooldown: 5
 --- !u!65 &486638670
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1248,7 +1248,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
