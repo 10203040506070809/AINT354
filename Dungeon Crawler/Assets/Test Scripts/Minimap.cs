@@ -12,10 +12,13 @@ public class Minimap : MonoBehaviour
     /// </summary>
     private Vector3 m_direction;
     private GameObject map;
+    private GameObject playerPositionMap;
     private Vector3 tempVec;
     private GameObject tempTile;
     private int[,] grid = new int[9,9];
     public Sprite[] imgs;
+    public Sprite marker;
+    public Sprite clear;
     /// <summary>
     /// A float value denoting the distance the raycast will check.
     /// </summary>
@@ -25,7 +28,8 @@ public class Minimap : MonoBehaviour
     void Update()
     {
         m_direction = transform.TransformDirection(Vector3.down);
-        map = GameObject.FindGameObjectWithTag("Map");
+        map = GameObject.FindGameObjectWithTag("MapTiles");
+        playerPositionMap = GameObject.FindGameObjectWithTag("MapPlayer");
         RaycastHit hit;
 
         ///If the raycast hits something within the max distance in the direction of m_direction
@@ -38,6 +42,11 @@ public class Minimap : MonoBehaviour
                 tempVec = tempTile.transform.position;
                 Debug.Log(tempTile.name);
                 string str = tempTile.name.Substring(0, 4);
+                for (int i = 0; i < 81; i++)
+                {
+                    playerPositionMap.transform.GetChild(i).GetComponent<Image>().sprite = clear;
+                }
+                playerPositionMap.transform.GetChild((40 - (Mathf.RoundToInt(tempVec.z / 40) * 9)) + (Mathf.RoundToInt(tempVec.x / 40))).GetComponent<Image>().sprite = marker;
                 map.transform.GetChild((40-(Mathf.RoundToInt(tempVec.z/40)*9))+(Mathf.RoundToInt(tempVec.x/40))).GetComponent<Image>().sprite = imgs[(Convert.ToInt32(str, 2))-1];
                 //map.transform.GetChild((40 - (Mathf.RoundToInt(tempVec.z / 40) * 9)) + (Mathf.RoundToInt(tempVec.x / 40))).GetComponent<Image>().color = Color.gray;
                 grid[Mathf.RoundToInt(tempVec.x / 40) + 4, 4 - Mathf.RoundToInt(tempVec.z / 40)] = 1;

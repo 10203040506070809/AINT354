@@ -711,6 +711,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 838c37243f06a06479f63fc9ecc7928d, type: 3}
   - {fileID: 21300000, guid: 66946fe02a7190944b24d12072ab7497, type: 3}
   - {fileID: 21300000, guid: a9d6f54db91d4984280bb5daea7ab649, type: 3}
+  marker: {fileID: 21300000, guid: 44e2bb0c081bad745abbb94428f252f2, type: 3}
+  clear: {fileID: 21300000, guid: e667198c79c7a3c47b451da830124dc8, type: 3}
   m_maxDistance: 5
 --- !u!114 &2666904554502813155
 MonoBehaviour:
@@ -1595,11 +1597,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 438539182}
     m_Modifications:
-    - target: {fileID: -927199367670048503, guid: a17fc141df99d394285fcab655f12d25,
-        type: 3}
-      propertyPath: m_Name
-      value: Sword
-      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: a17fc141df99d394285fcab655f12d25,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1669,6 +1666,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: a17fc141df99d394285fcab655f12d25,
+        type: 3}
+      propertyPath: m_Name
+      value: Sword
       objectReference: {fileID: 0}
     - target: {fileID: -6860895033569716450, guid: a17fc141df99d394285fcab655f12d25,
         type: 3}
