@@ -139,4 +139,24 @@ public class CharacterStats : MonoBehaviour
     {
         return m_attackSpeed.SetValue(input);
     }
+    public int GetStrength()
+    {
+        return m_strength.GetValue();
+    }
+    public int SetStrength(int input)
+    {
+        return m_strength.SetValue(input);
+    }
+    public int GetDamage()
+    {
+        return m_damage.GetValue();
+    }
+    public int SetDamage(int input)
+    {
+        return m_damage.SetValue(input);
+    }
+    public int SetArmour(int input)
+    {
+        return m_armour.SetValue(input);
+    }
 }

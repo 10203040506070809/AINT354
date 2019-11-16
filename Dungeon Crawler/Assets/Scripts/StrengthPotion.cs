@@ -4,22 +4,29 @@ using UnityEngine;
 
 public class StrengthPotion : Potion
 {
-    // Start is called before the first frame update
 
-
-    public override void OnPickUp()
+    
+    /// <summary>
+    /// Initialise variables here.
+    /// </summary>
+    public void Start()
     {
-        base.OnPickUp();
-    }
 
+    }
+    /// <summary>
+    /// An override for the item class's ActivateEffect.
+    /// </summary>
     public override void ActivateEffect()
     {
-        Debug.Log("Strength potion activated");
+        StartCoroutine("StrengthUp");
     }
-
-    public override void ActivatePotion()
+    
+    IEnumerator StrengthUp()
     {
-        base.ActivatePotion();
+        CharacterStats myStats = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>();
+        int originalDamage = myStats.GetDamage();
+        myStats.SetDamage((int)(originalDamage * m_potency));
+        yield return new WaitForSeconds(m_potionTimer);
+        myStats.SetDamage(originalDamage);
     }
-
 }
