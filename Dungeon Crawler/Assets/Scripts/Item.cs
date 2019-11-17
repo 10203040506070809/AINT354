@@ -62,6 +62,9 @@ public class Item : MonoBehaviour
        
     }
 
+    /// <summary>
+    /// A method that activates the effect of the item, that's always overriden by other items.
+    /// </summary>
     public virtual void ActivateEffect()
     {
         Debug.Log("Item activated.");
