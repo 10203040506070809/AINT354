@@ -46,7 +46,7 @@ public class PlayerCombat : MonoBehaviour
                 {
                     m_enemyStats = other.gameObject.GetComponent<EnemyStats>();
 
-                    m_enemyStats.TakeDamage((int)m_myStats.GetAttack());
+                    m_enemyStats.TakeDamage((int)m_myStats.GetDamage());
                     
                     ///Checks if the enemy just died
                   if (m_enemyStats.m_currentHealth <= 0)
