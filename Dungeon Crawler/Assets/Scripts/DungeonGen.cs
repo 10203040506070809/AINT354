@@ -168,7 +168,6 @@ public class DungeonGen : MonoBehaviour
         /// Generates the end location in the last tile spawned.
         Instantiate(m_end,new Vector3(m_tileList[m_tileList.Count - 1].worldPosition.x, m_tileList[m_tileList.Count - 1].worldPosition.y + (m_end.GetComponent<Renderer>().bounds.size.y / 2), m_tileList[m_tileList.Count - 1].worldPosition.z), Quaternion.identity);
         //m_player.transform.position = new Vector3(m_startTile.worldPosition.x, (m_startTile.worldPosition.y + m_player.GetComponent<CharacterController>().bounds.size.y), m_startTile.worldPosition.z);
-
         m_surface.BuildNavMesh();
 
         Instantiate(m_player, new Vector3(m_start.transform.position.x, m_start.transform.position.y + 6, m_start.transform.position.z), Quaternion.identity);
