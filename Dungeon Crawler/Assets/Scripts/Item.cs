@@ -20,6 +20,9 @@ public class Item : MonoBehaviour
     /// A string that stores hover over text, so the player can understand what different items are and do.
     /// </summary>
     [SerializeField] private string m_hoverOverText;
+    /// <summary>
+    /// A reference to the item cooldown. Items cannot be used again within this time.
+    /// </summary>
     [SerializeField] public float m_itemCooldown;
     private bool m_isAvailable = true;
 

@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
-public class PlayerHotbar : MonoBehaviour
+
+public class PlayerHotbar : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
 
     /// <summary>
@@ -19,7 +21,9 @@ public class PlayerHotbar : MonoBehaviour
     {
         CheckForInput();
     }
-
+    /// <summary>
+    /// Checks for input, I.E whether the project defined inputs for hotbar slots have been pressed down. If so, activates whatever is in that slot.
+    /// </summary>
     void CheckForInput()
     {
         if (Input.GetButtonDown("Hotbar Slot 1"))
@@ -60,8 +64,20 @@ public class PlayerHotbar : MonoBehaviour
         }
     }
 
-    void ActivateEffect(GameObject item)
+    private void ActivateEffect(GameObject item)
     {
         item.GetComponent<Item>().ActivateItem();
+        Destroy(item);
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        ///Show tooltip
+        Debug.Log("Tooltip entered");
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        ///Hide tooltip
     }
 }

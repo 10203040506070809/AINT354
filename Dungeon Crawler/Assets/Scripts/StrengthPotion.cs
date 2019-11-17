@@ -20,7 +20,10 @@ public class StrengthPotion : Potion
     {
         StartCoroutine("StrengthUp");
     }
-    
+    /// <summary>
+    /// A coroutine that increases the players strength for a set amount of time.
+    /// </summary>
+    /// <returns></returns>
     IEnumerator StrengthUp()
     {
         CharacterStats myStats = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>();
