@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class PlayerHotbar : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class PlayerHotbar : MonoBehaviour
 {
 
     /// <summary>
@@ -63,21 +63,13 @@ public class PlayerHotbar : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
             }
         }
     }
-
+    /// <summary>
+    /// Activates the effect of the item in the slot.
+    /// </summary>
+    /// <param name="item"></param>
     private void ActivateEffect(GameObject item)
     {
         item.GetComponent<Item>().ActivateItem();
         Destroy(item);
-    }
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        ///Show tooltip
-        Debug.Log("Tooltip entered");
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        ///Hide tooltip
     }
 }
