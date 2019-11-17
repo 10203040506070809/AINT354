@@ -11,6 +11,9 @@ TagManager:
   - Ambient
   - Voices
   - Map
+  - MapTiles
+  - MapPlayer
+  - MapEnd
   layers:
   - Default
   - TransparentFX
