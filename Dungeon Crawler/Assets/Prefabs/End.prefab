@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 1172726563846561946}
   - component: {fileID: 5716299239612018156}
   - component: {fileID: 7271302622240870082}
-  - component: {fileID: -7133821908105038318}
   - component: {fileID: 5787006891251569779}
   - component: {fileID: -3585336919800836498}
   - component: {fileID: 9126021763401781371}
@@ -82,19 +81,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &-7133821908105038318
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 553686761566615255}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 795b774863fe15b41adb18be0125f2b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_maxDistance: 15.95
 --- !u!65 &5787006891251569779
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -123,6 +109,7 @@ MonoBehaviour:
   m_player: {fileID: 0}
   m_dungeon: {fileID: 0}
   m_movement: {fileID: 0}
+  counter: 1
 --- !u!208 &9126021763401781371
 NavMeshObstacle:
   m_ObjectHideFlags: 0
