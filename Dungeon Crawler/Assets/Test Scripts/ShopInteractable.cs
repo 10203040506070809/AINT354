@@ -2,17 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShopInteractable : MonoBehaviour
+public class ShopInteractable : Interactable
 {
-    // Start is called before the first frame update
-    void Start()
+    /// <summary>
+    /// Overrides the original InteractedWith method.
+    /// </summary>
+    public override void InteractedWith()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        ///Debugs Interacted with + Gameobject name.
+        base.InteractedWith();
     }
 }
