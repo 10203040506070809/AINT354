@@ -25,6 +25,7 @@ public class TabGroup : MonoBehaviour
     public void OnTabEnter(TabButton button)
     {
         ResetTabs();
+        button.m_background.sprite = m_tabHover;
     }
 
     public void OnTabExit(TabButton button)
@@ -35,6 +36,7 @@ public class TabGroup : MonoBehaviour
     public void OnTabSelected(TabButton button)
     {
         ResetTabs();
+        button.m_background.sprite = m_tabActive;
     }
 
     public void ResetTabs()
