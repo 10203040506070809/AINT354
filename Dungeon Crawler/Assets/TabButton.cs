@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 /// Created using Game Dev Guide's 'Creating a Custom Tab System in Unity https://www.youtube.com/watch?v=211t6r12XPQ
 /// </summary>
 [RequireComponent(typeof(Image))]
-public class TabButton : MonoBehaviour, IPointerClickHandler, IPointerExitHandler
+public class TabButton : MonoBehaviour, IPointerClickHandler, IPointerExitHandler, IPointerEnterHandler
 {
     [SerializeField] private TabGroup m_tabGroup;
 
@@ -28,11 +28,16 @@ public class TabButton : MonoBehaviour, IPointerClickHandler, IPointerExitHandle
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        throw new System.NotImplementedException();
+        m_tabGroup.OnTabSelected(this);
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        m_tabGroup.OnTabEnter(this);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        throw new System.NotImplementedException();
+        m_tabGroup.OnTabExit(this);
     }
 }

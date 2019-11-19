@@ -12,7 +12,8 @@ public class TabGroup : MonoBehaviour
     public Sprite m_tabIdle;
     public Sprite m_tabHover;
     public Sprite m_tabActive;
-
+    public TabButton m_selectedTab;
+    
     public void Subscribe(TabButton button)
     {
         if(m_tabButtons == null)
@@ -35,6 +36,7 @@ public class TabGroup : MonoBehaviour
 
     public void OnTabSelected(TabButton button)
     {
+        m_selectedTab = button;
         ResetTabs();
         button.m_background.sprite = m_tabActive;
     }
@@ -43,6 +45,8 @@ public class TabGroup : MonoBehaviour
     {
         foreach (TabButton button in m_tabButtons)
         {
+            if (m_selectedTab != null && button == m_selectedTab)
+            { continue; }
             button.m_background.sprite = m_tabIdle;
         }
     }
