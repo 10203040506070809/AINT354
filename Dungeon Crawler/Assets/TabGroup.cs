@@ -1,23 +1,39 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 /// <summary>
 /// Created using Game Dev Guide's 'Creating a Custom Tab System in Unity' https://www.youtube.com/watch?v=211t6r12XPQ
 /// </summary>
 public class TabGroup : MonoBehaviour
 {
 
-    [SerializeField] private List<TabButton> m_tabButtons;
-    // Start is called before the first frame update
-    void Start()
+    public List<TabButton> m_tabButtons;
+    public Sprite m_tabIdle;
+    public Sprite m_tabHover;
+    public Sprite m_tabActive;
+
+    public void Subscribe(TabButton button)
     {
-        
+        if(m_tabButtons == null)
+        {
+            m_tabButtons = new List<TabButton>();
+        }
+        m_tabButtons.Add(button);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OnTabEnter(TabButton button)
     {
-        
+
+    }
+
+    public void OnTabExit(TabButton button)
+    {
+
+    }
+
+    public void OnTabSelected(TabButton button)
+    {
+
     }
 }
