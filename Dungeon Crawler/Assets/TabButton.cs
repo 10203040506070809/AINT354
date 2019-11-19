@@ -11,7 +11,7 @@ public class TabButton : MonoBehaviour, IPointerClickHandler, IPointerExitHandle
 {
     [SerializeField] private TabGroup m_tabGroup;
 
-    [SerializeField] private Image m_background;
+    public Image m_background;
 
     // Start is called before the first frame update
     void Start()

@@ -24,16 +24,24 @@ public class TabGroup : MonoBehaviour
 
     public void OnTabEnter(TabButton button)
     {
-
+        ResetTabs();
     }
 
     public void OnTabExit(TabButton button)
     {
-
+        ResetTabs();
     }
 
     public void OnTabSelected(TabButton button)
     {
+        ResetTabs();
+    }
 
+    public void ResetTabs()
+    {
+        foreach (TabButton button in m_tabButtons)
+        {
+            button.m_background.sprite = m_tabIdle;
+        }
     }
 }
