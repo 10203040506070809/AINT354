@@ -7,6 +7,8 @@ using UnityEngine;
 /// </summary>
 public class TabGroup : MonoBehaviour
 {
+
+    [SerializeField] private List<TabButton> m_tabButtons;
     // Start is called before the first frame update
     void Start()
     {
