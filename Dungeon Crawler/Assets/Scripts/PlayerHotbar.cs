@@ -16,9 +16,14 @@ public class PlayerHotbar : MonoBehaviour
     /// </summary>
     public Image[] m_hotBarIcons = new Image[4];
 
+    private void Start()
+    {
+        SaveSystem.LoadPlayerHotbar();
+    }
     // Update is called once per frame
     void Update()
     {
+        
         CheckForInput();
     }
     /// <summary>

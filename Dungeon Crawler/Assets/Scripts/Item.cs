@@ -24,8 +24,14 @@ public class Item : MonoBehaviour
     /// A reference to the item cooldown. Items cannot be used again within this time.
     /// </summary>
     [SerializeField] public float m_itemCooldown;
+
+    [SerializeField] private float m_itemCost;
     private bool m_isAvailable = true;
 
+    private void Start()
+    {
+        
+    }
     /// <summary>
     /// Occurs when an item interacts with this. Checks that the other GameObject is a player and if so, activeates the OnPickUp script.
     /// </summary>
@@ -34,7 +40,6 @@ public class Item : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            m_playerHotbar = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<PlayerHotbar>();
             Debug.Log("Trigger entered.");
             OnPickUp();
         }
@@ -44,7 +49,8 @@ public class Item : MonoBehaviour
     /// </summary>
     public virtual void OnPickUp()
     {
-
+        ///Get the player hotbar
+        m_playerHotbar = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<PlayerHotbar>();
         ///Add to hotbar
         for (int i = 0; i < m_playerHotbar.m_hotBarItems.Length; i++)
         {
