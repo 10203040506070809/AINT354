@@ -2533,6 +2533,7 @@ GameObject:
   - component: {fileID: 315219339}
   - component: {fileID: 315219338}
   - component: {fileID: 315219337}
+  - component: {fileID: 315219342}
   m_Layer: 0
   m_Name: ShopKeeper
   m_TagString: Untagged
@@ -2549,9 +2550,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 315219336}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49677999186c58f49bd01ed8b8ea19a9, type: 3}
+  m_Script: {fileID: 11500000, guid: 42584e262e9316a4cafc9b2f12014e73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_ShopUI: {fileID: 719774811}
 --- !u!65 &315219338
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2625,6 +2627,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &315219342
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 315219336}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3, y: 3, z: 3}
+  m_Center: {x: -0.01869507, y: -0.08110924, z: 0.116587065}
 --- !u!1 &334919031
 GameObject:
   m_ObjectHideFlags: 0
@@ -12393,7 +12408,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:

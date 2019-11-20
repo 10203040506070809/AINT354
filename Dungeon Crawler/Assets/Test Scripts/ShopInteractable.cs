@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class ShopInteractable : Interactable
 {
-    [SerializeField] private Canvas m_ShopUI; 
+    [SerializeField] private GameObject m_ShopUI; 
 
     /// <summary>
     /// Overrides the original InteractedWith method.
@@ -13,6 +13,14 @@ public class ShopInteractable : Interactable
     {
         ///Debugs Interacted with + Gameobject name.
         base.InteractedWith();
-        m_ShopUI.enabled = true;
+        m_ShopUI.SetActive(true);
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            m_ShopUI.SetActive(false);
+        }
     }
 }
