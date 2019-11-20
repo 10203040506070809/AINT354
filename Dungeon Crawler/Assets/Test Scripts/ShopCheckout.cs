@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class ShopCheckout : MonoBehaviour
 {
-    private PlayerHotbar m_playerHotbar;
+    public PlayerHotbar m_playerHotbar;
 
     public void Checkout(Item item)
     {
+        m_playerHotbar = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<PlayerHotbar>();
         item.OnPickUp();
         SaveSystem.SavePlayer(m_playerHotbar);
     }

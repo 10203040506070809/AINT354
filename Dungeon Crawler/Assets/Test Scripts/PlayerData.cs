@@ -8,7 +8,7 @@ public class PlayerData
     public int m_level;
     public int m_gold;
     public int m_experience;
-
+    
     public GameObject[] m_hotbarItems;
 
     public PlayerData(PlayerHotbar playerHotbar)
