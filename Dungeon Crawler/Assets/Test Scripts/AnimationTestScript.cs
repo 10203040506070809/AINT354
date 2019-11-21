@@ -43,7 +43,7 @@ public class AnimationTestScript : MonoBehaviour
             m_Animator.SetBool("Walking", true);
             Debug.Log("Walking");
         }
-        else
+        else if (Input.GetKeyUp("left shift"))
         {
             m_Animator.SetBool("Walking", false);
         }
