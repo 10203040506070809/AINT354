@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: -5857866930491609567}
   - component: {fileID: 4188802549834012774}
   m_Layer: 0
-  m_Name: 0011
+  m_Name: 1100
   m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,6 +47,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_enemy: {fileID: 5142493658647638993, guid: a367ce32a4b223645bcd2b2c567c3d93, type: 3}
   m_ChanceOfEnemySpawn: 100
+  m_ChanceOfBarrelSpawn: 100
+  m_ChanceOfSecondBarrelSpawn: 100
+  m_ChanceOfThirdBarrelSpawn: 100
+  m_barrel: {fileID: 853696506192942212, guid: cca32821f30056d4e81cc4aa8407a301, type: 3}
 --- !u!114 &4188802549834012774
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70,11 +74,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8041254464311695881}
     m_Modifications:
-    - target: {fileID: 1210354586634912090, guid: 2aef44b2caf801548b41f4d7398654a2,
-        type: 3}
-      propertyPath: m_Name
-      value: Corner V2
-      objectReference: {fileID: 0}
     - target: {fileID: 2780782337950315337, guid: 2aef44b2caf801548b41f4d7398654a2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -134,6 +133,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.y
       value: 999.99976
+      objectReference: {fileID: 0}
+    - target: {fileID: 1210354586634912090, guid: 2aef44b2caf801548b41f4d7398654a2,
+        type: 3}
+      propertyPath: m_Name
+      value: Corner V2
       objectReference: {fileID: 0}
     - target: {fileID: 644257849399162246, guid: 2aef44b2caf801548b41f4d7398654a2,
         type: 3}

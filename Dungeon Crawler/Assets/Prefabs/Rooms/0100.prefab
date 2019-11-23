@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: -8714540615081856513}
   - component: {fileID: 7665994967840677006}
   m_Layer: 0
-  m_Name: 0001
+  m_Name: 0100
   m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,6 +47,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_enemy: {fileID: 5142493658647638993, guid: a367ce32a4b223645bcd2b2c567c3d93, type: 3}
   m_ChanceOfEnemySpawn: 100
+  m_ChanceOfBarrelSpawn: 100
+  m_ChanceOfSecondBarrelSpawn: 100
+  m_ChanceOfThirdBarrelSpawn: 100
+  m_barrel: {fileID: 853696506192942212, guid: cca32821f30056d4e81cc4aa8407a301, type: 3}
 --- !u!114 &7665994967840677006
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70,11 +74,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6353519847735560009}
     m_Modifications:
-    - target: {fileID: 7449463796214174853, guid: 4954b66f8d12b75468f7a29a543641c7,
-        type: 3}
-      propertyPath: m_Name
-      value: Dead End V2
-      objectReference: {fileID: 0}
     - target: {fileID: 5853155602731918998, guid: 4954b66f8d12b75468f7a29a543641c7,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -134,6 +133,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.y
       value: 999.99976
+      objectReference: {fileID: 0}
+    - target: {fileID: 7449463796214174853, guid: 4954b66f8d12b75468f7a29a543641c7,
+        type: 3}
+      propertyPath: m_Name
+      value: Dead End V2
       objectReference: {fileID: 0}
     - target: {fileID: 9177520023536181337, guid: 4954b66f8d12b75468f7a29a543641c7,
         type: 3}
