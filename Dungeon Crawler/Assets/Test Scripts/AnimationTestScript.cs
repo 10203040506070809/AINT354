@@ -47,6 +47,17 @@ public class AnimationTestScript : MonoBehaviour
         {
             m_Animator.SetBool("Walking", false);
         }
+
+        if (Input.GetKeyDown("left ctrl")){
+            m_Animator.SetBool("Dead", true);
+            Debug.Log("Dead");
+        }
+        else if (Input.GetKeyUp("left ctrl"))
+        {
+            m_Animator.SetBool("Dead", false);
+            Debug.Log("NotDead");
+
+        }
     }
 
     private void resetAttack()
