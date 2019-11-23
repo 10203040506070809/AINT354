@@ -74,7 +74,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemList:
-  - {fileID: 7749815534087187769, guid: 7d3e2fc6b8820f54d9b60a671debb395, type: 3}
+  - {fileID: 8265202128751237099, guid: 2e903273f2565614f87e59519975154f, type: 3}
+  - {fileID: 3209202297227471064, guid: c4a51a93a7b36ce4a9fb79c07c1bbbfb, type: 3}
+  - {fileID: 5720131898354837000, guid: 499b11481cc0ecc4c9ac1b12638db950, type: 3}
   m_ChanceOfItemSpawn: 100
 --- !u!1 &2256846389636057732
 GameObject:
