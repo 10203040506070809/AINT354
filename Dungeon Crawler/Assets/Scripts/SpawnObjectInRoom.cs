@@ -15,6 +15,7 @@ public class SpawnObjectInRoom : MonoBehaviour
     [SerializeField] private float m_ChanceOfEnemySpawn = 0;
     private float m_tileWidth;
     private float m_enemyWidth;
+    public GameObject m_barrel;
     // Start is called before the first frame update
     void Start()
     {

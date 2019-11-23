@@ -53,7 +53,7 @@ public class EnemyStats : CharacterStats
     public override void Die()
     {
         base.Die();
-        
+        gameObject.GetComponent<EnemyDropItem>().DropItem(gameObject.transform.position, gameObject);
         //TODO give experience/gold to the player who killed it
     }
 }
