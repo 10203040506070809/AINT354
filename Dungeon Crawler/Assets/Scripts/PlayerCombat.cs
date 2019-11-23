@@ -67,8 +67,10 @@ public class PlayerCombat : MonoBehaviour
                     Debug.Log("Enemy does not have an enemystats script");
                 }
             }
+            /// Checks if the gameobject is a breakable object
             if (other.tag == "Breakable")
             {
+                ///Checks if the object has an ItemBreak script - Redundancy
                 if (other.gameObject.GetComponent<ItemBreak>() != null)
                 {
                     m_itemBreak = other.gameObject.GetComponent<ItemBreak>();
