@@ -9,9 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4432573014093702807}
+  - component: {fileID: 4284704719766837293}
+  - component: {fileID: -7030374744349637756}
+  - component: {fileID: -3104644631658301008}
   m_Layer: 0
   m_Name: Barrel
-  m_TagString: Untagged
+  m_TagString: Breakable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -33,6 +36,46 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &4284704719766837293
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 853696506192942212}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.047244, y: 3.7782078, z: 1.9972496}
+  m_Center: {x: 0.000028133392, y: 0.49410057, z: 0.025333405}
+--- !u!114 &-7030374744349637756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 853696506192942212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d496f2e25f0a4774c93416dbcee455d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-3104644631658301008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 853696506192942212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99f3bd3c5f4520543b8d273faed62843, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemList:
+  - {fileID: 7749815534087187769, guid: 7d3e2fc6b8820f54d9b60a671debb395, type: 3}
+  m_ChanceOfItemSpawn: 100
 --- !u!1 &2256846389636057732
 GameObject:
   m_ObjectHideFlags: 0

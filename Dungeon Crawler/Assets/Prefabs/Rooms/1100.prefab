@@ -47,9 +47,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_enemy: {fileID: 5142493658647638993, guid: a367ce32a4b223645bcd2b2c567c3d93, type: 3}
   m_ChanceOfEnemySpawn: 100
-  m_ChanceOfBarrelSpawn: 100
-  m_ChanceOfSecondBarrelSpawn: 100
-  m_ChanceOfThirdBarrelSpawn: 100
+  m_ChanceOfBarrelSpawn: 78
+  m_ChanceOfSecondBarrelSpawn: 54.8
+  m_ChanceOfThirdBarrelSpawn: 30.5
   m_barrel: {fileID: 853696506192942212, guid: cca32821f30056d4e81cc4aa8407a301, type: 3}
 --- !u!114 &4188802549834012774
 MonoBehaviour:

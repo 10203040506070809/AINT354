@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class ItemBreak : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    int m_health = 2;
+    public void TakeDamage()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        m_health -= 1;
+        if (m_health <= 0)
+        {
+            gameObject.GetComponent<DropItem>().Drop(gameObject.transform.position, gameObject);
+            Destroy(gameObject);
+        }
     }
 }

@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyDropItem : MonoBehaviour
+public class DropItem : MonoBehaviour
 {
     [SerializeField]
     private List<GameObject> itemList;
     [Range(0.0f, 100.0f)]
     [SerializeField] private float m_ChanceOfItemSpawn = 0;
-    public void DropItem(Vector3 position, GameObject source)
+    public void Drop(Vector3 position, GameObject source)
     {
         if (Random.Range(0, 100) < m_ChanceOfItemSpawn)
         {
