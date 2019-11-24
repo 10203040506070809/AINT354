@@ -17,15 +17,20 @@ public class Item : MonoBehaviour
     /// </summary>
     [SerializeField] private Image m_hotBarIcon;
     /// <summary>
-    /// A string that stores hover over text, so the player can understand what different items are and do.
+    /// A string that stores hover over text, so the player can understand what different items are and do. Also used for the shop text.
     /// </summary>
-    [SerializeField] private string m_hoverOverText;
+    public string m_hoverOverText;
     /// <summary>
     /// A reference to the item cooldown. Items cannot be used again within this time.
     /// </summary>
-    [SerializeField] public float m_itemCooldown;
-
-    [SerializeField] private float m_itemCost;
+    public float m_itemCooldown;
+    /// <summary>
+    /// A float denoting the cost of the item in the shop.
+    /// </summary>
+    public float m_itemCost;
+    /// <summary>
+    /// A boolean denoting whether the item is available to be used again.
+    /// </summary>
     private bool m_isAvailable = true;
 
     private void Start()

@@ -49,7 +49,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5720131898354837000}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -89,7 +89,7 @@ BoxCollider:
   m_GameObject: {fileID: 5720131898354837000}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -109,7 +109,8 @@ MonoBehaviour:
   m_maxNumberInSlot: 0
   m_hotBarIcon: {fileID: 5282182795716386400, guid: c28ca2fee890cae4a8a44a0ac743ebe5,
     type: 3}
-  m_hoverOverText: 
+  m_hoverOverText: This potion increases your damage by 20% for 10 seconds.
   m_itemCooldown: 10
+  m_itemCost: 10
   m_potionTimer: 10
   m_potency: 1.2

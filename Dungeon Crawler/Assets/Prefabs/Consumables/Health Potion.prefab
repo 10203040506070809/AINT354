@@ -109,7 +109,8 @@ MonoBehaviour:
   m_maxNumberInSlot: 0
   m_hotBarIcon: {fileID: 5282182795716386400, guid: c28ca2fee890cae4a8a44a0ac743ebe5,
     type: 3}
-  m_hoverOverText: 
+  m_hoverOverText: This potion instantly heals you for 50 hitpoints!
   m_itemCooldown: 1
+  m_itemCost: 10
   m_potionTimer: 1
   m_potency: 50

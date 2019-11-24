@@ -191,4 +191,8 @@ public class CharacterStats : MonoBehaviour
     {
         return m_armour.SetValue(input);
     }
+    public int GetGold()
+    {
+        return m_gold.GetValue();
+    }
 }

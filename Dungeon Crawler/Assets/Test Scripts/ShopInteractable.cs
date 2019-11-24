@@ -15,12 +15,23 @@ public class ShopInteractable : Interactable
         base.InteractedWith();
         m_ShopUI.SetActive(true);
     }
-
+    /// <summary>
+    /// Disables the shop GUI if the player leaves the vicinity of the shop.
+    /// </summary>
+    /// <param name="other"></param>
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.tag == "Player")
         {
-            m_ShopUI.SetActive(false);
+            LeaveShop();
         }
     }
+    /// <summary>
+    /// Disables the shop GUI.
+    /// </summary>
+    public void LeaveShop()
+        {
+            m_ShopUI.SetActive(false);
+        }
+    
 }
