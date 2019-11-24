@@ -15,6 +15,7 @@ TagManager:
   - MapPlayer
   - MapEnd
   - ItemDatabase
+  - Breakable
   layers:
   - Default
   - TransparentFX
