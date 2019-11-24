@@ -53,7 +53,9 @@ public class EnemyStats : CharacterStats
     public override void Die()
     {
         base.Die();
-        
+        Vector3 pos = gameObject.transform.position;
+        pos.y += gameObject.GetComponentInChildren<SkinnedMeshRenderer>().bounds.size.y / 2;
+        gameObject.GetComponent<DropItem>().Drop(pos, gameObject);
         //TODO give experience/gold to the player who killed it
     }
 }
