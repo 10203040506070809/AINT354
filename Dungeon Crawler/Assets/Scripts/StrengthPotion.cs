@@ -11,7 +11,7 @@ public class StrengthPotion : Potion
     /// </summary>
     public void Start()
     {
-
+       
     }
     /// <summary>
     /// An override for the item class's ActivateEffect.
@@ -32,4 +32,5 @@ public class StrengthPotion : Potion
         yield return new WaitForSeconds(m_potionTimer);
         myStats.SetDamage(originalDamage);
     }
+
 }

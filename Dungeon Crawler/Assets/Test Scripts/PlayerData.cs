@@ -18,9 +18,9 @@ public class PlayerData
     /// </summary>
     public int m_experience;
     /// <summary>
-    /// A gameobject array, holding the current items within the players hotbar.
+    /// A string array, holding the current items within the players hotbar as names.
     /// </summary>
-    public GameObject[] m_hotbarItems;
+    public string[] m_hotbarItems = new string[4];
 
     /// <summary>
     /// Takes in a playerhotbar, and sets m_hotBarItems.
@@ -28,7 +28,13 @@ public class PlayerData
     /// <param name="playerHotbar"></param>
     public PlayerData(PlayerHotbar playerHotbar)
     {
-        m_hotbarItems = playerHotbar.m_hotBarItems;
+        for (int i = 0; i < playerHotbar.m_hotBarItems.Length; i++)
+        {
+            if (playerHotbar.m_hotBarItems[i] != null)
+            {
+                m_hotbarItems[i] = playerHotbar.m_hotBarItems[i].name;
+            }
+        }
     }
     /// <summary>
     /// Stores the players current stats, ready to be saved.

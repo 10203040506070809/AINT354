@@ -15,7 +15,7 @@ public class Item : MonoBehaviour
     /// <summary>
     /// A reference to an image variable, which is the image shown on the hotbar UI.
     /// </summary>
-    [SerializeField] private Image m_hotBarIcon;
+    public Image m_hotBarIcon;
     /// <summary>
     /// A string that stores hover over text, so the player can understand what different items are and do. Also used for the shop text.
     /// </summary>
@@ -31,11 +31,11 @@ public class Item : MonoBehaviour
     /// <summary>
     /// A boolean denoting whether the item is available to be used again.
     /// </summary>
-    private bool m_isAvailable = true;
+    public bool m_isAvailable = true;
 
     private void Start()
     {
-        
+       
     }
     /// <summary>
     /// Occurs when an item interacts with this. Checks that the other GameObject is a player and if so, activeates the OnPickUp script.
@@ -56,6 +56,8 @@ public class Item : MonoBehaviour
     {
         ///Get the player hotbar
         m_playerHotbar = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<PlayerHotbar>();
+        ///Get the ItemDatabase
+ 
         ///Add to hotbar
         for (int i = 0; i < m_playerHotbar.m_hotBarItems.Length; i++)
         {
@@ -92,6 +94,7 @@ public class Item : MonoBehaviour
             StartCoroutine("ItemCooldown");
             ///Activate potion effect here
             ActivateEffect();
+
         }
     }
 

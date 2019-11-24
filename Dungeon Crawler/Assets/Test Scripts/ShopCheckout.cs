@@ -28,7 +28,7 @@ public class ShopCheckout : MonoBehaviour
     /// <param name="item"></param>
     public void Checkout(Item item)
     {
-        
+
 
         PlayerHotbar m_playerHotbar = m_player.GetComponentInChildren<PlayerHotbar>();
         PlayerStats m_playerStats = m_player.GetComponent<PlayerStats>();

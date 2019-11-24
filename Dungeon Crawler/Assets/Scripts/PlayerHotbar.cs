@@ -18,7 +18,7 @@ public class PlayerHotbar : MonoBehaviour
 
     private void Start()
     {
-        SaveSystem.LoadPlayerHotbar();
+        LoadPlayerHotbar();
     }
     // Update is called once per frame
     void Update()
@@ -38,6 +38,7 @@ public class PlayerHotbar : MonoBehaviour
                 ActivateEffect(m_hotBarItems[0]);
                 m_hotBarItems[0] = null;
                 m_hotBarIcons[0].sprite = null;
+               
             }
         }
         else if (Input.GetButtonDown("Hotbar Slot 2"))
@@ -47,6 +48,7 @@ public class PlayerHotbar : MonoBehaviour
                 ActivateEffect(m_hotBarItems[1]);
                 m_hotBarItems[1] = null;
                 m_hotBarIcons[1].sprite = null;
+                SaveSystem.SavePlayer(this);
             }
         }
         else if (Input.GetButtonDown("Hotbar Slot 3"))
@@ -56,6 +58,7 @@ public class PlayerHotbar : MonoBehaviour
                 ActivateEffect(m_hotBarItems[2]);
                 m_hotBarItems[2] = null;
                 m_hotBarIcons[2].sprite = null;
+                SaveSystem.SavePlayer(this);
             }
         }
         else if (Input.GetButtonDown("Hotbar Slot 4"))
@@ -65,6 +68,7 @@ public class PlayerHotbar : MonoBehaviour
                 ActivateEffect(m_hotBarItems[3]);
                 m_hotBarItems[3] = null;
                 m_hotBarIcons[3].sprite = null;
+                SaveSystem.SavePlayer(this);
             }
         }
     }
@@ -74,7 +78,24 @@ public class PlayerHotbar : MonoBehaviour
     /// <param name="item"></param>
     private void ActivateEffect(GameObject item)
     {
-        item.GetComponent<Item>().ActivateItem();
-        Destroy(item);
+        GameObject tempItem = Resources.Load(item.name, typeof(GameObject)) as GameObject;
+        tempItem = Instantiate(tempItem);
+        tempItem.GetComponent<Renderer>().enabled = false;
+        tempItem.GetComponent<Collider>().enabled = false;
+        tempItem.GetComponent<Item>().ActivateItem();        
+    }
+
+    private void LoadPlayerHotbar()
+    {
+        PlayerData data = SaveSystem.LoadPlayerHotbar();
+        for (int i = 0; i < data.m_hotbarItems.Length; i++)
+        {
+            if (data.m_hotbarItems[i] != null)
+            {
+                m_hotBarItems[i] = Resources.Load(data.m_hotbarItems[i], typeof(GameObject)) as GameObject;
+                m_hotBarIcons[i].sprite = m_hotBarItems[i].GetComponent<Item>().m_hotBarIcon.sprite;
+                
+            }
+        }
     }
 }
