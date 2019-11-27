@@ -94,7 +94,7 @@ public class EnemyController : CharacterMovement
         if (m_lastAttacked >= m_attackSpeed)
         {
             ///Clamps the value of the armour between 0 and the value of the targets armour
-            targetStats.TakeDamage((int)(m_myStats.GetDamage() - (Mathf.Clamp(m_myStats.GetArmour(), 0, m_myStats.GetArmour()))));
+            targetStats.TakeDamage((int)(m_myStats.GetDamage() + targetStats.m_currentInsanity - (Mathf.Clamp(m_myStats.GetArmour(), 0, m_myStats.GetArmour()))));
             m_lastAttacked = 0;
             //Do attack animation
             

@@ -8,15 +8,15 @@ public class CharacterStats : MonoBehaviour
     /// <summary>
     /// Variable to store the level of the entity.
     /// </summary>
-    [SerializeField] protected int m_level = 1;
+     public int m_level = 1;
     /// <summary>
     /// Variable to store the max health of an entity.
     /// </summary>
-    [SerializeField] public int m_maxHealth = 100;
+     public int m_maxHealth = 100;
     /// <summary>
     /// Variable to store the current health of an entity.
     /// </summary>
-    [SerializeField] public int m_currentHealth;
+     public int m_currentHealth;
     /// <summary>
     /// A variable to store the maximum insanity level.
     /// </summary>
@@ -190,5 +190,9 @@ public class CharacterStats : MonoBehaviour
     public int SetArmour(int input)
     {
         return m_armour.SetValue(input);
+    }
+    public int GetGold()
+    {
+        return m_gold.GetValue();
     }
 }
