@@ -38,7 +38,7 @@ public class PlayerHotbar : MonoBehaviour
                 ActivateEffect(m_hotBarItems[0]);
                 m_hotBarItems[0] = null;
                 m_hotBarIcons[0].sprite = null;
-               
+                SaveSystem.SavePlayer(this);
             }
         }
         else if (Input.GetButtonDown("Hotbar Slot 2"))
