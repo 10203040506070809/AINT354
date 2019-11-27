@@ -21,6 +21,7 @@ public class PlayerCombat : MonoBehaviour
     /// </summary>
     [SerializeField] private ParticleSystem m_bloodSystem = null;
     private CharacterStats m_enemyStats;
+    private ItemBreak m_itemBreak;
     /// <summary>
     /// 
     /// </summary>
@@ -46,7 +47,7 @@ public class PlayerCombat : MonoBehaviour
                 {
                     m_enemyStats = other.gameObject.GetComponent<EnemyStats>();
 
-                    m_enemyStats.TakeDamage((int)m_myStats.GetAttack());
+                    m_enemyStats.TakeDamage((int)m_myStats.GetDamage() + (int)m_myStats.m_currentInsanity);
                     
                     ///Checks if the enemy just died
                   if (m_enemyStats.m_currentHealth <= 0)
@@ -64,6 +65,21 @@ public class PlayerCombat : MonoBehaviour
                 else
                 {
                     Debug.Log("Enemy does not have an enemystats script");
+                }
+            }
+            /// Checks if the gameobject is a breakable object
+            if (other.tag == "Breakable")
+            {
+                ///Checks if the object has an ItemBreak script - Redundancy
+                if (other.gameObject.GetComponent<ItemBreak>() != null)
+                {
+                    m_itemBreak = other.gameObject.GetComponent<ItemBreak>();
+
+                    m_itemBreak.TakeDamage();
+                }
+                else
+                {
+                    Debug.Log("Object does not have an ItemBreak script");
                 }
             }
         }

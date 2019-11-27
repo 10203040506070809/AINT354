@@ -8,15 +8,15 @@ public class CharacterStats : MonoBehaviour
     /// <summary>
     /// Variable to store the level of the entity.
     /// </summary>
-    [SerializeField] protected int m_level = 1;
+     public int m_level = 1;
     /// <summary>
     /// Variable to store the max health of an entity.
     /// </summary>
-    [SerializeField] public int m_maxHealth = 100;
+     public int m_maxHealth = 100;
     /// <summary>
     /// Variable to store the current health of an entity.
     /// </summary>
-    [SerializeField] public int m_currentHealth;
+     public int m_currentHealth;
     /// <summary>
     /// A variable to store the maximum insanity level.
     /// </summary>
@@ -123,20 +123,76 @@ public class CharacterStats : MonoBehaviour
     {
         return m_movementSpeed.GetValue();
     }
-    public float GetAttack()
-    {
-        return m_damage.GetValue();
-    }
+    /// <summary>
+    /// Gets the entities armour value.
+    /// </summary>
+    /// <returns></returns>
     public float GetArmour()
     {
         return m_armour.GetValue();
     }
+    /// <summary>
+    /// Gets the entities attack speed.
+    /// </summary>
+    /// <returns></returns>
     public float GetAttackSpeed()
     {
         return m_attackSpeed.GetValue();
     }
+    /// <summary>
+    /// Sets the entities attack speed.
+    /// </summary>
+    /// <param name="input">Takes an integer input as a parameter.</param>
+    /// <returns></returns>
     public float SetAttackSpeed(int input)
     {
         return m_attackSpeed.SetValue(input);
+    }
+    /// <summary>
+    /// Gets the entities strength value.
+    /// </summary>
+    /// <returns></returns>
+    public int GetStrength()
+    {
+        return m_strength.GetValue();
+    }
+    /// <summary>
+    /// Sets the entities strength value.
+    /// </summary>
+    /// <param name="input">An integer value, denoting the amount the strength will be set to.</param>
+    /// <returns></returns>
+    public int SetStrength(int input)
+    {
+        return m_strength.SetValue(input);
+    }
+    /// <summary>
+    /// Gets the damage value of an entity.
+    /// </summary>
+    /// <returns></returns>
+    public int GetDamage()
+    {
+        return m_damage.GetValue();
+    }
+    /// <summary>
+    /// Sets the damage value of an entity.
+    /// </summary>
+    /// <param name="input">Takes an integer as an input, sets the value of damage to this value.</param>
+    /// <returns></returns>
+    public int SetDamage(int input)
+    {
+        return m_damage.SetValue(input);
+    }
+    /// <summary>
+    /// Sets the armour value of an entity.
+    /// </summary>
+    /// <param name="input">Takes an integer as an input, sets the value of armour to this value.</param>
+    /// <returns></returns>
+    public int SetArmour(int input)
+    {
+        return m_armour.SetValue(input);
+    }
+    public int GetGold()
+    {
+        return m_gold.GetValue();
     }
 }

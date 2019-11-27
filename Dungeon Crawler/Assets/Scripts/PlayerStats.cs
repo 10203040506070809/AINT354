@@ -11,18 +11,7 @@ public class PlayerStats : CharacterStats
     private void Awake()
     {
         m_animator = this.GetComponent<Animator>();
-
-        ///If in the unity editor, use stats from inspector - This is useful for debugging.
-#if UNITY_EDITOR
-        Debug.Log("Using Unity Editor");
-#endif
-
-        ///In standalone, prefer using the player level from playerprefs.
-#if UNITY_STANDALONE
-        m_level = PlayerPrefs.GetInt("Level", 1);
-        m_gold.SetValue(PlayerPrefs.GetInt("Gold", 1));
-        m_experience.SetValue(PlayerPrefs.GetInt("Experience", 0));
-#endif
+        LoadPlayerStats();
         CalculateStats();
     }
 
@@ -92,7 +81,25 @@ public class PlayerStats : CharacterStats
     /// </summary>
     private void CheckForLevelUp()
     {
-
+        if ((m_experience.GetValue() / m_level) > 100)
+        {
+            m_level++;
+            CalculateStats();
+            SavePlayerStats();
+        }
     }
 
+    private void LoadPlayerStats()
+    {
+        PlayerData data = SaveSystem.LoadPlayerStats();
+
+        m_level = data.m_level;
+        m_gold.SetValue(data.m_gold);
+        m_experience.SetValue(data.m_experience);
+    }
+
+    private void SavePlayerStats()
+    {
+        SaveSystem.SavePlayer(this);
+    }
 }

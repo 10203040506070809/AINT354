@@ -10,6 +10,12 @@ TagManager:
   - SFX
   - Ambient
   - Voices
+  - Map
+  - MapTiles
+  - MapPlayer
+  - MapEnd
+  - ItemDatabase
+  - Breakable
   layers:
   - Default
   - TransparentFX
