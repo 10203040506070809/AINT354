@@ -66,7 +66,12 @@ public class Item : MonoBehaviour
                 m_playerHotbar.m_hotBarItems[i] = this.gameObject;
                 m_playerHotbar.m_hotBarIcons[i].sprite = m_hotBarIcon.sprite;
                 this.gameObject.GetComponent<MeshRenderer>().enabled = false;
-                this.gameObject.GetComponent<Collider>().enabled = false;
+                var go = this.gameObject.GetComponents<Collider>();
+                foreach (Collider col in go)
+                {
+                    col.enabled = false;
+                }
+                
                 break;
             }
         }
