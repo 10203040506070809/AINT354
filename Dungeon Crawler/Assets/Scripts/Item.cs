@@ -54,6 +54,8 @@ public class Item : MonoBehaviour
     /// </summary>
     public virtual void OnPickUp()
     {
+        ///if the item is a clone, remove the (clone) from its name
+        this.gameObject.name = this.gameObject.name.Replace("(Clone)", "").Trim();
         ///Get the player hotbar
         m_playerHotbar = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<PlayerHotbar>();
         ///Get the ItemDatabase
