@@ -22,6 +22,10 @@ public class TitleScreenManager : MonoBehaviour
     /// A Vector3 holding the position of the camera.
     /// </summary>
     private Vector3 m_pos;
+    /// <summary>
+    /// The speed the camera moves between two menu screens.
+    /// </summary>
+    [SerializeField] private float m_speed;
     // Start is called before the first frame update
     void Start()
     {
@@ -96,10 +100,17 @@ public class TitleScreenManager : MonoBehaviour
     /// <returns></returns>
     public IEnumerator MoveTo()
     {
+        Debug.Log(m_cam.transform.position.y);
+        Debug.Log(m_pos.y);
+        float baseSpeed = m_speed;
+        m_speed = m_speed * System.Math.Abs(m_cam.transform.position.y - m_pos.y) / 250;
         while(m_cam.transform.position != m_pos)
         {
-            m_cam.transform.position = Vector3.Lerp(m_cam.transform.position, m_pos, 0.05f);
+            // m_cam.transform.position = Vector3.Slerp(m_cam.transform.position, m_pos, 0.05f);
+            m_cam.transform.position = Vector3.MoveTowards(m_cam.transform.position, m_pos, m_speed);          
             yield return null;
         }
+        ///Reset the speed of the camera when its finished reaching the point.
+        m_speed = baseSpeed;
     }
 }
