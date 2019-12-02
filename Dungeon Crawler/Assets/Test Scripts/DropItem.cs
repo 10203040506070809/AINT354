@@ -24,7 +24,7 @@ public class DropItem : MonoBehaviour
         if (Random.Range(0, 100) < m_ChanceOfItemSpawn)
         {
             /// Randomly chooses an item to drop.
-            int dropItem = Random.Range(0, itemList.Count - 1);
+            int dropItem = Random.Range(0, itemList.Count);
             /// Moves the spawn position up so the item doesnt spawn in the ground.
             float moveUp = itemList[dropItem].GetComponent<Renderer>().bounds.size.y;
             position.y += moveUp;
