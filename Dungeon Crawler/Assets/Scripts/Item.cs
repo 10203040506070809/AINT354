@@ -54,6 +54,8 @@ public class Item : MonoBehaviour
     /// </summary>
     public virtual void OnPickUp()
     {
+        ///if the item is a clone, remove the (clone) from its name
+        this.gameObject.name = this.gameObject.name.Replace("(Clone)", "").Trim();
         ///Get the player hotbar
         m_playerHotbar = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<PlayerHotbar>();
         ///Get the ItemDatabase
@@ -66,7 +68,12 @@ public class Item : MonoBehaviour
                 m_playerHotbar.m_hotBarItems[i] = this.gameObject;
                 m_playerHotbar.m_hotBarIcons[i].sprite = m_hotBarIcon.sprite;
                 this.gameObject.GetComponent<MeshRenderer>().enabled = false;
-                this.gameObject.GetComponent<Collider>().enabled = false;
+                var go = this.gameObject.GetComponents<Collider>();
+                foreach (Collider col in go)
+                {
+                    col.enabled = false;
+                }
+                
                 break;
             }
         }
