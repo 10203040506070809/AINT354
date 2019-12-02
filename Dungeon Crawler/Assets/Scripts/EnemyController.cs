@@ -59,7 +59,7 @@ public class EnemyController : CharacterMovement
         if (distance <= m_lookRadius)
         {
             m_navMeshAgent.SetDestination(m_target.transform.position);
-
+            Debug.Log("within range");
             if (distance <= m_navMeshAgent.stoppingDistance)
             {
                 ///Do attack
