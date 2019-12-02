@@ -80,8 +80,6 @@ public class PlayerHotbar : MonoBehaviour
     {
         GameObject tempItem = Resources.Load(item.name, typeof(GameObject)) as GameObject;
         tempItem = Instantiate(tempItem);
-        //remove the (clone) from name
-        tempItem.name = tempItem.name.Replace("(clone)", "").Trim();
         tempItem.GetComponent<Renderer>().enabled = false;
         tempItem.GetComponent<Collider>().enabled = false;
         tempItem.GetComponent<Item>().ActivateItem();        
