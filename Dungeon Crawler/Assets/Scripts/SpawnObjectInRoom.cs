@@ -54,7 +54,7 @@ public class SpawnObjectInRoom : MonoBehaviour
         /// variable used to track which quadrant has barrels spawned in it. This is later used to prevent additional enemies from spawning in the same quadrant.
         int hasBarrel = -1;
         m_tileWidth = gameObject.GetComponentInChildren<Renderer>().bounds.size.x;
-        m_enemyWidth = m_enemy.GetComponent<Renderer>().bounds.size.x;
+        m_enemyWidth = m_enemy.GetComponentInChildren<SkinnedMeshRenderer>().bounds.size.x;
         m_barrelWidth = m_barrel.GetComponentInChildren<Renderer>().bounds.size.x;
         m_barrelHeight = m_barrel.GetComponentInChildren<Renderer>().bounds.size.y;
         float halfTileWidth = m_tileWidth / 2;

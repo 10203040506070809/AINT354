@@ -1250,6 +1250,7 @@ MonoBehaviour:
   - {fileID: 1773974826}
   - {fileID: 0}
   - {fileID: 0}
+  m_speed: 1
 --- !u!1 &899099170
 GameObject:
   m_ObjectHideFlags: 0
