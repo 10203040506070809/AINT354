@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyStats : CharacterStats
 {
 
-    
+    public Image healthBar;
     
     /// <summary>
     /// Awake is called when a script is  loaded for the first time.
@@ -18,7 +19,9 @@ public class EnemyStats : CharacterStats
     public override void TakeDamage(int damage)
     {
         base.TakeDamage(damage);
-
+        healthBar.fillAmount =  (float)m_currentHealth / (float)m_maxHealth;
+        Debug.Log(m_currentHealth/m_maxHealth);
+        //Debug.Log(m_maxHealth);
         this.GetComponent<Rigidbody>().AddForce(transform.forward * -10, ForceMode.Impulse);
         //Play audio clip
         Debug.Log("OOF");
