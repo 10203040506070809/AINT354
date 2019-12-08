@@ -63,7 +63,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_playerHotbar: {fileID: 0}
   m_maxNumberInSlot: 0
-  m_hotBarIcon: {fileID: 5282182795716386400, guid: c28ca2fee890cae4a8a44a0ac743ebe5,
+  m_hotBarIcon: {fileID: 6573680091103788868, guid: be5cf40a52c324e43b952ae108e15380,
     type: 3}
   m_hoverOverText: This potion increases your damage by 20% for 10 seconds.
   m_itemCooldown: 10
