@@ -109,6 +109,10 @@ public class DungeonGen : MonoBehaviour
             {
                 Destroy(p);
             }
+            foreach (GameObject p in GameObject.FindGameObjectsWithTag("Pickup"))
+            {
+                Destroy(p);
+            }
             /// Resets all variables.
             m_tileList.Clear();
             m_tempTileList.Clear();
