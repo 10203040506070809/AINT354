@@ -146,4 +146,26 @@ public class Minimap : MonoBehaviour
             }
         }
     }
+    public void ResetMap()
+    {
+        for (int i = 0; i < 81; i++)
+        {
+            m_playerPositionMap.transform.GetChild(i).GetComponent<Image>().sprite = m_clear;
+        }
+        for (int i = 0; i < 81; i++)
+        {
+            m_map.transform.GetChild(i).GetComponent<Image>().sprite = m_clear;
+        }
+        for (int i = 0; i < 81; i++)
+        {
+            m_endMap.transform.GetChild(i).GetComponent<Image>().sprite = m_clear;
+        }
+        for (int i = 0; i < 9; i++)
+        {
+            for (int j = 0; j < 9; j++)
+            {
+                m_grid[i,j] = 0;
+            }
+        }
+    }
 }

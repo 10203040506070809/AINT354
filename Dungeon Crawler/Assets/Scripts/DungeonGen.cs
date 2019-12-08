@@ -95,6 +95,7 @@ public class DungeonGen : MonoBehaviour
         bool changed = true;
         /// Loops until the dungeon has at least the minimum number of rooms.
         do {
+            
             /// Clears the map.
             foreach (GameObject o in GameObject.FindGameObjectsWithTag("Tile"))
             {
@@ -179,6 +180,7 @@ public class DungeonGen : MonoBehaviour
         m_surface.BuildNavMesh();
 
         Instantiate(m_player, new Vector3(m_start.transform.position.x, m_start.transform.position.y + 6, m_start.transform.position.z), Quaternion.identity);
+        GameObject.FindGameObjectWithTag("Player").GetComponent<Minimap>().ResetMap();
         Debug.Log(m_player.GetComponent<Collider>().bounds.size.y);
     }
     /// <summary>
