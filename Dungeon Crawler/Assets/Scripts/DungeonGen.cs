@@ -113,6 +113,10 @@ public class DungeonGen : MonoBehaviour
             {
                 Destroy(p);
             }
+            foreach (GameObject b in GameObject.FindGameObjectsWithTag("Breakable"))
+            {
+                Destroy(b);
+            }
             /// Resets all variables.
             m_tileList.Clear();
             m_tempTileList.Clear();
