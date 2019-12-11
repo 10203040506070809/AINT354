@@ -22,6 +22,10 @@ public class EnemyController : CharacterMovement
     /// </summary>
     private NavMeshAgent m_navMeshAgent;
     /// <summary>
+    /// A reference to the Animator Component
+    /// </summary>
+    private Animator m_Animator;
+    /// <summary>
     /// attackSpeed is an integer derived from the enemyStats script.
     /// </summary>
     private int m_attackSpeed = 0;
@@ -29,6 +33,11 @@ public class EnemyController : CharacterMovement
     /// A reference to the current GameObjects EnemyStats script, used to get variable values.
     /// </summary>
     CharacterStats m_myStats;
+   
+    /// <summary>
+    /// A boolean to see if the model can attack
+    /// </summary>
+    private bool m_CanAttack = true;
     /// <summary>
     /// In this method variables are initialised.
     /// </summary>
@@ -37,7 +46,7 @@ public class EnemyController : CharacterMovement
        
         m_navMeshAgent = GetComponent<NavMeshAgent>();
         m_myStats = GetComponent<EnemyStats>();
-        
+        m_Animator = GetComponent<Animator>();
         m_attackSpeed = (int)m_myStats.GetAttackSpeed();
         m_target = GameObject.FindGameObjectWithTag("Player");
     }
@@ -58,19 +67,25 @@ public class EnemyController : CharacterMovement
         float distance = Vector3.Distance(m_target.transform.position, transform.position);
         if (distance <= m_lookRadius)
         {
+            m_Animator.SetBool("Walking", true);
             m_navMeshAgent.SetDestination(m_target.transform.position);
-            Debug.Log("within range");
             if (distance <= m_navMeshAgent.stoppingDistance)
             {
                 ///Do attack
                 Attack();
-
+                m_Animator.SetBool("Walking", false);
             }
             ///This is reset when the player leaves stopping distance so the enemy instantly attacks whenever the player moves. This may not be required when actual combat is implemented due to knockback, but is a reasonable failsafe.
             else
             {
+             
                 m_lastAttacked = m_attackSpeed;
+                m_Animator.SetBool("Attacking", false);
             }
+        }
+        else
+        {
+            m_Animator.SetBool("Walking", false);
         }
     }
     /// <summary>
@@ -97,13 +112,23 @@ public class EnemyController : CharacterMovement
             targetStats.TakeDamage((int)(m_myStats.GetDamage() + targetStats.m_currentInsanity - (Mathf.Clamp(m_myStats.GetArmour(), 0, m_myStats.GetArmour()))));
             m_lastAttacked = 0;
             //Do attack animation
-            
-            //Debug.Log("Attacked - " + m_lastAttacked);
+                m_Animator.SetBool("Attacking", true);
+                m_CanAttack = false;
+            Invoke("ResetAttack", 1);
+
         }
+            //Debug.Log("Attacked - " + m_lastAttacked);
+        
         else
         {
             m_lastAttacked += Time.deltaTime;
+            m_Animator.SetBool("Attacking", false);
             //Debug.Log("Did not attack - " + m_lastAttacked);
         }
+    }
+    private void ResetAttack()
+    {
+        m_CanAttack = true;
+        m_Animator.SetBool("Attacking", false);
     }
 }

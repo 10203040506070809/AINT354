@@ -5,8 +5,8 @@ using UnityEngine;
 public class EnemyStats : CharacterStats
 {
 
-    
-    
+
+    private Animator m_Animator;
     /// <summary>
     /// Awake is called when a script is  loaded for the first time.
     /// </summary>
@@ -56,6 +56,6 @@ public class EnemyStats : CharacterStats
         Vector3 pos = gameObject.transform.position;
         pos.y += gameObject.GetComponentInChildren<SkinnedMeshRenderer>().bounds.size.y / 2;
         gameObject.GetComponent<DropItem>().Drop(pos, gameObject);
-        //TODO give experience/gold to the player who killed it
     }
+
 }
