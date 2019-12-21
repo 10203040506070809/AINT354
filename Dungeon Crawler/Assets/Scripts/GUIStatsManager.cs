@@ -17,19 +17,49 @@ public class GUIStatsManager : MonoBehaviour
     /// A CharacterStats  variable denoting the entitites stats class.
     /// </summary>
     private PlayerStats m_charStats = null;
-
+    /// <summary>
+    /// 
+    /// </summary>
     [SerializeField] private Canvas m_StatsScreen;
-
+    /// <summary>
+    /// 
+    /// </summary>
     [SerializeField] private TextMeshProUGUI m_StrengthTxt;
+    /// <summary>
+    /// 
+    /// </summary>
     [SerializeField] private TextMeshProUGUI m_VitalityTxt;
+    /// <summary>
+    /// 
+    /// </summary>
     [SerializeField] private TextMeshProUGUI m_DamageTxt;
+    /// <summary>
+    /// 
+    /// </summary>
     [SerializeField] private TextMeshProUGUI m_ArmourTxt;
+    /// <summary>
+    /// 
+    /// </summary>
     [SerializeField] private TextMeshProUGUI m_AttackSpeedTxt;
+    /// <summary>
+    /// 
+    /// </summary>
     [SerializeField] private TextMeshProUGUI m_goldTxt;
+    /// <summary>
+    /// 
+    /// </summary>
     [SerializeField] private TextMeshProUGUI m_playerLevel;
+    /// <summary>
+    /// 
+    /// </summary>
     [SerializeField] private TextMeshProUGUI m_playerName;
-
+    /// <summary>
+    /// 
+    /// </summary>
     [SerializeField] private Slider m_playerExperience;
+    /// <summary>
+    /// 
+    /// </summary>
     [SerializeField] private TextMeshProUGUI m_playerExperienceTxt;
     // Start is called before the first frame update
     void Start()
@@ -89,6 +119,9 @@ public class GUIStatsManager : MonoBehaviour
         m_playerExperienceTxt.text = "XP: " + m_charStats.m_experience.GetValue().ToString() + " / " + m_charStats.GetExperienceToLevel();
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     void CheckForInput()
     {
         if (Input.GetButtonDown("StatsToggle"))
