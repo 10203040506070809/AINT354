@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -194,5 +195,10 @@ public class CharacterStats : MonoBehaviour
     public int GetGold()
     {
         return m_gold.GetValue();
+    }
+
+    public int GetVitality()
+    {
+        return m_vitality.GetValue();
     }
 }

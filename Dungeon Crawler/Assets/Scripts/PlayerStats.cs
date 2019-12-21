@@ -1,10 +1,13 @@
 ﻿
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class PlayerStats : CharacterStats
 {
     private Animator m_animator;
 
+    private float m_experienceToLevel;
     /// <summary>
     /// A method that is called when the script is loaded.
     /// </summary>
@@ -67,6 +70,18 @@ public class PlayerStats : CharacterStats
         this.gameObject.transform.position = new Vector3(0, 0, 0);
         m_currentHealth = m_maxHealth;
         m_currentInsanity = 0;
+
+        //Send player back to overworld
+        if (Application.CanStreamedLevelBeLoaded("Overworld"))
+        {
+            SceneManager.LoadScene("Overworld");
+        }
+        //Sanity check - Put player back to title screen, I.E first scene in index
+        else
+        {
+            SceneManager.LoadScene(0);
+        }
+
         //TODO on death, give gold/experience to the thing that killed it.
     }
     /// <summary>
@@ -81,9 +96,12 @@ public class PlayerStats : CharacterStats
     /// </summary>
     private void CheckForLevelUp()
     {
-        if ((m_experience.GetValue() / m_level) > 100)
+        m_experienceToLevel = m_level * 100;
+        //if ready for level up
+        if ((m_experience.GetValue() >= m_experienceToLevel))
         {
             m_level++;
+            m_experience.SetValue(0);
             CalculateStats();
             SavePlayerStats();
         }
@@ -101,5 +119,10 @@ public class PlayerStats : CharacterStats
     private void SavePlayerStats()
     {
         SaveSystem.SavePlayer(this);
+    }
+
+    public float GetExperienceToLevel()
+    {
+        return m_experienceToLevel;
     }
 }
