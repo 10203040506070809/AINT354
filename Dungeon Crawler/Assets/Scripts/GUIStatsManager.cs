@@ -30,6 +30,8 @@ public class GUIStatsManager : MonoBehaviour
     void Update()
     {
         UpdateGUI();
+
+        CheckForInput();
     }
     /// <summary>
     /// Updates all GUI elements.
@@ -45,5 +47,15 @@ public class GUIStatsManager : MonoBehaviour
         }
         m_healthSlider.value = m_charStats.m_currentHealth;
         m_corruptionSlider.value = m_charStats.m_currentInsanity;
+    }
+
+    void CheckForInput()
+    {
+        if (Input.GetButtonDown("StatsToggle"))
+        {
+            //Debug test
+            Debug.Log("Stats screen toggled");
+            //Toggle screen move in or out
+        }
     }
 }
