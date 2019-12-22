@@ -42,7 +42,7 @@ public class PlayerMovement : CharacterMovement
     /// Start is called before the first frame update
     /// </summary>
     public void Start()
-    {      
+    {
         m_myStats = this.GetComponent<CharacterStats>();
         m_animator = this.GetComponent<Animator>();
         m_speed = m_myStats.GetMovementSpeed();
@@ -65,21 +65,44 @@ public class PlayerMovement : CharacterMovement
     {
         m_inputX = Input.GetAxis("Horizontal");
         m_inputZ = Input.GetAxis("Vertical");
-        if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
-        {
-            m_animator.SetBool("isWalking", true);
-            m_moveVector = new Vector3(m_inputX, 0, m_inputZ);
-           
-            m_moveVector.Normalize();
+        //if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
+        //{
+        //    m_animator.SetBool("isWalking", true);
+        //    m_moveVector = new Vector3(m_inputX, 0, m_inputZ);
 
-            m_moveVector /= 5;
+        //    m_moveVector.Normalize();
 
-            m_rigidBody.MovePosition(transform.position + m_moveVector);                        
-        }
-        else
+        //    m_moveVector /= 5;
+
+        //    m_rigidBody.MovePosition(transform.position + m_moveVector);                        
+        //}
+        //else
+        //{
+        //    m_animator.SetBool("isWalking", false);
+        //}
+
+        bool isAttacking = m_animator.GetBool("isAttacking");
+
+        if (isAttacking == false)
         {
-            m_animator.SetBool("isWalking", false);
+            if ((Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0) && isAttacking == false)
+            {
+                Vector3 movement = new Vector3(m_inputX, 0, m_inputZ);
+
+                transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(movement), 0.5f);
+
+                //Do movement
+
+                transform.Translate(movement * m_speed * Time.deltaTime, Space.World);
+
+                m_animator.SetBool("isWalking", true);
+            }
+            else
+            {
+                m_animator.SetBool("isWalking", false);
+            }
         }
+    
     }
 
     /// <summary>
@@ -87,16 +110,17 @@ public class PlayerMovement : CharacterMovement
     /// </summary>
     private void Rotation()
     {
-            var groundPlane = new Plane(Vector3.up, -transform.position.y);
-            var mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-            float hitDistance;
+        //var groundPlane = new Plane(Vector3.up, -transform.position.y);
+        //var mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+        //float hitDistance;
 
-            if (groundPlane.Raycast(mouseRay, out hitDistance))
-            {
-                Vector3 lookAtPosition = mouseRay.GetPoint(hitDistance);
-                transform.LookAt(lookAtPosition, Vector3.up);
-            }
-       
+        //if (groundPlane.Raycast(mouseRay, out hitDistance))
+        //{
+        //    Vector3 lookAtPosition = mouseRay.GetPoint(hitDistance);
+        //    transform.LookAt(lookAtPosition, Vector3.up);
+        //}
+
     }
+
 
 }

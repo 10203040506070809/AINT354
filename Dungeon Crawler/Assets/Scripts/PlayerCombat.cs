@@ -20,6 +20,8 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField] private ParticleSystem m_bloodSystem = null;
     private CharacterStats m_enemyStats;
     private ItemBreak m_itemBreak;
+
+    public bool m_isAttacking = false;
     /// <summary>
     /// 
     /// </summary>
@@ -38,7 +40,6 @@ public class PlayerCombat : MonoBehaviour
         ///Checks if the player is currently attacking, so the player cant just walk into an enemy
         if (m_playerAnimator.GetBool("isAttacking") == true)
         {
- 
             ///Checks if the gameobject is in fact an enemy
             if (other.tag == "Enemy")
             {
@@ -93,7 +94,7 @@ public class PlayerCombat : MonoBehaviour
         //Main attack - Slash
         if (Input.GetButton("Fire1"))
         {
-            if (m_playerAnimator.GetBool("isAttacking") == false)
+           // if (m_playerAnimator.GetBool("isAttacking") == false)
             {
                 m_playerAnimator.SetBool("isAttacking", true);
                 Invoke("AttackCooldown", 1f);
@@ -103,7 +104,7 @@ public class PlayerCombat : MonoBehaviour
         //Alt attack - Stab
         if (Input.GetButton("Fire2"))
         {
-            if (m_playerAnimator.GetBool("isAttacking") == false)
+          //  if (m_playerAnimator.GetBool("isAttacking") == false)
             {
                 m_playerAnimator.SetBool("isAttacking", true);
                 Invoke("AttackCooldown", 0.5f);
@@ -117,4 +118,5 @@ public class PlayerCombat : MonoBehaviour
     {
         m_playerAnimator.SetBool("isAttacking", false);
     }
+
 }
