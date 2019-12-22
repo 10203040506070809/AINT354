@@ -48,8 +48,8 @@ public class PlayerCombat : MonoBehaviour
                 {
                     m_enemyStats = other.gameObject.GetComponent<EnemyStats>();
 
-                    m_enemyStats.TakeDamage((int)m_myStats.GetDamage() + (int)m_myStats.m_currentInsanity);
-                    
+                    // m_enemyStats.TakeDamage((int)m_myStats.GetDamage() + (int)m_myStats.m_currentInsanity);
+                    other.gameObject.GetComponent<Rigidbody>().AddForce((transform.forward) * 500);
                     ///Checks if the enemy just died
                   if (m_enemyStats.m_currentHealth <= 0)
                     {
