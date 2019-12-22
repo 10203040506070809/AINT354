@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerCombat : MonoBehaviour
 {
@@ -25,20 +23,22 @@ public class PlayerCombat : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-     private void Start()
+     private void Update()
     {
-       
+        Attack();
     }
 
     /// <summary>
     /// If the object connects with a gameobject, activates this
     /// </summary>
     /// <param name="other"></param>
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
+       
         ///Checks if the player is currently attacking, so the player cant just walk into an enemy
         if (m_playerAnimator.GetBool("isAttacking") == true)
         {
+ 
             ///Checks if the gameobject is in fact an enemy
             if (other.tag == "Enemy")
             {
@@ -64,7 +64,7 @@ public class PlayerCombat : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("Enemy does not have an enemystats script");
+                    Debug.LogWarning("Enemy does not have an enemystats script");
                 }
             }
             /// Checks if the gameobject is a breakable object
@@ -79,10 +79,42 @@ public class PlayerCombat : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("Object does not have an ItemBreak script");
+                    Debug.LogWarning("Object does not have an ItemBreak script");
                 }
             }
         }
     }
 
+    /// <summary>
+    /// Allows the player to attack by pressing the Left Mouse Button
+    /// </summary>
+    private void Attack()
+    {
+        //Main attack - Slash
+        if (Input.GetButton("Fire1"))
+        {
+            if (m_playerAnimator.GetBool("isAttacking") == false)
+            {
+                m_playerAnimator.SetBool("isAttacking", true);
+                Invoke("AttackCooldown", 1f);
+            }
+        }
+
+        //Alt attack - Stab
+        if (Input.GetButton("Fire2"))
+        {
+            if (m_playerAnimator.GetBool("isAttacking") == false)
+            {
+                m_playerAnimator.SetBool("isAttacking", true);
+                Invoke("AttackCooldown", 0.5f);
+            }
+        }
+    }
+    /// <summary>
+    /// After a set delay, re-enable attack
+    /// </summary>
+    private void AttackCooldown()
+    {
+        m_playerAnimator.SetBool("isAttacking", false);
+    }
 }

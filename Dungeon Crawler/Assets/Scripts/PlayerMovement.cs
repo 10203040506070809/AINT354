@@ -57,7 +57,6 @@ public class PlayerMovement : CharacterMovement
     {
         Move();
         Rotation();
-        Attack();
     }
     /// <summary>
     /// Moves the player based on input.
@@ -84,52 +83,20 @@ public class PlayerMovement : CharacterMovement
     }
 
     /// <summary>
-    /// Allows the player to attack by pressing the Left Mouse Button
-    /// </summary>
-    private void Attack()
-    {
-        //Main attack - Slash
-        if (Input.GetButton("Fire1"))
-        {
-            if (m_animator.GetBool("isAttacking") == false)
-            {
-                m_animator.SetBool("isAttacking", true);
-                Invoke("AttackCooldown", 1f);
-            }
-        }
-
-        //Alt attack - Stab
-        if (Input.GetButton("Fire2")){
-            if (m_animator.GetBool("isAttacking") == false)
-            {
-                m_animator.SetBool("isAttacking", true);
-                Invoke("AttackCooldown", 0.5f);
-            }
-        }
-    }
-    /// <summary>
-    /// After a set delay, re-enable attack
-    /// </summary>
-    private void AttackCooldown()
-    {
-        m_animator.SetBool("isAttacking", false);
-    }
-
-    /// <summary>
     /// Rotates the player
     /// </summary>
     private void Rotation()
     {
-        var groundPlane = new Plane(Vector3.up, -transform.position.y);
-        var mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-        float hitDistance;
+            var groundPlane = new Plane(Vector3.up, -transform.position.y);
+            var mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+            float hitDistance;
 
-        if (groundPlane.Raycast(mouseRay, out hitDistance))
-        {
-            Vector3 lookAtPosition = mouseRay.GetPoint(hitDistance);
-            transform.LookAt(lookAtPosition, Vector3.up);
-        }
+            if (groundPlane.Raycast(mouseRay, out hitDistance))
+            {
+                Vector3 lookAtPosition = mouseRay.GetPoint(hitDistance);
+                transform.LookAt(lookAtPosition, Vector3.up);
+            }
+       
     }
-
 
 }
