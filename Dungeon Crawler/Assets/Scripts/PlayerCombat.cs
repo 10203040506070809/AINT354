@@ -20,12 +20,18 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField] private ParticleSystem m_bloodSystem = null;
     private CharacterStats m_enemyStats;
     private ItemBreak m_itemBreak;
-
+    private Collider m_collider;
     public bool m_isAttacking = false;
+
+    private void Start()
+    {
+        m_collider = m_weapon.GetComponent<Collider>();
+        m_collider.enabled = false;
+    }
     /// <summary>
     /// 
     /// </summary>
-     private void Update()
+    private void Update()
     {
         Attack();
     }
@@ -34,7 +40,7 @@ public class PlayerCombat : MonoBehaviour
     /// If the object connects with a gameobject, activates this
     /// </summary>
     /// <param name="other"></param>
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
        
         ///Checks if the player is currently attacking, so the player cant just walk into an enemy
@@ -48,8 +54,8 @@ public class PlayerCombat : MonoBehaviour
                 {
                     m_enemyStats = other.gameObject.GetComponent<EnemyStats>();
 
-                    // m_enemyStats.TakeDamage((int)m_myStats.GetDamage() + (int)m_myStats.m_currentInsanity);
-                    other.gameObject.GetComponent<Rigidbody>().AddForce((transform.forward) * 500);
+                     m_enemyStats.TakeDamage((int)m_myStats.GetDamage() + (int)m_myStats.m_currentInsanity);
+                    //other.gameObject.GetComponent<Rigidbody>().AddForce((transform.forward) * 500);
                     ///Checks if the enemy just died
                   if (m_enemyStats.m_currentHealth <= 0)
                     {
@@ -92,20 +98,22 @@ public class PlayerCombat : MonoBehaviour
     private void Attack()
     {
         //Main attack - Slash
-        if (Input.GetButton("Fire1"))
+        if (Input.GetButtonUp("Fire1"))
         {
-           // if (m_playerAnimator.GetBool("isAttacking") == false)
+            if (m_playerAnimator.GetBool("isAttacking") == false)
             {
+                m_collider.enabled = true;
                 m_playerAnimator.SetBool("isAttacking", true);
                 Invoke("AttackCooldown", 1f);
             }
         }
 
         //Alt attack - Stab
-        if (Input.GetButton("Fire2"))
+        if (Input.GetButtonUp("Fire2"))
         {
-          //  if (m_playerAnimator.GetBool("isAttacking") == false)
+            if (m_playerAnimator.GetBool("isAttacking") == false)
             {
+                m_collider.enabled = true;
                 m_playerAnimator.SetBool("isAttacking", true);
                 Invoke("AttackCooldown", 0.5f);
             }
@@ -117,6 +125,7 @@ public class PlayerCombat : MonoBehaviour
     private void AttackCooldown()
     {
         m_playerAnimator.SetBool("isAttacking", false);
+        m_collider.enabled = false;
     }
 
 }

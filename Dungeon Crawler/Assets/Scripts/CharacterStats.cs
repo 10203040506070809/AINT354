@@ -90,7 +90,7 @@ public class CharacterStats : MonoBehaviour
 
         m_currentHealth -= damage;
         Debug.Log(transform.name + " takes " + damage + "damage." + "Current health is: " + m_currentHealth );
-
+        GetComponent<Rigidbody>().AddForce((transform.forward) * 500);
         if (m_currentHealth <= 0)
         {
             Die();

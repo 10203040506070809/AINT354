@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: cae247fcfbafcdc448fc02727ad98f37
+guid: 12c1ea54b18ec5f40a98b6cc66fe19f1
 ModelImporter:
   serializedVersion: 26
   internalIDToNameTable:
   - first:
       74: -5662057800245447957
-    second: Standing Idle
+    second: Standing Walk Forward
   - first:
       74: -2889085019725202202
     second: Action.001
@@ -44,7 +44,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Standing Idle
+      name: Standing Walk Forward
       takeName: SkeletAction
       internalID: 0
       firstFrame: 0
@@ -106,7 +106,7 @@ ModelImporter:
       takeName: mixamo.com
       internalID: 0
       firstFrame: 0
-      lastFrame: 55
+      lastFrame: 40
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
