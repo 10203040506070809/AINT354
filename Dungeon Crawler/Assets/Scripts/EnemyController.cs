@@ -74,6 +74,7 @@ public class EnemyController : CharacterMovement
                 ///Do attack
                 Attack();
                 m_Animator.SetBool("Walking", false);
+                FaceTarget();
             }
             ///This is reset when the player leaves stopping distance so the enemy instantly attacks whenever the player moves. This may not be required when actual combat is implemented due to knockback, but is a reasonable failsafe.
             else
@@ -87,6 +88,14 @@ public class EnemyController : CharacterMovement
         {
             m_Animator.SetBool("Walking", false);
         }
+    }
+
+
+    void FaceTarget()
+    {
+        Vector3 direction = (m_target.transform.position - transform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
     }
     /// <summary>
     /// Draws a wireframe sphere  around the character within the editor to easily see its look radius.

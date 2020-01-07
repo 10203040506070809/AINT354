@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerCombat : MonoBehaviour
 {
@@ -22,12 +20,20 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField] private ParticleSystem m_bloodSystem = null;
     private CharacterStats m_enemyStats;
     private ItemBreak m_itemBreak;
+    private Collider m_collider;
+    public bool m_isAttacking = false;
+
+    private void Start()
+    {
+        m_collider = m_weapon.GetComponent<Collider>();
+        m_collider.enabled = false;
+    }
     /// <summary>
     /// 
     /// </summary>
-     private void Start()
+    private void Update()
     {
-       
+        Attack();
     }
 
     /// <summary>
@@ -36,6 +42,7 @@ public class PlayerCombat : MonoBehaviour
     /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
+       
         ///Checks if the player is currently attacking, so the player cant just walk into an enemy
         if (m_playerAnimator.GetBool("isAttacking") == true)
         {
@@ -47,8 +54,8 @@ public class PlayerCombat : MonoBehaviour
                 {
                     m_enemyStats = other.gameObject.GetComponent<EnemyStats>();
 
-                    m_enemyStats.TakeDamage((int)m_myStats.GetDamage() + (int)m_myStats.m_currentInsanity);
-                    
+                     m_enemyStats.TakeDamage((int)m_myStats.GetDamage() + (int)m_myStats.m_currentInsanity);
+                    //other.gameObject.GetComponent<Rigidbody>().AddForce((transform.forward) * 500);
                     ///Checks if the enemy just died
                   if (m_enemyStats.m_currentHealth <= 0)
                     {
@@ -64,7 +71,7 @@ public class PlayerCombat : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("Enemy does not have an enemystats script");
+                    Debug.LogWarning("Enemy does not have an enemystats script");
                 }
             }
             /// Checks if the gameobject is a breakable object
@@ -79,10 +86,46 @@ public class PlayerCombat : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("Object does not have an ItemBreak script");
+                    Debug.LogWarning("Object does not have an ItemBreak script");
                 }
             }
         }
+    }
+
+    /// <summary>
+    /// Allows the player to attack by pressing the Left Mouse Button
+    /// </summary>
+    private void Attack()
+    {
+        //Main attack - Slash
+        if (Input.GetButtonUp("Fire1"))
+        {
+            if (m_playerAnimator.GetBool("isAttacking") == false)
+            {
+                m_collider.enabled = true;
+                m_playerAnimator.SetBool("isAttacking", true);
+                Invoke("AttackCooldown", 1f);
+            }
+        }
+
+        //Alt attack - Stab
+        if (Input.GetButtonUp("Fire2"))
+        {
+            if (m_playerAnimator.GetBool("isAttacking") == false)
+            {
+                m_collider.enabled = true;
+                m_playerAnimator.SetBool("isAttacking", true);
+                Invoke("AttackCooldown", 0.5f);
+            }
+        }
+    }
+    /// <summary>
+    /// After a set delay, re-enable attack
+    /// </summary>
+    private void AttackCooldown()
+    {
+        m_playerAnimator.SetBool("isAttacking", false);
+        m_collider.enabled = false;
     }
 
 }

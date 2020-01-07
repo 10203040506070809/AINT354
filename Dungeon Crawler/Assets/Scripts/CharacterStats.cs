@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -89,7 +90,7 @@ public class CharacterStats : MonoBehaviour
 
         m_currentHealth -= damage;
         Debug.Log(transform.name + " takes " + damage + "damage." + "Current health is: " + m_currentHealth );
-
+        GetComponent<Rigidbody>().AddForce((transform.forward) * 500);
         if (m_currentHealth <= 0)
         {
             Die();
@@ -194,5 +195,10 @@ public class CharacterStats : MonoBehaviour
     public int GetGold()
     {
         return m_gold.GetValue();
+    }
+
+    public int GetVitality()
+    {
+        return m_vitality.GetValue();
     }
 }
