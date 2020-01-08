@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class PlayerStats : CharacterStats
 {
     private Animator m_animator;
-
+    [SerializeField] private AudioSource m_sounds;
     private float m_experienceToLevel;
     /// <summary>
     /// A method that is called when the script is loaded.
@@ -35,6 +35,7 @@ public class PlayerStats : CharacterStats
 
         //Play audio clip
         Debug.Log("OOF");
+        m_sounds.Play();
         m_animator.SetBool("isHit", true);
         Invoke("HitReset", 0.5f);
         

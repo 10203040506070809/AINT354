@@ -34,13 +34,13 @@ public class EnemyStats : CharacterStats
         {
             m_movementSpeed.SetValue(10 + m_level);
             m_vitality.SetValue(10 + m_level);
-            m_strength.SetValue(10 + m_level);
+            m_strength.SetValue(5 + m_level);
 
-            m_maxHealth = m_vitality.GetValue() * (5);
+            m_maxHealth = m_vitality.GetValue() * (3);
 
             m_damage.SetValue(m_strength.GetValue() * (2));
 
-            m_currentInsanity = 10;
+            m_currentInsanity = 5;
 
             m_gold.SetValue(m_level);
             m_experience.SetValue(m_level);

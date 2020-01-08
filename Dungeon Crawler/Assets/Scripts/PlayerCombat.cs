@@ -25,10 +25,13 @@ public class PlayerCombat : MonoBehaviour
     private Collider m_collider;
     public bool m_isAttacking = false;
 
+    [SerializeField] private List<AudioSource> m_Sounds;
     private void Start()
     {
         m_collider = m_weapon.GetComponent<Collider>();
         m_collider.enabled = false;
+        
+    
     }
     /// <summary>
     /// 
@@ -55,7 +58,7 @@ public class PlayerCombat : MonoBehaviour
                 if (other.gameObject.GetComponent<EnemyStats>() != null)
                 {
                     m_enemyStats = other.gameObject.GetComponent<EnemyStats>();
-
+                    m_Sounds[1].Play();
                      m_enemyStats.TakeDamage((int)m_myStats.GetDamage() + (int)m_myStats.m_currentInsanity);
                     //other.gameObject.GetComponent<Rigidbody>().AddForce((transform.forward) * 500);
                     ///Checks if the enemy just died
@@ -106,6 +109,7 @@ public class PlayerCombat : MonoBehaviour
             {
                 m_collider.enabled = true;
                 m_playerAnimator.SetBool("Attack1", true);
+                m_Sounds[0].Play();
                 StartCoroutine(AttackCooldown("Attack1", 1f));
             }
         }

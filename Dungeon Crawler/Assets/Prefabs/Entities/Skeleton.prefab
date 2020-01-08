@@ -215,7 +215,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edbeeedce40cfee4fa2920ed1c70d8f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_lookRadius: 25
+  m_lookRadius: 17
   m_target: {fileID: 4859750551911778040, guid: 22eda2f43104f4246bcdbc98d4c5ed7d,
     type: 3}
 --- !u!195 &-5637944704707906821

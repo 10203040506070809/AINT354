@@ -29,6 +29,7 @@ public class VideoManager : MonoBehaviour
         int currentResIndex = 0;
         for (int i = 0; i < m_resolutions.Length; i++)
         {
+           
             string option = m_resolutions[i].width + " x " + m_resolutions[i].height;
             options.Add(option);
             if (m_resolutions[i].width == Screen.currentResolution.width && m_resolutions[i].height == Screen.currentResolution.height)
@@ -50,6 +51,6 @@ public class VideoManager : MonoBehaviour
     public void SetResolution(int index)
     {
         Resolution res = m_resolutions[index];
-        Screen.SetResolution(res.width, res.height, true);
+        Screen.SetResolution(res.width, res.height, FullScreenMode.FullScreenWindow);
     }
 }
