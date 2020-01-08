@@ -20,7 +20,7 @@ public class GUIStatsManager : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    [SerializeField] private Canvas m_StatsScreen;
+    [SerializeField] private GameObject m_StatsScreen;
     /// <summary>
     /// 
     /// </summary>
@@ -65,7 +65,7 @@ public class GUIStatsManager : MonoBehaviour
     void Start()
     {
         //Sanity check - Make sure stats screen is disabled.
-        m_StatsScreen.enabled = false;
+        m_StatsScreen.SetActive(false);
 
         //Sanity check - Make sure player name is checked by default
         m_playerName.text = "Player Name";
@@ -129,15 +129,15 @@ public class GUIStatsManager : MonoBehaviour
             //Debug test
             Debug.Log("Stats screen toggled");
             //Toggle screen 
-            if (m_StatsScreen.enabled == false)
+            if (!m_StatsScreen.activeInHierarchy)
             {
                 Time.timeScale = 0.0f;
-                m_StatsScreen.enabled = true;
+                m_StatsScreen.SetActive(true);
             }
             else
             {
                 Time.timeScale = 1.0f;
-                m_StatsScreen.enabled = false;
+                m_StatsScreen.SetActive(false);
             }
         }
     }

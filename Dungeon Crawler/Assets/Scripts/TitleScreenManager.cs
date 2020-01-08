@@ -41,6 +41,7 @@ public class TitleScreenManager : MonoBehaviour
         ///Quits application if run in the standalone version, otherwise debugs application quit
         Application.Quit();
 #if UNITY_EDITOR
+        Debug.Log(Application.persistentDataPath);
         Debug.Log("Application closed.");
 #endif
     }
@@ -50,12 +51,10 @@ public class TitleScreenManager : MonoBehaviour
     public void OnNewGamePress()
     {
         ///Open new scene, discard all playerprefs progress
-
-        PlayerPrefs.DeleteAll();
-        Debug.Log("PlayerPrefs deleted");
+      
+        SaveSystem.DeletePlayer();
         SceneManager.LoadScene("Overworld");
         
-        Debug.Log("New Game Selected");
     }
     /// <summary>
     /// Continues the game on press and loads the Overworld scene.
@@ -64,7 +63,7 @@ public class TitleScreenManager : MonoBehaviour
     {
         ///Open new scene, keep all playerprefs progress
         SceneManager.LoadScene("Overworld");
-        Debug.Log("Continue Game Selected");
+
     }
     /// <summary>
     /// Moves the camera to the options canvas.
@@ -100,8 +99,6 @@ public class TitleScreenManager : MonoBehaviour
     /// <returns></returns>
     public IEnumerator MoveTo()
     {
-        Debug.Log(m_cam.transform.position.y);
-        Debug.Log(m_pos.y);
         float baseSpeed = m_speed;
         m_speed = m_speed * System.Math.Abs(m_cam.transform.position.y - m_pos.y) / 250;
         while(m_cam.transform.position != m_pos)

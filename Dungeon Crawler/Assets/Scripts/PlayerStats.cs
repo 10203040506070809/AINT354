@@ -96,10 +96,12 @@ public class PlayerStats : CharacterStats
     /// </summary>
     private void CheckForLevelUp()
     {
+        
         m_experienceToLevel = m_level * 100;
         //if ready for level up
         if ((m_experience.GetValue() >= m_experienceToLevel))
         {
+            Debug.Log("Levelled up");
             m_level++;
             m_experience.SetValue(0);
             CalculateStats();

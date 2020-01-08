@@ -13,7 +13,14 @@ public class PauseManager : MonoBehaviour
     /// A reference to the pause menu gameobject.
     /// </summary>
     [SerializeField] private GameObject m_pauseMenu = null;
-
+    /// <summary>
+    /// A reference to the controls menu gameobject.
+    /// </summary>
+    [SerializeField] private GameObject m_ControlsMenu = null;
+    /// <summary>
+    /// A reference to the options menu gameobject.
+    /// </summary>
+    [SerializeField] private GameObject m_OptionsMenu = null;
     /// <summary>
     /// Occurs before the first update loop.
     /// </summary>
@@ -21,6 +28,8 @@ public class PauseManager : MonoBehaviour
     {
         m_isPaused = false;
         m_pauseMenu.SetActive(false);
+        m_ControlsMenu.SetActive(false);
+        m_OptionsMenu.SetActive(false);
     }
     /// <summary>
     /// Checks for pause menu input, opens or closes pause menu and pauses the game if its found.
@@ -43,15 +52,15 @@ public class PauseManager : MonoBehaviour
                 Time.timeScale = 0f;
                 m_isPaused = true;
                 m_pauseMenu.SetActive(true);
+                m_ControlsMenu.SetActive(false);
+                m_OptionsMenu.SetActive(false);
             }
         }
         else
         {
             if (Input.GetButtonDown("Pause"))
             {
-                Time.timeScale = 1f;
-                m_isPaused = false;
-                m_pauseMenu.SetActive(false);
+                Resume();
             }
         }
     }
@@ -64,7 +73,8 @@ public class PauseManager : MonoBehaviour
         Time.timeScale = 1f;
         m_isPaused = false;
         m_pauseMenu.SetActive(false);
-        
+        m_ControlsMenu.SetActive(false);
+        m_OptionsMenu.SetActive(false);
     }
     
     /// <summary>
@@ -76,5 +86,33 @@ public class PauseManager : MonoBehaviour
 #if UNITY_EDITOR
         Debug.Log("Application quit.");
 #endif
+    }
+    /// <summary>
+    /// Opens the help menu.
+    /// </summary>
+    public void Help()
+    {
+        if (m_ControlsMenu.activeInHierarchy)
+        {
+            m_ControlsMenu.SetActive(false);
+        }
+        else
+        {
+            m_ControlsMenu.SetActive(true);
+        }
+    }
+    /// <summary>
+    /// Opens the option menu.
+    /// </summary>
+    public void Options()
+    {
+        if (m_OptionsMenu.activeInHierarchy)
+        {
+            m_OptionsMenu.SetActive(false);
+        }
+        else
+        {
+            m_OptionsMenu.SetActive(true);
+        }
     }
 }

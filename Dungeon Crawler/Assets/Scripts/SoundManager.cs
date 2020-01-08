@@ -42,8 +42,6 @@ public class SoundManager : MonoBehaviour
         {
             m_globalMute.isOn = false;
         }
-
-        Debug.Log(PlayerPrefs.GetFloat("Ambient_Sound"));
     }
     /// <summary>
     /// Occurs every frame, checks for sound updates

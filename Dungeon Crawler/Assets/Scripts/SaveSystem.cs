@@ -65,6 +65,20 @@ public class SaveSystem
             return null;
         }
     }
+
+    /// <summary>
+    /// Saves playerStats to a binary file, player.stats.
+    /// </summary>
+    /// <param name="playerStats"></param>
+    public static void DeletePlayer()
+    {
+        string path = Application.persistentDataPath;
+        string pathHotBar = path + "/player.hotbar";
+        string pathStats = path + "/player.stats";
+
+        File.Delete(pathHotBar);
+        File.Delete(pathStats);
+    }
     /// <summary>
     /// Loads the player hotbar.
     /// </summary>

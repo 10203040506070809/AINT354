@@ -14,15 +14,15 @@ public class TabGroup : MonoBehaviour
     /// <summary>
     /// The idle sprite of the button.
     /// </summary>
-    public Sprite m_tabIdle;
+    public Color m_tabIdle;
     /// <summary>
     /// The hover sprite of a button.
     /// </summary>
-    public Sprite m_tabHover;
+    public Color m_tabHover;
     /// <summary>
     /// The active sprite of a button.
     /// </summary>
-    public Sprite m_tabActive;
+    public Color m_tabActive;
     /// <summary>
     /// The currently selected tab.
     /// </summary>
@@ -50,7 +50,7 @@ public class TabGroup : MonoBehaviour
     public void OnTabEnter(TabButton button)
     {
         ResetTabs();
-        button.m_background.sprite = m_tabHover;
+        button.m_background.color = m_tabHover;
     }
     /// <summary>
     /// Resets all tabs when a tab is exited.
@@ -68,7 +68,7 @@ public class TabGroup : MonoBehaviour
     {
         m_selectedTab = button;
         ResetTabs();
-        button.m_background.sprite = m_tabActive;
+        button.m_background.color = m_tabActive;
         int index = button.transform.GetSiblingIndex();
         for (int i = 0; i < m_objectsToSwap.Count; i++)
         {
@@ -91,7 +91,7 @@ public class TabGroup : MonoBehaviour
         {
             if (m_selectedTab != null && button == m_selectedTab)
             { continue; }
-            button.m_background.sprite = m_tabIdle;
+            button.m_background.color = m_tabIdle;
         }
     }
 }

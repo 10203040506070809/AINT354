@@ -63,46 +63,37 @@ public class PlayerMovement : CharacterMovement
     /// </summary>
     public override void Move()
     {
+        bool isAttacking;
+
+        if (m_animator.GetBool("Attack1") == true || m_animator.GetBool("Attack2") == true)
+        {
+            isAttacking = true;
+
+        }
+        else
+        {
+            isAttacking = false;
+        }
+
+
         m_inputX = Input.GetAxis("Horizontal");
         m_inputZ = Input.GetAxis("Vertical");
-        //if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
-        //{
-        //    m_animator.SetBool("isWalking", true);
-        //    m_moveVector = new Vector3(m_inputX, 0, m_inputZ);
-
-        //    m_moveVector.Normalize();
-
-        //    m_moveVector /= 5;
-
-        //    m_rigidBody.MovePosition(transform.position + m_moveVector);                        
-        //}
-        //else
-        //{
-        //    m_animator.SetBool("isWalking", false);
-        //}
-
-        bool isAttacking = m_animator.GetBool("isAttacking");
-
-        if (isAttacking == false)
+        if ((Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0) && isAttacking == false)
         {
-            if ((Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0) && isAttacking == false)
-            {
-                Vector3 movement = new Vector3(m_inputX, 0, m_inputZ);
+            m_animator.SetBool("isWalking", true);
+            m_moveVector = new Vector3(m_inputX, 0, m_inputZ);
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(m_moveVector), 0.5f);
+            m_moveVector.Normalize();
 
-                transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(movement), 0.5f);
+            m_moveVector /= 5;
 
-                //Do movement
-
-                transform.Translate(movement * m_speed * Time.deltaTime, Space.World);
-
-                m_animator.SetBool("isWalking", true);
-            }
-            else
-            {
-                m_animator.SetBool("isWalking", false);
-            }
+            m_rigidBody.MovePosition(transform.position + m_moveVector);
         }
-    
+        else
+        {
+            m_animator.SetBool("isWalking", false);
+        }
+
     }
 
     /// <summary>

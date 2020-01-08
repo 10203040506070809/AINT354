@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class PlayerCombat : MonoBehaviour
 {
@@ -44,7 +46,7 @@ public class PlayerCombat : MonoBehaviour
     {
        
         ///Checks if the player is currently attacking, so the player cant just walk into an enemy
-        if (m_playerAnimator.GetBool("isAttacking") == true)
+        if (m_playerAnimator.GetBool("Attack2") == true || m_playerAnimator.GetBool("Attack1") == true)
         {
             ///Checks if the gameobject is in fact an enemy
             if (other.tag == "Enemy")
@@ -100,31 +102,33 @@ public class PlayerCombat : MonoBehaviour
         //Main attack - Slash
         if (Input.GetButtonUp("Fire1"))
         {
-            if (m_playerAnimator.GetBool("isAttacking") == false)
+            if (m_playerAnimator.GetBool("Attack1") == false && m_playerAnimator.GetBool("Attack2") == false)
             {
                 m_collider.enabled = true;
-                m_playerAnimator.SetBool("isAttacking", true);
-                Invoke("AttackCooldown", 1f);
+                m_playerAnimator.SetBool("Attack1", true);
+                StartCoroutine(AttackCooldown("Attack1", 1f));
             }
         }
 
         //Alt attack - Stab
         if (Input.GetButtonUp("Fire2"))
         {
-            if (m_playerAnimator.GetBool("isAttacking") == false)
+            if (m_playerAnimator.GetBool("Attack1") == false && m_playerAnimator.GetBool("Attack2") == false)
             {
                 m_collider.enabled = true;
-                m_playerAnimator.SetBool("isAttacking", true);
-                Invoke("AttackCooldown", 0.5f);
+                m_playerAnimator.SetBool("Attack2", true);
+                StartCoroutine(AttackCooldown("Attack2", 0.5f));
             }
         }
     }
     /// <summary>
     /// After a set delay, re-enable attack
     /// </summary>
-    private void AttackCooldown()
+    IEnumerator AttackCooldown(string animName, float time)
     {
-        m_playerAnimator.SetBool("isAttacking", false);
+
+        yield return new WaitForSeconds(time);
+        m_playerAnimator.SetBool(animName, false);
         m_collider.enabled = false;
     }
 
