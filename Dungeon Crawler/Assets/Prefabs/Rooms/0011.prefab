@@ -420,7 +420,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_enemy: {fileID: 815583112389924485, guid: 05141ca0f6783bb4f9a12595063a822a, type: 3}
-  m_ChanceOfEnemySpawn: 100
+  m_ChanceOfEnemySpawn: 53.8
   m_ChanceOfBarrelSpawn: 78
   m_ChanceOfSecondBarrelSpawn: 54.8
   m_ChanceOfThirdBarrelSpawn: 30.5
@@ -593,16 +593,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -2416733968201007103, guid: 51d468443528b434fb7591314d90e741,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: d38c067da370cd04abc9f0a6420a8dd8, type: 2}
     - target: {fileID: -2745567992595731601, guid: 51d468443528b434fb7591314d90e741,
         type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -2416733968201007103, guid: 51d468443528b434fb7591314d90e741,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: d38c067da370cd04abc9f0a6420a8dd8, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 51d468443528b434fb7591314d90e741, type: 3}
 --- !u!4 &5006512736845422912 stripped
@@ -618,11 +618,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1769976831509093584}
     m_Modifications:
-    - target: {fileID: 1210354586634912090, guid: 2aef44b2caf801548b41f4d7398654a2,
-        type: 3}
-      propertyPath: m_Name
-      value: Corner V2
-      objectReference: {fileID: 0}
     - target: {fileID: 2780782337950315337, guid: 2aef44b2caf801548b41f4d7398654a2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -682,6 +677,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.y
       value: 999.99976
+      objectReference: {fileID: 0}
+    - target: {fileID: 1210354586634912090, guid: 2aef44b2caf801548b41f4d7398654a2,
+        type: 3}
+      propertyPath: m_Name
+      value: Corner V2
       objectReference: {fileID: 0}
     - target: {fileID: 644257849399162246, guid: 2aef44b2caf801548b41f4d7398654a2,
         type: 3}

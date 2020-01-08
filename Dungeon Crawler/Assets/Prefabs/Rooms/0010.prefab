@@ -420,7 +420,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_enemy: {fileID: 815583112389924485, guid: 05141ca0f6783bb4f9a12595063a822a, type: 3}
-  m_ChanceOfEnemySpawn: 100
+  m_ChanceOfEnemySpawn: 53.8
   m_ChanceOfBarrelSpawn: 78
   m_ChanceOfSecondBarrelSpawn: 54.8
   m_ChanceOfThirdBarrelSpawn: 30.5
@@ -593,16 +593,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -2416733968201007103, guid: 51d468443528b434fb7591314d90e741,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: d38c067da370cd04abc9f0a6420a8dd8, type: 2}
     - target: {fileID: -2745567992595731601, guid: 51d468443528b434fb7591314d90e741,
         type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -2416733968201007103, guid: 51d468443528b434fb7591314d90e741,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: d38c067da370cd04abc9f0a6420a8dd8, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 51d468443528b434fb7591314d90e741, type: 3}
 --- !u!4 &5006512736728231054 stripped
@@ -618,11 +618,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2878403868938803669}
     m_Modifications:
-    - target: {fileID: 7449463796214174853, guid: 4954b66f8d12b75468f7a29a543641c7,
-        type: 3}
-      propertyPath: m_Name
-      value: Dead End V2
-      objectReference: {fileID: 0}
     - target: {fileID: 5853155602731918998, guid: 4954b66f8d12b75468f7a29a543641c7,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -682,6 +677,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.y
       value: 999.99976
+      objectReference: {fileID: 0}
+    - target: {fileID: 7449463796214174853, guid: 4954b66f8d12b75468f7a29a543641c7,
+        type: 3}
+      propertyPath: m_Name
+      value: Dead End V2
       objectReference: {fileID: 0}
     - target: {fileID: 9177520023536181337, guid: 4954b66f8d12b75468f7a29a543641c7,
         type: 3}

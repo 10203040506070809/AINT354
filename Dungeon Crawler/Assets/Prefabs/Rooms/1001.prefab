@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_enemy: {fileID: 815583112389924485, guid: 05141ca0f6783bb4f9a12595063a822a, type: 3}
-  m_ChanceOfEnemySpawn: 100
+  m_ChanceOfEnemySpawn: 53.8
   m_ChanceOfBarrelSpawn: 78
   m_ChanceOfSecondBarrelSpawn: 54.8
   m_ChanceOfThirdBarrelSpawn: 30.5
@@ -226,11 +226,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7525159979600302529}
     m_Modifications:
-    - target: {fileID: 1210354586634912090, guid: 2aef44b2caf801548b41f4d7398654a2,
-        type: 3}
-      propertyPath: m_Name
-      value: Corner V2
-      objectReference: {fileID: 0}
     - target: {fileID: 2780782337950315337, guid: 2aef44b2caf801548b41f4d7398654a2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -290,6 +285,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.y
       value: 999.99976
+      objectReference: {fileID: 0}
+    - target: {fileID: 1210354586634912090, guid: 2aef44b2caf801548b41f4d7398654a2,
+        type: 3}
+      propertyPath: m_Name
+      value: Corner V2
       objectReference: {fileID: 0}
     - target: {fileID: 644257849399162246, guid: 2aef44b2caf801548b41f4d7398654a2,
         type: 3}

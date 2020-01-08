@@ -82,7 +82,7 @@ public class PlayerMovement : CharacterMovement
         {
             m_animator.SetBool("isWalking", true);
             m_moveVector = new Vector3(m_inputX, 0, m_inputZ);
-            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(m_moveVector), 0.5f);
+            //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(m_moveVector), 0.5f);
             m_moveVector.Normalize();
 
             m_moveVector /= 5;
@@ -101,15 +101,15 @@ public class PlayerMovement : CharacterMovement
     /// </summary>
     private void Rotation()
     {
-        //var groundPlane = new Plane(Vector3.up, -transform.position.y);
-        //var mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-        //float hitDistance;
+        var groundPlane = new Plane(Vector3.up, -transform.position.y);
+        var mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+        float hitDistance;
 
-        //if (groundPlane.Raycast(mouseRay, out hitDistance))
-        //{
-        //    Vector3 lookAtPosition = mouseRay.GetPoint(hitDistance);
-        //    transform.LookAt(lookAtPosition, Vector3.up);
-        //}
+        if (groundPlane.Raycast(mouseRay, out hitDistance))
+        {
+            Vector3 lookAtPosition = mouseRay.GetPoint(hitDistance);
+            transform.LookAt(lookAtPosition, Vector3.up);
+        }
 
     }
 

@@ -117,6 +117,7 @@ public class Minimap : MonoBehaviour
                 /// If the tile contains the end, the UI is updated to show this.
                 if (m_tempTile.name.Contains("end"))
                 {
+                    Debug.Log("test");
                     m_endMap.transform.GetChild((40 - (Mathf.RoundToInt(m_tempVec.z / 40) * 9)) + (Mathf.RoundToInt(m_tempVec.x / 40))).GetComponent<Image>().sprite = m_end;
                 }
                 /// Checks if the room has a north connection.

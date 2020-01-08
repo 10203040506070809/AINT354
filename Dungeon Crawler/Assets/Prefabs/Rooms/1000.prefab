@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_enemy: {fileID: 815583112389924485, guid: 05141ca0f6783bb4f9a12595063a822a, type: 3}
-  m_ChanceOfEnemySpawn: 100
+  m_ChanceOfEnemySpawn: 53.8
   m_ChanceOfBarrelSpawn: 78
   m_ChanceOfSecondBarrelSpawn: 54.8
   m_ChanceOfThirdBarrelSpawn: 30.5
@@ -226,11 +226,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5239609088982890927}
     m_Modifications:
-    - target: {fileID: 7449463796214174853, guid: 4954b66f8d12b75468f7a29a543641c7,
-        type: 3}
-      propertyPath: m_Name
-      value: Dead End V2
-      objectReference: {fileID: 0}
     - target: {fileID: 5853155602731918998, guid: 4954b66f8d12b75468f7a29a543641c7,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -290,6 +285,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.y
       value: 999.99976
+      objectReference: {fileID: 0}
+    - target: {fileID: 7449463796214174853, guid: 4954b66f8d12b75468f7a29a543641c7,
+        type: 3}
+      propertyPath: m_Name
+      value: Dead End V2
       objectReference: {fileID: 0}
     - target: {fileID: 9177520023536181337, guid: 4954b66f8d12b75468f7a29a543641c7,
         type: 3}

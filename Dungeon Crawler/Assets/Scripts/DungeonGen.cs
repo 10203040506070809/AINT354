@@ -12,6 +12,7 @@ public class DungeonGen : MonoBehaviour
     /// An array of game tiles consisting of every possible tile orientation.
     /// </summary>
     public GameObject[] m_mapTiles;
+    public GameObject m_leave;
     /// <summary>
     /// The object which will trigger the end of the level.
     /// </summary>
@@ -109,6 +110,10 @@ public class DungeonGen : MonoBehaviour
             {
                 Destroy(p);
             }
+            foreach (GameObject p in GameObject.FindGameObjectsWithTag("Breakable"))
+            {
+                Destroy(p);
+            }
             /// Resets all variables.
             m_tileList.Clear();
             m_tempTileList.Clear();
@@ -165,6 +170,7 @@ public class DungeonGen : MonoBehaviour
                 }
             }
         }
+        Instantiate(m_leave, new Vector3(m_startTile.worldPosition.x, m_startTile.worldPosition.y + (m_end.GetComponent<Renderer>().bounds.size.y / 2), m_startTile.worldPosition.z-2), Quaternion.identity);
         /// Generates the end location in the last tile spawned.
         Instantiate(m_end,new Vector3(m_tileList[m_tileList.Count - 1].worldPosition.x, m_tileList[m_tileList.Count - 1].worldPosition.y + (m_end.GetComponent<Renderer>().bounds.size.y / 2), m_tileList[m_tileList.Count - 1].worldPosition.z), Quaternion.identity);
         //m_player.transform.position = new Vector3(m_startTile.worldPosition.x, (m_startTile.worldPosition.y + m_player.GetComponent<CharacterController>().bounds.size.y), m_startTile.worldPosition.z);
