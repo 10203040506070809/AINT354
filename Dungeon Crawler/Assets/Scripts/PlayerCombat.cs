@@ -110,20 +110,20 @@ public class PlayerCombat : MonoBehaviour
                 m_collider.enabled = true;
                 m_playerAnimator.SetBool("Attack1", true);
                 m_Sounds[0].Play();
-                StartCoroutine(AttackCooldown("Attack1", 1f));
+                StartCoroutine(AttackCooldown("Attack1", 0.5f));
             }
         }
 
         //Alt attack - Stab
-        if (Input.GetButtonUp("Fire2"))
-        {
-            if (m_playerAnimator.GetBool("Attack1") == false && m_playerAnimator.GetBool("Attack2") == false)
-            {
-                m_collider.enabled = true;
-                m_playerAnimator.SetBool("Attack2", true);
-                StartCoroutine(AttackCooldown("Attack2", 0.5f));
-            }
-        }
+        //if (Input.GetButtonUp("Fire2"))
+        //{
+        //    if (m_playerAnimator.GetBool("Attack1") == false && m_playerAnimator.GetBool("Attack2") == false)
+        //    {
+        //        m_collider.enabled = true;
+        //        m_playerAnimator.SetBool("Attack2", true);
+        //        StartCoroutine(AttackCooldown("Attack2", 0.5f));
+        //    }
+        //}
     }
     /// <summary>
     /// After a set delay, re-enable attack
