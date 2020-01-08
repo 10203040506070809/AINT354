@@ -106,6 +106,8 @@ public class GUIStatsManager : MonoBehaviour
         m_VitalityTxt.text = m_charStats.GetVitality().ToString();
         m_DamageTxt.text = m_charStats.GetDamage().ToString();
         m_AttackSpeedTxt.text = m_charStats.GetAttackSpeed().ToString();
+        m_ArmourTxt.text = m_charStats.GetArmour().ToString();
+
         m_goldTxt.text = m_charStats.GetGold().ToString();
 
         //Set max experience
