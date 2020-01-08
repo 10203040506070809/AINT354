@@ -71,7 +71,8 @@ public class PlayerStats : CharacterStats
         this.gameObject.transform.position = new Vector3(0, 0, 0);
         m_currentHealth = m_maxHealth;
         m_currentInsanity = 0;
-
+        SaveSystem.SavePlayer(this);
+        SaveSystem.SavePlayer(this.GetComponent<PlayerHotbar>());
         //Send player back to overworld
         if (Application.CanStreamedLevelBeLoaded("Overworld"))
         {
