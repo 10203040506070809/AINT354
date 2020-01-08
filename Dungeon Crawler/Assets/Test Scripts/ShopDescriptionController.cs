@@ -16,7 +16,7 @@ public class ShopDescriptionController : MonoBehaviour
     /// <summary>
     /// A GUI text showing the items cost.
     /// </summary>
-    [SerializeField] private TextMeshProUGUI m_itemCost;
+   // [SerializeField] private TextMeshProUGUI m_itemCost;
     
     /// <summary>
     /// Occurs before the first update cycle.

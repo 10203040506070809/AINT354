@@ -55,7 +55,10 @@ public class Minimap : MonoBehaviour
     /// A float value denoting the distance the raycast will check.
     /// </summary>
     [SerializeField] private float m_maxDistance = 0;
-
+    /// <summary>
+    /// A GameObject which contains all minimap tiles.
+    /// </summary>
+    [SerializeField] private CanvasGroup m_mapPanel;
     void Update()
     {
         UpdateMap();
@@ -65,6 +68,19 @@ public class Minimap : MonoBehaviour
     /// </summary>
     private void UpdateMap()
     {
+        if (Input.GetButtonUp("MapToggle"))
+        {
+         if (m_mapPanel.alpha == 1)
+            {
+                m_mapPanel.alpha = 0;
+            }
+            else
+            {
+                m_mapPanel.alpha = 1;
+            }
+        }
+
+
         /// Used to set the raycast to be facing downwards.
         m_direction = transform.TransformDirection(Vector3.down);
         /// Used to get the UI component for the map

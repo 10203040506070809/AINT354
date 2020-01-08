@@ -51,8 +51,8 @@ public class PlayerStats : CharacterStats
             m_movementSpeed.SetValue(10 + m_level);
             m_vitality.SetValue(10 + m_level);
             m_strength.SetValue(10 + m_level);
-
-
+            m_armour.SetValue(m_level);
+            m_attackSpeed.SetValue(m_level);
 
             m_maxHealth = m_vitality.GetValue() * 10;
 

@@ -123,7 +123,7 @@ public class EnemyController : CharacterMovement
             //Do attack animation
                 m_Animator.SetBool("Attacking", true);
                 m_CanAttack = false;
-            Invoke("ResetAttack", 1);
+            Invoke("ResetAttack", 1f);
 
         }
             //Debug.Log("Attacked - " + m_lastAttacked);

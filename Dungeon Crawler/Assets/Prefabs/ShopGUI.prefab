@@ -201,7 +201,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.009302083, y: 0.79920375}
   m_AnchorMax: {x: 1, y: 0.9256483}
-  m_AnchoredPosition: {x: -0.99975586, y: -2}
+  m_AnchoredPosition: {x: -1, y: -2}
   m_SizeDelta: {x: 1.1999512, y: -0.6999512}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2960639874181870838
@@ -502,14 +502,14 @@ MonoBehaviour:
   m_text: Weapons
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 1c4a564121df2994e95df0e585f84720, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -720,7 +720,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_item: {fileID: 1438427854, guid: c4a51a93a7b36ce4a9fb79c07c1bbbfb, type: 3}
   m_descriptionText: {fileID: 2960639875234913607}
-  m_itemCost: {fileID: 0}
 --- !u!1 &2960639874385961013
 GameObject:
   m_ObjectHideFlags: 0
@@ -879,7 +878,7 @@ MonoBehaviour:
   m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 1c4a564121df2994e95df0e585f84720, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1003,7 +1002,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.9446562, y: 0.9256483}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 4.0998535, y: -0.89990234}
+  m_AnchoredPosition: {x: 4.0996094, y: -0.89990234}
   m_SizeDelta: {x: -6.199951, y: -0.2000122}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2960639874400956224
@@ -1402,7 +1401,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_item: {fileID: 2057941978, guid: 2e903273f2565614f87e59519975154f, type: 3}
   m_descriptionText: {fileID: 3506583764253077959}
-  m_itemCost: {fileID: 0}
 --- !u!1 &2960639874621906017
 GameObject:
   m_ObjectHideFlags: 0
@@ -1471,7 +1469,7 @@ MonoBehaviour:
   m_text: Health Potion
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 1c4a564121df2994e95df0e585f84720, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1653,7 +1651,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_item: {fileID: 285016970, guid: 499b11481cc0ecc4c9ac1b12638db950, type: 3}
   m_descriptionText: {fileID: 3506583764127428762}
-  m_itemCost: {fileID: 0}
 --- !u!1 &2960639875009046924
 GameObject:
   m_ObjectHideFlags: 0
@@ -1689,7 +1686,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.18612961, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.5300293, y: -0.0009765625}
+  m_AnchoredPosition: {x: 0.53027344, y: -0.0009765625}
   m_SizeDelta: {x: 0.19995117, y: 0.19995117}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2960639875234913605
@@ -1726,7 +1723,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0.56331396, y: 0.7625502}
-  m_AnchoredPosition: {x: 3.1999512, y: 276}
+  m_AnchoredPosition: {x: 3.199707, y: 276}
   m_SizeDelta: {x: 5.7, y: -551.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2960639875234913600
@@ -1760,7 +1757,7 @@ MonoBehaviour:
   m_text: 'Heals you for 50 hitpoints instantly. '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 1c4a564121df2994e95df0e585f84720, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1961,7 +1958,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.052886143, y: 0.15470342}
   m_AnchorMax: {x: 0.65881854, y: 0.36851335}
-  m_AnchoredPosition: {x: -2.999878, y: 9.045715}
+  m_AnchoredPosition: {x: -2.999878, y: 9.045654}
   m_SizeDelta: {x: -11.476471, y: -5.0421753}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2960639875335975166
@@ -2579,7 +2576,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0.18612961, y: 1}
-  m_AnchoredPosition: {x: -0.30004883, y: -0.0014648438}
+  m_AnchoredPosition: {x: -0.2998047, y: -0.0014648438}
   m_SizeDelta: {x: 0.59002686, y: 0.4000244}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &3506583762989230681
@@ -2805,14 +2802,14 @@ MonoBehaviour:
   m_text: Levels
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 1c4a564121df2994e95df0e585f84720, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2962,7 +2959,7 @@ MonoBehaviour:
   m_text: Armour Potion
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 1c4a564121df2994e95df0e585f84720, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3166,7 +3163,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0.56331396, y: 0.7625502}
-  m_AnchoredPosition: {x: 3.1999512, y: 276}
+  m_AnchoredPosition: {x: 3.199707, y: 276}
   m_SizeDelta: {x: 5.7, y: -551.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3506583764127428763
@@ -3200,7 +3197,7 @@ MonoBehaviour:
   m_text: Increases the damage you deal by 20% for 10 seconds.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 1c4a564121df2994e95df0e585f84720, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3323,7 +3320,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0.56331396, y: 0.7625502}
-  m_AnchoredPosition: {x: 3.1999512, y: 276}
+  m_AnchoredPosition: {x: 3.199707, y: 276}
   m_SizeDelta: {x: 5.7, y: -551.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3506583764253077952
@@ -3357,7 +3354,7 @@ MonoBehaviour:
   m_text: Increases your armour value by 20% for 10 seconds.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 1c4a564121df2994e95df0e585f84720, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3729,7 +3726,7 @@ MonoBehaviour:
   m_text: Potions
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 1c4a564121df2994e95df0e585f84720, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3963,7 +3960,7 @@ MonoBehaviour:
   m_text: Strength Potion
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 1c4a564121df2994e95df0e585f84720, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
